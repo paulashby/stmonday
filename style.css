@@ -1,0 +1,245 @@
+/*
+Theme Name: Neto Child
+Theme URI: https://primitive.co
+Author: Paul Ashby
+Author URI: https://primitive.co
+Template:  neto
+Description: Neto E-Commerce theme for WordPress with customisations
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: netochild
+*/
+
+/* Typography */
+@font-face {
+	font-family: "Maison Neue Bold";
+	src: url("fonts/4a373e70cd01dec089c1dd1185ceba51.eot"); /* IE9*/
+	src: url("fonts/4a373e70cd01dec089c1dd1185ceba51.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+	url("fonts/4a373e70cd01dec089c1dd1185ceba51.woff2") format("woff2"), /* chrome、firefox */
+	url("fonts/4a373e70cd01dec089c1dd1185ceba51.woff") format("woff"), /* chrome、firefox */
+	url("fonts/4a373e70cd01dec089c1dd1185ceba51.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url("fonts/4a373e70cd01dec089c1dd1185ceba51.svg#Maison Neue Bold") format("svg"); /* iOS 4.1- */
+}
+@font-face {
+	font-family: "Maison Neue Light";
+	src: url("fonts/8b59d4b47037b08d452d8cb659cc2d53.eot"); /* IE9*/
+	src: url("fonts/8b59d4b47037b08d452d8cb659cc2d53.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.woff2") format("woff2"), /* chrome、firefox */
+	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.woff") format("woff"), /* chrome、firefox */
+	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.svg#Maison Neue Light") format("svg"); /* iOS 4.1- */
+}
+body, h1, h2, h3, h4, h5, h6, .entry-content th, .comment-content th, .navigation-main > li > a, .navigation-header-secondary > li > a, .footer .nav-list-inline, .mast-head-right > a, .entry-sticky-notice, .entry-item-title, .item-title, .widget-title, .section-title, .module-callout-title, .product_meta > span, .wc-tabs a, .woocommerce-thankyou-order-details li strong, .wc-bacs-bank-details li strong, .woocommerce-EditAccountForm legend, .product_list_widget .product-title, .widget_shopping_cart .total, .site-logo, .head-search-input, .vc_general.vc_tta.vc_tta-tabs .vc_tta-panel-title > a, .elementor-2066 .elementor-element.elementor-element-54afa230 .elementor-heading-title {
+    font-family:"Maison Neue Light", Verdana, Arial, sans-serif; !important;
+}
+.nav, h1, h2, h3, h4, h5, h6 {
+	font-family:"Maison Neue Bold", Verdana, Arial, sans-serif; !important;
+	text-transform: uppercase;
+}
+.sm-home-title .elementor-heading-title {
+	line-height: 4rem;
+}
+.sm-product-subtitle {
+	text-align: center;
+	color: #999;
+}
+.sm-product-size-instruction {
+	font-size: 0.7rem;
+	margin-top: 2.5rem;
+	text-align: center;
+}
+
+/* menus */
+.navigation-main ul {
+	border: none;
+}
+/* hide hamburger menu - we currently have no entries and it appears regardless of content */
+.mast-head-right .mobile-nav-trigger {
+	display: none;
+}
+
+/* Footer at bottom */
+#page {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+.sm-footer-pusher {
+	display: flex;
+	flex-grow: 1;
+}
+
+/* Footer menu */
+.footer {
+	font-weight: bold;
+}
+.sm-footer-top-level {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+.widget_nav_menu li.sm-footer-top-level a {
+	color: #000;
+}
+.widget_nav_menu li.sm-footer-top-level .sm-footer-sub-level a {
+	color: #737373;
+}
+.sm-footer-sub-level {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+.widget_nav_menu ul .sm-footer-top-level ul {
+	margin: 0;
+}
+.widget_nav_menu li.sm-footer-top-level a {
+	border-bottom: 0;
+}
+
+/* Product listings */
+.item-product {
+	text-align: center;
+}
+
+/* Product page elements (excluding typography) */
+.variations .value, .variations .label {
+	/* Remove border between size selector and note */
+	border: none;	
+}
+.single_variation_wrap {
+	/* Reduce space between size selector and note */
+	margin-top: -2.5rem;
+}
+
+.item-eyebrow {
+	/* hide category in product listings */
+	display: none;
+}
+
+/* Generic page text blocks */
+.sm-generic-pg.sm-content.sm-text {
+	padding: 5rem 5rem 0 5rem;
+}
+
+.sm_buy_now__pre-txt {
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.woocommerce-variation-add-to-cart .single_add_to_cart_button,
+#sm_buy_now_button_wrapper .single_add_to_cart_button {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	min-width: 200px;
+	width: calc(60% - 48px);
+}
+
+.product-template-default .variations {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.product-template-default .variations #pa_size,
+.product-template-default .variations #pa_colour {
+	text-align: center;
+	text-transform: uppercase;
+	/* 
+	 *	element has 12px padding either side.
+	 *	Inner (option) element has further 4px either side
+	 *	Total = 32px
+	 */
+	width: calc(60% - 32px);
+}
+
+.product-template-default .entry-item-sharing {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1rem;
+	width: 70px;
+}
+
+.product-template-default .summary .sku_wrapper,
+.product-template-default .summary .posted_in,
+.product-template-default .summary .product_title,
+.product-template-default .summary bdi {
+	text-align: center;
+}
+
+.product-template-default .summary bdi {
+	display: block;
+}
+
+.product-template-default .variations .label ,
+.product-template-default .variations .value {
+	text-align: center;
+	display: block;
+	width: 100%
+}
+
+/* Customised product tabs  */
+.woocommerce-tabs.wc-tabs-wrapper {
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+/* Hide tab headings */
+.woocommerce-Tabs-panel h2 {
+	display:  none;
+}
+
+/* Render list as two column */
+#tab-description.woocommerce-Tabs-panel ul {
+	columns: 2;
+	-webkit-columns: 2;
+	-moz-columns: 2;
+}
+
+/* Maxslider homepage carousel */
+.maxslider-slide-title,
+.maxslider-slide-subtitle {
+	text-transform: uppercase;
+	font-size: 52px;
+	line-height: 64px;
+	font-weight: bold;
+}
+
+.maxslider .maxslider-btn {
+	text-transform: uppercase;
+	font-size: 15px;
+	line-height: 15px;
+	font-weight: bold;	
+}
+
+@media only screen and (max-width: 1024px) {
+
+	/* Generic page text blocks */
+	.sm-generic-pg.sm-content.sm-text {
+		padding: 2rem 2rem 0 2rem;
+	}
+	/* Footer menu items */
+	.footer .col-md-6 {
+		width: 33%;
+	}
+
+}
+
+@media only screen and (max-width: 767px) {
+
+	/* Home page banner */
+	.elementor-2374 .elementor-element.elementor-element-37e4df66:not(.elementor-motion-effects-element-type-background) {
+		background-position-x: -40rem;
+	}
+	/* Footer menu items */
+	.footer .footer-widgets .container {
+		text-align: center;
+	}
+	.footer .col-md-6 {
+		width: 100%;
+	}
+	/* Generic page text blocks */
+	.sm-generic-pg.sm-content.sm-text {
+		padding: 0;
+	}
+	
+}
