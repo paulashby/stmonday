@@ -47,6 +47,15 @@ function sm_enqueue_resources() {
     }
 }
 
+
+/* Enable svg - NOTE: This is safe as long as we're not allowing uers to upload files */
+// add_filter('upload_mimes', 'cc_mime_types');
+
+// function cc_mime_types($mimes) {
+// 	$mimes['svg'] = 'image/svg+xml';
+//  return $mimes;
+// }
+
 // Add div before footer to push it to bottom of screen when content is short
 add_action( 'get_footer', 'sm_add_foot_pusher' );
 

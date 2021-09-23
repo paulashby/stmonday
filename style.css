@@ -30,6 +30,32 @@ Text Domain: netochild
 	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
 	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.svg#Maison Neue Light") format("svg"); /* iOS 4.1- */
 }
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?q3c06e');
+  src:  url('fonts/icomoon.eot?q3c06e#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?q3c06e') format('truetype'),
+    url('fonts/icomoon.woff?q3c06e') format('woff'),
+    url('fonts/icomoon.svg?q3c06e#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body, h1, h2, h3, h4, h5, h6, .entry-content th, .comment-content th, .navigation-main > li > a, .navigation-header-secondary > li > a, .footer .nav-list-inline, .mast-head-right > a, .entry-sticky-notice, .entry-item-title, .item-title, .widget-title, .section-title, .module-callout-title, .product_meta > span, .wc-tabs a, .woocommerce-thankyou-order-details li strong, .wc-bacs-bank-details li strong, .woocommerce-EditAccountForm legend, .product_list_widget .product-title, .widget_shopping_cart .total, .site-logo, .head-search-input, .vc_general.vc_tta.vc_tta-tabs .vc_tta-panel-title > a, .elementor-2066 .elementor-element.elementor-element-54afa230 .elementor-heading-title {
     font-family:"Maison Neue Light", Verdana, Arial, sans-serif; !important;
 }
@@ -37,6 +63,48 @@ body, h1, h2, h3, h4, h5, h6, .entry-content th, .comment-content th, .navigatio
 	font-family:"Maison Neue Bold", Verdana, Arial, sans-serif; !important;
 	text-transform: uppercase;
 }
+.mast-head .container .nav {
+	height: 1.2rem;
+	margin-top:  1.15rem;
+	background: #fff url('assets/images/roundel.png') left center/contain no-repeat !important;
+}
+.site-logo img {
+	 max-width: 280px !important;
+}
+/* Cart quantity is in this */
+.head-cart-toggle {
+	display: inline-block;
+	font-size: 0.8rem;
+	position: relative;
+	text-align: center;
+	width: 1.7rem;
+}
+.fas.fa-shopping-cart:before {
+  color: #555;
+  content: "\e900";
+  display: inline-block;
+  font-family: 'icomoon' !important;
+  position: relative;
+  top: -.28rem;
+  width: 1.7rem;
+}
+.fas.fa-shopping-cart {
+	font-size: 1.6rem;
+	height: 1.7rem;
+	left: 0;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	width: 1.7rem;
+}
+/*.icon-icon-search:before {
+  content: "\e901";
+  color: #666;
+}
+.icon-icon-user:before {
+  content: "\e902";
+  color: #666;
+}*/
 .sm-home-title .elementor-heading-title {
 	line-height: 4rem;
 }
