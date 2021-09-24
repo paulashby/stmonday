@@ -38,19 +38,22 @@ var SM_product = (function () {
 	function get_product_settings() {
 
 		var product_settings = {
-				size: $('#pa_size').val(),
-				colour: $('#pa_colour').val(),
 				quantity: $('.quantity input.qty').first().val()
-			},
-			ps_keys = Object.keys(product_settings),
-			currentSetting = '';
+			}, i, curr, ps_keys;
+
+			for (var i = 0; i < config.product_variation_attributes.length; i++) {
+				curr = config.product_variation_attributes[i];
+				product_settings[curr.replace('pa_', '')] = $('#' + curr).val();
+			}
+
+		ps_keys = Object.keys(product_settings);
 
 		// Check product_settings object has captured product variation values
 		for(i = 0; i < ps_keys.length; i++) {
 
-			currentSetting = product_settings[ps_keys[i]];
+			curr = product_settings[ps_keys[i]];
 
-			if( currentSetting === undefined || currentSetting.length === 0) { 
+			if( curr === undefined || curr.length === 0) { 
 				return ('Unable to get data for product ' + ps_keys[i]); 
 			}
 		}
@@ -65,8 +68,8 @@ var SM_product = (function () {
 
 		var buy_now_button = $('#buy_now_button'),
 			quantity_adjustment = 0,
-			quantity = undefined,
-			checkout_url = undefined;
+			quantity,
+			checkout_url;
 
 		if(buy_now_button.length){
 			checkout_url = buy_now_button.attr('href');
@@ -96,7 +99,6 @@ var SM_product = (function () {
          data : settings,
          success: function(response) {
          	if(response.success) {
-         		// settings.ajax_callback(response.data);
          		success_callbacks[settings.to_update](response.data, settings);
             }
             else {
@@ -104,8 +106,8 @@ var SM_product = (function () {
             }
          },
          error: function(xhr, ajaxOptions, thrownError) {
-         	alert(xhr.status);
-         	alert(thrownError);
+         	console.log(xhr.status);
+         	console.log(thrownError);
          }
       });
 
@@ -113,20 +115,26 @@ var SM_product = (function () {
 
 	$( document ).ready(function() {
 
-		// Load images on page load
-		update_variation_elements('all');
+		// Get images on page load
+		if(config.product_variation_attributes.length){
+			// Load image gallery and Buy Now button
+			update_variation_elements('all');
+		} else {
+			// Load only buy now button - the image gallery is already loaded as we didn't need to filter by variation
+			update_variation_elements('buy_now_button');
+		}
 
 		// On product colour change, get new Buy Now button and image gallery
 		$('#pa_colour').change( function() {
 			update_variation_elements('all');
 		 });
 
-		// On product size change, get new Buy Now button
+		// On product size change, get new Buy Now button - requires ajax call as we need the variation code
 		$('#pa_size').change( function() {
 			update_variation_elements('buy_now_button');
 		 });
 
-		// On product quantity change, update Buy Now button
+		// On product quantity change, update Buy Now button - no ajax call needed as we're just updating quantity
 		$('input[name="quantity"]').first().blur( function() {
 			update_buy_now_button();
 		 });

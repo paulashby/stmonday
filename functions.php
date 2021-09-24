@@ -37,10 +37,15 @@ function sm_enqueue_resources() {
 	    $nonce = wp_create_nonce('ajax-nonce');
 	    $product_id = get_queried_object_id();
 
-		$js_data = "var config = {
+	    $product = wc_get_product($product_id);
+
+	    $attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array());
+
+	    $js_data = "var config = {
 	    	url: '$admin_url',
 			nonce: '$nonce',
-			product_id: '$product_id'
+			product_id: '$product_id',
+			product_variation_attributes: $attributes 
 		};";
 
 		wp_add_inline_script('neto-child-script', $js_data);
@@ -92,6 +97,7 @@ remove_action( 'woocommerce_product_thumbnails', 'woocommerce_show_product_thumb
 
 // If product has variations defer to AJAX load. Else, render all products shots instead of single image
 add_filter( 'woocommerce_single_product_image_thumbnail_html', 'sm_render_all_product_shots', 10 );
+
 function sm_render_all_product_shots ( $html ) {
 
 	// Single product pages (woocommerce)
@@ -143,8 +149,7 @@ function remove_short_description() {
 add_action( 'woocommerce_after_add_to_cart_form', 'sm_after_add_to_cart_form' );
 
 function sm_after_add_to_cart_form(){
-	echo "<div class='sm_buy_now__pre'><p class='sm_buy_now__pre-txt'>Or</p></div>
-	<div id='sm_buy_now_button_wrapper'></div>";
+	echo "<div id='sm_buy_now_button_wrapper'></div>";
 }
 
 // Remove reset variation button from variable products
@@ -193,25 +198,37 @@ function sm_on_product_variation_change() {
      	wp_send_json_error ('The request could not be processed due to possible security issues') ;
          die ( 'Insecure request' );
     }
-    if ( ! isset ($_REQUEST['to_update'])) { wp_send_json_error( "Missing required argument: 'to_update'" ); }
-    if ( ! isset ($_REQUEST['colour'])) { wp_send_json_error( "Missing required argument: 'colour'" ); }
-    if ( ! isset ($_REQUEST['size'])) { wp_send_json_error( "Missing required argument: 'size'" ); }
+    if ( ! isset ($_REQUEST['to_update'])) { (wp_send_json_error( "Missing required argument: 'to_update'" )); }
     if ( ! isset ($_REQUEST['quantity'])) { wp_send_json_error( "Missing required argument: 'quantity'" ); }
     if ( ! isset ($_REQUEST['product_id'])) { wp_send_json_error( "Missing required argument: 'product_id'" ); }
 
     $to_update = sanitize_text_field(filter_input(INPUT_GET, 'to_update'));
-    $colour = sanitize_text_field(filter_input(INPUT_GET, 'colour'));
-	$size = sanitize_text_field(filter_input(INPUT_GET, 'size'));
+   
 	$quantity = intval(sanitize_text_field(filter_input(INPUT_GET, 'quantity')));
 	$product_id = intval(sanitize_text_field(filter_input(INPUT_GET, 'product_id')));
+	$product = wc_get_product($product_id);
 
-	$buy_now_button = get_buy_now_button($size, $colour, $quantity, $product_id);
+	$buy_now_button_settings = array(
+		'size' => false,
+		'colour' => false,
+		'quantity' => $quantity,
+		'product_id' => $product_id,
+		'product' => $product
+	);
 
+	if ( isset ($_REQUEST['size'])) { 
+    	$buy_now_button_settings['size'] = sanitize_text_field(filter_input(INPUT_GET, 'size')); 
+    }
+    if ( isset ($_REQUEST['colour'])) { 
+    	$buy_now_button_settings['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour')); 
+    }
+
+	$buy_now_button = get_buy_now_button($buy_now_button_settings);
 	$return_data = array('buy_now_button' => $buy_now_button);
 
 	if($to_update === 'all') {
 
-		$return_data['image_gallery'] = get_image_gallery($product_id, $colour);
+		$return_data['image_gallery'] = get_image_gallery($product_id, $buy_now_button_settings['colour']);
 	}
 
 	exit(wp_send_json_success($return_data));
@@ -286,7 +303,9 @@ function get_image_gallery($product_id, $colour){
 
 	// We only want the main image if its colour field matches the value of $colour
 	$image_colour = get_field( "colour", $product->get_image_id());
-	if($image_colour === $colour) {
+
+	// $colour is false is product has no colour variations
+	if($colour === false || $image_colour === $colour) {
 		$image_gallery[] = sm_get_image_markup($product->get_image_id());
 	}
 
@@ -298,7 +317,7 @@ function get_image_gallery($product_id, $colour){
 		$description = strtolower($attachment->post_content);
 		$image_colour  = get_field( "colour", $image_id );
 		
-		if($image_colour  === $colour) {
+		if($colour === false || $image_colour  === $colour) {
 			
 			$image_gallery[] = sm_get_image_markup($image_id);
 		} 
@@ -363,17 +382,28 @@ function replace_first($search, $replace, $subject) {
 	return $subject;
 }
 
-function get_buy_now_button($size, $colour, $quantity, $product_id) {
+function get_buy_now_button($settings) {
 
-	$match_attributes =  array(
-		"attribute_pa_size" => $size,
-	    "attribute_pa_colour" => $colour
-	);
+	if( ! $settings['product']->is_type( 'variable' )){
+		$variation_id = $settings['product_id'];
+	} else {
+		$match_attributes =  array(
+			'attribute_pa_size' => $settings['size']
+		);
 
-	$data_store = WC_Data_Store::load( 'product' );
-	$variation_id = $data_store->find_matching_product_variation(
-	  new \WC_Product($product_id), $match_attributes
-	);
+		if($settings['colour'] !== false) {
+			$match_attributes['attribute_pa_colour'] = $settings['colour'];
+		}
+		if($settings['size'] !== false) {
+			$match_attributes['attribute_pa_size'] = $settings['size'];
+		}
+
+		$data_store = WC_Data_Store::load( 'product' );
+		$variation_id = $data_store->find_matching_product_variation(
+		  new \WC_Product($settings['product_id']), $match_attributes
+		);
+	}
 	$checkout_url = wc_get_checkout_url();
-	return "<a id='buy_now_button' class='single_add_to_cart_button button alt' href='{$checkout_url}?add-to-cart=$variation_id&quantity=$quantity'>Buy Now</a>";
+
+	return "<div class='sm_buy_now__pre'><p class='sm_buy_now__pre-txt'>Or</p></div><a id='buy_now_button' class='single_add_to_cart_button button alt' href='{$checkout_url}?add-to-cart=$variation_id&quantity=" . $settings['quantity'] . "'>Buy Now</a>";
 }
