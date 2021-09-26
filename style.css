@@ -13,22 +13,29 @@ Text Domain: netochild
 
 /* Typography */
 @font-face {
-	font-family: "Maison Neue Bold";
-	src: url("fonts/4a373e70cd01dec089c1dd1185ceba51.eot"); /* IE9*/
-	src: url("fonts/4a373e70cd01dec089c1dd1185ceba51.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-	url("fonts/4a373e70cd01dec089c1dd1185ceba51.woff2") format("woff2"), /* chrome、firefox */
-	url("fonts/4a373e70cd01dec089c1dd1185ceba51.woff") format("woff"), /* chrome、firefox */
-	url("fonts/4a373e70cd01dec089c1dd1185ceba51.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-	url("fonts/4a373e70cd01dec089c1dd1185ceba51.svg#Maison Neue Bold") format("svg"); /* iOS 4.1- */
+    font-family: 'TT Norms Pro Normal';
+    src: url('fonts/TTNormsPro-Normal.eot');
+    src: url('fonts/TTNormsPro-Normal.eot?#iefix') format('embedded-opentype'),
+        url('fonts/TTNormsPro-Normal.woff2') format('woff2'),
+        url('fonts/TTNormsPro-Normal.woff') format('woff'),
+        url('fonts/TTNormsPro-Normal.ttf') format('truetype'),
+        url('fonts/TTNormsPro-Normal.svg#TTNormsPro-Normal') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
+/* Bold  */
 @font-face {
-	font-family: "Maison Neue Light";
-	src: url("fonts/8b59d4b47037b08d452d8cb659cc2d53.eot"); /* IE9*/
-	src: url("fonts/8b59d4b47037b08d452d8cb659cc2d53.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.woff2") format("woff2"), /* chrome、firefox */
-	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.woff") format("woff"), /* chrome、firefox */
-	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-	url("fonts/8b59d4b47037b08d452d8cb659cc2d53.svg#Maison Neue Light") format("svg"); /* iOS 4.1- */
+    font-family: 'TT Norms Pro';
+    src: url('fonts/TTNormsPro-Bd.eot');
+    src: url('fonts/TTNormsPro-Bd.eot?#iefix') format('embedded-opentype'),
+        url('fonts/TTNormsPro-Bd.woff2') format('woff2'),
+        url('fonts/TTNormsPro-Bd.woff') format('woff'),
+        url('fonts/TTNormsPro-Bd.ttf') format('truetype'),
+        url('fonts/TTNormsPro-Bd.svg#TTNormsPro-Bd') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
 }
 @font-face {
   font-family: 'icomoon';
@@ -56,13 +63,51 @@ Text Domain: netochild
   -moz-osx-font-smoothing: grayscale;
 }
 
-body, h1, h2, h3, h4, h5, h6, .entry-content th, .comment-content th, .navigation-main > li > a, .navigation-header-secondary > li > a, .footer .nav-list-inline, .mast-head-right > a, .entry-sticky-notice, .entry-item-title, .item-title, .widget-title, .section-title, .module-callout-title, .product_meta > span, .wc-tabs a, .woocommerce-thankyou-order-details li strong, .wc-bacs-bank-details li strong, .woocommerce-EditAccountForm legend, .product_list_widget .product-title, .widget_shopping_cart .total, .site-logo, .head-search-input, .vc_general.vc_tta.vc_tta-tabs .vc_tta-panel-title > a, .elementor-2066 .elementor-element.elementor-element-54afa230 .elementor-heading-title {
-    font-family:"Maison Neue Light", Verdana, Arial, sans-serif; !important;
+body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-content th, .navigation-main > li > a, .navigation-header-secondary > li > a, .footer .nav-list-inline, .mast-head-right > a, .entry-sticky-notice, .entry-item-title, .item-title, .widget-title, .section-title, .module-callout-title, .product_meta > span, .wc-tabs a, .woocommerce-thankyou-order-details li strong, .wc-bacs-bank-details li strong, .woocommerce-EditAccountForm legend, .product_list_widget .product-title, .widget_shopping_cart .total, .site-logo, .head-search-input, .vc_general.vc_tta.vc_tta-tabs .vc_tta-panel-title > a, .elementor-2066 .elementor-element.elementor-element-54afa230 .elementor-heading-title {
+    font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif; !important; font-weight: 500; font-style: normal;
 }
-.nav, h1, h2, h3, h4, h5, h6 {
-	font-family:"Maison Neue Bold", Verdana, Arial, sans-serif; !important;
+.nav, .woocommerce-breadcrumb, .label, select, .woocommerce select option, h1, h2, h3, h4, h5, h6 {
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important; font-weight: bold; font-style: normal;
 	text-transform: uppercase;
 }
+
+.variations select,
+.product-template-default .entry-summary .quantity {
+	display: none !important;
+}
+.variation-radios{
+	display: flex;
+	justify-content: center;
+}
+.variation-radios input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+.woocommerce-breadcrumb a {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 0.05rem;
+}
+.variation-radios label {
+	display:  block;
+	background-color: #fff;
+	height: 45px;
+	vertical-align: top;
+	padding: 13px 24px;
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important;
+	font-weight: bold;
+	font-style: normal;
+	font-size: 12px;
+	box-shadow: #c4c2c2 0px 0px 0px 1px;
+	background-color: #fff;
+}
+.variation-radios input[type="radio"]:checked + label {
+	color: #000;
+	box-shadow: #000 0px 0px 0px 1px;
+	z-index: 10;
+}
+
 .mast-head .container .nav {
 	height: 1.2rem;
 	margin-top:  1.15rem;

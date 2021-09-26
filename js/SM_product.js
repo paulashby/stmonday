@@ -119,6 +119,7 @@ var SM_product = (function () {
 		if(config.product_variation_attributes.length){
 			// Load image gallery and Buy Now button
 			update_variation_elements('all');
+			// capitalise_select_options();
 		} else {
 			// Load only buy now button - the image gallery is already loaded as we didn't need to filter by variation
 			update_variation_elements('buy_now_button');
@@ -133,6 +134,29 @@ var SM_product = (function () {
 		$('#pa_size').change( function() {
 			update_variation_elements('buy_now_button');
 		 });
+
+		// Make radio button clicks trigger change event on corresponding select menu entry
+		$('.variation-radios input').change( function() {
+			$('.variation-radios input:checked').each(function(index, element) {
+				var $el = $(element);
+				var thisName = $el.attr('name');
+				var thisVal  = $el.attr('value');
+				$('select[name="'+thisName+'"]').val(thisVal).trigger('change');
+			});
+		 });
+
+		// Enable appropriate radio buttons after variations have been selected
+		$(document).on('woocommerce_update_variation_values', function() {
+		  $('.variation-radios input').each(function(index, element) {
+		    var $el = $(element);
+		    var thisName = $el.attr('name');
+		    var thisVal  = $el.attr('value');
+		    $el.removeAttr('disabled');
+		    if($('select[name="'+thisName+'"] option[value="'+thisVal+'"]').is(':disabled')) {
+		      $el.prop('disabled', true);
+		    }
+		  });
+		});
 
 		// On product quantity change, update Buy Now button - no ajax call needed as we're just updating quantity
 		$('input[name="quantity"]').first().blur( function() {
