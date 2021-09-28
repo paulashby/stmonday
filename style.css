@@ -64,16 +64,30 @@ Text Domain: netochild
 }
 
 body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-content th, .navigation-main > li > a, .navigation-header-secondary > li > a, .footer .nav-list-inline, .mast-head-right > a, .entry-sticky-notice, .entry-item-title, .item-title, .widget-title, .section-title, .module-callout-title, .product_meta > span, .wc-tabs a, .woocommerce-thankyou-order-details li strong, .wc-bacs-bank-details li strong, .woocommerce-EditAccountForm legend, .product_list_widget .product-title, .widget_shopping_cart .total, .site-logo, .head-search-input, .vc_general.vc_tta.vc_tta-tabs .vc_tta-panel-title > a, .elementor-2066 .elementor-element.elementor-element-54afa230 .elementor-heading-title {
-	font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif; !important; font-weight: 500; font-style: normal;
+	font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif; !important; 
 }
-.nav, .woocommerce-breadcrumb, .label, select, .woocommerce select option, h1, h2, h3, h4, h5, h6 {
-	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important; font-weight: bold; font-style: normal;
+.nav, .woocommerce-breadcrumb, .label, select, .woocommerce select option, .entry-summary .price, h1, h2, h3, h4, h5, h6 {
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important; 
 	text-transform: uppercase;
 }
-.sm-bold {
-	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important; font-weight: bold; font-style: normal;	
+body {
+	color:  #282828;
 }
-
+a,
+.woocommerce-breadcrumb a {
+	color: #737373;
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease;
+}
+a:hover,
+.woocommerce-breadcrumb a:hover {
+	color: #a2a2a2;
+}
+a:active,
+.woocommerce-breadcrumb a::active
+a:visited,
+.woocommerce-breadcrumb a:visited {
+	color: #a2a2a2;
+}
 .variations select,
 .product-template-default .entry-summary .quantity {
 	display: none !important;
@@ -102,8 +116,6 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	vertical-align: top;
 	padding: 13px 24px;
 	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important;
-	font-weight: bold;
-	font-style: normal;
 	font-size: 12px;
 	box-shadow: #c4c2c2 0px 0px 0px 1px;
 	background-color: #fff;
@@ -186,9 +198,26 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 .sm-home-title .elementor-heading-title {
 	line-height: 4rem;
 }
-.sm-product-subtitle {
+.entry-summary .product_title,
+.entry-summary .entry_title {
+	font-size: 1.8rem;
+	margin-bottom: 0.3rem;
+	line-height: 1.85rem;
+}
+.sm-product-subtitle, 
+.entry-summary .price {
+	font-size: 1.38rem;
+	line-height: 1.55rem;
 	text-align: center;
+	margin-bottom: 1rem;
 	color: #999;
+}
+.entry-summary .price {
+	color: #252525;
+}
+.entry-summary .button,
+.tabs.wc-tabs a {
+	font-size: 1rem;
 }
 .sm-product-size-instruction {
 	font-size: 0.7rem;
@@ -209,7 +238,7 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 
 /* Footer menu */
 .footer {
-	font-weight: bold;
+	font-family: 'TT Norms Pro';
 }
 .sm-footer-top-level {
 	text-transform: uppercase;
@@ -265,7 +294,6 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 }
 
 .sm_buy_now__pre-txt {
-	font-weight: bold;
 	text-transform: uppercase;
 	text-align: center;
 }
@@ -277,6 +305,20 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	display: block;
 	min-width: 200px;
 	width: calc(60% - 48px);
+}
+.woocommerce-variation-add-to-cart .single_add_to_cart_button {
+	margin-top: 1.6rem;
+}
+#sm_buy_now_button_wrapper {
+	margin-top: -1.6rem;
+}
+#buy_now_button {
+	margin-top: -0.7rem;
+	/*margin-bottom: 1.8rem;*/
+}
+.button,
+#buy_now_button {
+	font-family: 'TT Norms Pro';
 }
 
 .product-template-default .variations {
@@ -297,10 +339,13 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	}
 
 	.product-template-default .entry-item-sharing {
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 1rem;
+		margin:  1.8rem auto 0.7rem;
 		width: 70px;
+	}
+	.entry-summary .product_meta > span,
+	.entry-summary .product_meta .posted_in {
+		font-family: 'TT Norms Pro';
+		color: #737373;
 	}
 
 	.product-template-default .summary .sku_wrapper,
@@ -323,6 +368,7 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 
 	/* Customised product tabs  */
 	.woocommerce-tabs.wc-tabs-wrapper {
+		margin-top: 2.5rem;
 		margin-left: -15px;
 		margin-right: -15px;
 	}
@@ -336,14 +382,24 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 		flex-grow: 1;
 		text-align: center;
 	}
-	.wc-tabs li a {
+	.wc-tabs li a {	
+		font-family: 'TT Norms Pro';	
+		font-weight: bold;	
 		margin-left: auto;
 		margin-right: auto;
 	}
 
-
-	.description_tab.active {
+	.tabs.wc-tabs .active {
 		border-bottom: 2px solid #000;
+	}
+	.wc-tabs-wrapper p a {
+		font-family: 'TT Norms Pro';
+		color: #282828;
+		transition: color .18s ease, background-color .18s ease, border-color .18s ease;
+		text-decoration: underline solid #c4c2c2;
+	}
+	.wc-tabs-wrapper p a:hover {
+		color: #737373;
 	}
 
 	/* Hide tab headings */
@@ -364,14 +420,14 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 		text-transform: uppercase;
 		font-size: 52px;
 		line-height: 64px;
-		font-weight: bold;
+		font-family: 'TT Norms Pro';
 	}
 
 	.maxslider .maxslider-btn {
 		text-transform: uppercase;
 		font-size: 15px;
 		line-height: 15px;
-		font-weight: bold;	
+		font-family: 'TT Norms Pro';
 	}
 
 	@media only screen and (max-width: 1024px) {
