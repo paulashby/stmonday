@@ -229,6 +229,11 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	border-bottom: 0;
 }
 
+/* Product listings */
+.product .col-lg-5 {
+	margin-left: 0;
+	width: 50%;
+}
 .item-product {
 	text-align: center;
 }
