@@ -34,9 +34,9 @@ function sm_enqueue_resources() {
 		wp_enqueue_script( 'neto-child-script', get_stylesheet_directory_uri() . '/js/SM_product.js', array(), '1.0.0', true );
 		$admin_url = admin_url('admin-ajax.php');
 		$nonce = wp_create_nonce('ajax-nonce');
-		$product_id = get_queried_object_id()
-		$product = wc_get_product($product_id)
-		$attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array())
+		$product_id = get_queried_object_id();
+		$product = wc_get_product($product_id);
+		$attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array());
 		$js_data = "var config = {
 			url: '$admin_url',
 			nonce: '$nonce',
@@ -132,7 +132,7 @@ function variation_radio_buttons($html, $args) {
 	}
 
 	$radios .= '</div>';
-	
+
 	return $html.$radios;
 }
 
@@ -280,7 +280,7 @@ function sm_on_product_variation_change() {
 	if ( ! isset ($_REQUEST['product_id'])) { wp_send_json_error( "Missing required argument: 'product_id'" ); }
 
 	$to_update = sanitize_text_field(filter_input(INPUT_GET, 'to_update'));
-	
+
 	$quantity = intval(sanitize_text_field(filter_input(INPUT_GET, 'quantity')));
 	$product_id = intval(sanitize_text_field(filter_input(INPUT_GET, 'product_id')));
 	$product = wc_get_product($product_id);
@@ -330,7 +330,7 @@ function acf_load_color_field_choices( $field ) {
 	}
 
 	return $field;
-	
+
 }
 
 // Customise product page tabs
