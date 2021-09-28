@@ -22,11 +22,27 @@ var SM_product = (function () {
 		all: function(data, settings) {
 			$('.woocommerce-product-gallery__wrapper').html(data.image_gallery);
 			$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
+			$('.sm_gallery_display_button').click( function(){
+
+				var gallery_images;
+				var now_active_num = $(this).data('num');
+
+				if($(this).hasClass('active')){
+					return;
+				}
+				update_active('.woocommerce-product-gallery__wrapper picture', now_active_num);
+				update_active('.sm_gallery_display_buttons .sm_gallery_display_button', now_active_num);
+			});
 			current_colour = settings.colour;
 			current_size = settings.size;
 		}
 	};
 
+	function update_active(class_name, elmt_number) {
+		var collection = $(class_name);
+		collection.removeClass('active');
+		collection.eq(elmt_number).addClass('active');
+	}
 	function update_variation_elements(toUpdate) {
 		// Call appropriate function
 		var settings = get_product_settings();

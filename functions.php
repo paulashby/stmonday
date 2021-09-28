@@ -177,6 +177,8 @@ add_filter( 'woocommerce_single_product_image_thumbnail_html', 'sm_render_all_pr
 
 function sm_render_all_product_shots ( $html ) {
 
+	$button_count = 0;
+
 	// Single product pages (woocommerce)
 	if ( is_product() ) {
 
@@ -197,15 +199,16 @@ function sm_render_all_product_shots ( $html ) {
 
 		ob_start(); // Start buffering
 
-		echo sm_get_image_markup($image_id);
+		echo sm_get_image_markup($image_id, true);
 
 	    // Loop through gallery Image Ids
 		foreach( $product->get_gallery_image_ids() as $image_id ) {
 
 			echo sm_get_image_markup($image_id);
+			$button_count++;
 
 		}
-
+		echo sm_get_display_button_markup($button_count);
 	    // Return buffered content
 		return ob_get_clean();
 	}
@@ -226,7 +229,7 @@ function remove_short_description() {
 add_action( 'woocommerce_after_add_to_cart_form', 'sm_after_add_to_cart_form' );
 
 function sm_after_add_to_cart_form(){
-	echo "<div id='sm_buy_now_button_wrapper'></div>";
+	echo "<div id='sm_buy_now_button_wrapper' class='fade-in'></div>";
 }
 
 // Remove reset variation button from variable products
@@ -378,12 +381,12 @@ function get_image_gallery($product_id, $colour){
 	$product = new WC_Product_Variable( $product_id );
 	$image_gallery = array();
 
-	// We only want the main image if its colour field matches the value of $colour
+	// Include the main image if its colour field matches the value of $colour
 	$image_colour = get_field( "colour", $product->get_image_id());
 
 	// $colour is false if product has no colour variations
 	if($colour === false || $image_colour === $colour) {
-		$image_gallery[] = sm_get_image_markup($product->get_image_id());
+		$image_gallery[] = sm_get_image_markup($product->get_image_id(), true);
 	}
 
 	// Loop through gallery Image Ids
@@ -393,20 +396,41 @@ function get_image_gallery($product_id, $colour){
 		
 		$description = strtolower($attachment->post_content);
 		$image_colour  = get_field( "colour", $image_id );
+		$active_image = count($image_gallery) === 0;
 		
 		if($colour === false || $image_colour  === $colour) {
 			
-			$image_gallery[] = sm_get_image_markup($image_id);
+			$image_gallery[] = sm_get_image_markup($image_id, $active_image);
 		} 
+	}
+	$num_images = count($image_gallery);
+	if($num_images > 0){
+		$image_gallery[] = sm_get_display_button_markup($num_images);
 	}
 	return $image_gallery;
 }
 
-function sm_get_image_markup($image_id) {
+function sm_get_display_button_markup($button_count){
+
+	if($button_count < 1){ return; }
+
+	$buttons = "<div class='sm_gallery_display_buttons'>";
+	$active_class = "active";
+
+	for ($i=0; $i < $button_count; $i++) { 
+		$buttons .= "<div class='sm_gallery_display_button $active_class' data-num='$i'></div>";
+		$active_class = "";
+	}
+
+	return "$buttons</div>";
+}
+
+function sm_get_image_markup($image_id, $active_image = false) {
 
 	$attachment = get_post($image_id);
 	$image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
 	$image_title = $attachment->post_title;
+	$picture_class = $active_image ? 'fade-in active' : 'fade-in';
 
 	// Make 540 wide image to use as fallback
 	$src_540 = wp_get_attachment_image_url($image_id, array(540, 540));
@@ -430,7 +454,7 @@ function sm_get_image_markup($image_id) {
 	$webp_srcset = rtrim($webp_srcset, ", ");
 	$sizes = '(min-width: 1200px) 540px, (min-width: 1000px) 440px, (min-width: 780px) 330px, (min-width: 620px) 540px, 90vw';
 
-	return "<picture>
+	return "<picture class='$picture_class'>
 	<source type='image/webp'
 	srcset='$webp_srcset'
 	sizes='$sizes'
