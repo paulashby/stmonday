@@ -87,6 +87,9 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	position: fixed;
 	width: 0;
 }
+.woocommerce-breadcrumb {
+	border-bottom:  none;
+}
 .woocommerce-breadcrumb a {
 	display: inline-block;
 	vertical-align: top;
@@ -322,6 +325,21 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	.woocommerce-tabs.wc-tabs-wrapper {
 		margin-left: -15px;
 		margin-right: -15px;
+	}
+
+	.tabs.wc-tabs {
+		border-bottom: 1px solid #c4c2c2;
+		display: flex;
+	}
+
+	.wc-tabs li {
+		flex-grow: 1;
+		text-align: center;
+	}
+
+
+	.description_tab.active {
+		border-bottom: 2px solid #000;
 	}
 
 	/* Hide tab headings */
