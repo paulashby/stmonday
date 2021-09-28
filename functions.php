@@ -1,20 +1,20 @@
 <?php
 add_action( 'wp_loaded', function() {
-    global $pagenow;
-    if(
-        defined( 'IN_MAINTENANCE' )
-        && IN_MAINTENANCE
-        && $pagenow !== 'wp-login.php'
-        && ! is_user_logged_in()
-    ) {
-        header( 'HTTP/1.1 Service Unavailable', true, 503 );
-        header( 'Content-Type: text/html; charset=utf-8' );
-        header( 'Retry-After: 3600' );
-        if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' ) ) {
-            require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' );
-        }
-        die();
-    }
+	global $pagenow;
+	if(
+		defined( 'IN_MAINTENANCE' )
+		&& IN_MAINTENANCE
+		&& $pagenow !== 'wp-login.php'
+		&& ! is_user_logged_in()
+	) {
+		header( 'HTTP/1.1 Service Unavailable', true, 503 );
+		header( 'Content-Type: text/html; charset=utf-8' );
+		header( 'Retry-After: 3600' );
+		if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' ) ) {
+			require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' );
+		}
+		die();
+	}
 });
 
 // enqueue parent styles and custom scripts and provide config data to page
@@ -22,34 +22,30 @@ add_action( 'wp_enqueue_scripts', 'sm_enqueue_resources' );
 
 function sm_enqueue_resources() {
 	// enqueue parent styles
-    wp_enqueue_style( 'parent-theme', get_template_directory_uri() . '/style.css' );
+	wp_enqueue_style( 'parent-theme', get_template_directory_uri() . '/style.css' );
 
     // parent theme enqueues child theme styles
     // https://wordpress.stackexchange.com/questions/329875/how-to-avoid-loading-style-css-twice-in-child-theme
 
-    if ( is_product() ){
+	if ( is_product() ){
 
-		// enqueue child theme scripts - have to use get_stylesheet_directory_uri() for child path - clear as mud then!
+    	// enqueue child theme scripts - have to use get_stylesheet_directory_uri() for child path - clear as mud then!
 		// https://wordpress.stackexchange.com/questions/230085/get-template-directory-uri-pointing-to-parent-theme-not-child-theme
 		wp_enqueue_script( 'neto-child-script', get_stylesheet_directory_uri() . '/js/SM_product.js', array(), '1.0.0', true );
-
 		$admin_url = admin_url('admin-ajax.php');
-	    $nonce = wp_create_nonce('ajax-nonce');
-	    $product_id = get_queried_object_id();
-
-	    $product = wc_get_product($product_id);
-
-	    $attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array());
-
-	    $js_data = "var config = {
-	    	url: '$admin_url',
+		$nonce = wp_create_nonce('ajax-nonce');
+		$product_id = get_queried_object_id()
+		$product = wc_get_product($product_id)
+		$attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array())
+		$js_data = "var config = {
+			url: '$admin_url',
 			nonce: '$nonce',
 			product_id: '$product_id',
 			product_variation_attributes: $attributes 
 		};";
 
 		wp_add_inline_script('neto-child-script', $js_data);
-    }
+	}
 }
 
 
@@ -82,72 +78,72 @@ function sm_change_breadcrumb_delimiter( $defaults ) {
 add_filter('woocommerce_dropdown_variation_attribute_options_html', 'variation_radio_buttons', 20, 2);
 
 function variation_radio_buttons($html, $args) {
-  $args = wp_parse_args(apply_filters('woocommerce_dropdown_variation_attribute_options_args', $args), array(
-    'options'          => false,
-    'attribute'        => false,
-    'product'          => false,
-    'selected'         => false,
-    'name'             => '',
-    'id'               => '',
-    'class'            => '',
-    'show_option_none' => __('Choose an option', 'woocommerce'),
-  ));
+	$args = wp_parse_args(apply_filters('woocommerce_dropdown_variation_attribute_options_args', $args), array(
+		'options'          => false,
+		'attribute'        => false,
+		'product'          => false,
+		'selected'         => false,
+		'name'             => '',
+		'id'               => '',
+		'class'            => '',
+		'show_option_none' => __('Choose an option', 'woocommerce'),
+	));
 
-  if(false === $args['selected'] && $args['attribute'] && $args['product'] instanceof WC_Product) {
-    $selected_key     = 'attribute_'.sanitize_title($args['attribute']);
-    $args['selected'] = isset($_REQUEST[$selected_key]) ? wc_clean(wp_unslash($_REQUEST[$selected_key])) : $args['product']->get_variation_default_attribute($args['attribute']);
-  }
+	if(false === $args['selected'] && $args['attribute'] && $args['product'] instanceof WC_Product) {
+		$selected_key     = 'attribute_'.sanitize_title($args['attribute']);
+		$args['selected'] = isset($_REQUEST[$selected_key]) ? wc_clean(wp_unslash($_REQUEST[$selected_key])) : $args['product']->get_variation_default_attribute($args['attribute']);
+	}
 
-  $options               = $args['options'];
-  $product               = $args['product'];
-  $attribute             = $args['attribute'];
-  $name                  = $args['name'] ? $args['name'] : 'attribute_'.sanitize_title($attribute);
-  $id                    = $args['id'] ? $args['id'] : sanitize_title($attribute);
-  $class                 = $args['class'];
-  $show_option_none      = (bool)$args['show_option_none'];
-  $show_option_none_text = $args['show_option_none'] ? $args['show_option_none'] : __('Choose an option', 'woocommerce');
+	$options               = $args['options'];
+	$product               = $args['product'];
+	$attribute             = $args['attribute'];
+	$name                  = $args['name'] ? $args['name'] : 'attribute_'.sanitize_title($attribute);
+	$id                    = $args['id'] ? $args['id'] : sanitize_title($attribute);
+	$class                 = $args['class'];
+	$show_option_none      = (bool)$args['show_option_none'];
+	$show_option_none_text = $args['show_option_none'] ? $args['show_option_none'] : __('Choose an option', 'woocommerce');
 
-  if(empty($options) && !empty($product) && !empty($attribute)) {
-    $attributes = $product->get_variation_attributes();
-    $options    = $attributes[$attribute];
-  }
+	if(empty($options) && !empty($product) && !empty($attribute)) {
+		$attributes = $product->get_variation_attributes();
+		$options    = $attributes[$attribute];
+	}
 
-  $radios = '<div class="variation-radios">';
+	$radios = '<div class="variation-radios">';
 
-  if(!empty($options)) {
-    if($product && taxonomy_exists($attribute)) {
-      $terms = wc_get_product_terms($product->get_id(), $attribute, array(
-        'fields' => 'all',
-      ));
+	if(!empty($options)) {
+		if($product && taxonomy_exists($attribute)) {
+			$terms = wc_get_product_terms($product->get_id(), $attribute, array(
+				'fields' => 'all',
+			));
 
-      foreach($terms as $term) {
-        if(in_array($term->slug, $options, true)) {
-          $id = $name.'-'.$term->slug;
-          $radios .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($term->slug).'" '.checked(sanitize_title($args['selected']), $term->slug, false).'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $term->name)).'</label>';
-        }
-      }
-    } else {
-      foreach($options as $option) {
-        $id = $name.'-'.$option;
-        $checked    = sanitize_title($args['selected']) === $args['selected'] ? checked($args['selected'], sanitize_title($option), false) : checked($args['selected'], $option, false);
-        $radios    .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($option).'" id="'.sanitize_title($option).'" '.$checked.'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $option)).'</label>';
-      }
-    }
-  }
+			foreach($terms as $term) {
+				if(in_array($term->slug, $options, true)) {
+					$id = $name.'-'.$term->slug;
+					$radios .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($term->slug).'" '.checked(sanitize_title($args['selected']), $term->slug, false).'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $term->name)).'</label>';
+				}
+			}
+		} else {
+			foreach($options as $option) {
+				$id = $name.'-'.$option;
+				$checked    = sanitize_title($args['selected']) === $args['selected'] ? checked($args['selected'], sanitize_title($option), false) : checked($args['selected'], $option, false);
+				$radios    .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($option).'" id="'.sanitize_title($option).'" '.$checked.'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $option)).'</label>';
+			}
+		}
+	}
 
-  $radios .= '</div>';
-    
-  return $html.$radios;
+	$radios .= '</div>';
+	
+	return $html.$radios;
 }
 
 // Added when replacing select menu with radio buttons
 add_filter('woocommerce_variation_is_active', 'variation_check', 10, 2);
 
 function variation_check($active, $variation) {
-  if(!$variation->is_in_stock() && !$variation->backorders_allowed()) {
-    return false;
-  }
-  return $active;
+	if(!$variation->is_in_stock() && !$variation->backorders_allowed()) {
+		return false;
+	}
+	return $active;
 }
 
 // Position tabs on right of product page
@@ -204,14 +200,14 @@ function sm_render_all_product_shots ( $html ) {
 		echo sm_get_image_markup($image_id);
 
 	    // Loop through gallery Image Ids
-	    foreach( $product->get_gallery_image_ids() as $image_id ) {
+		foreach( $product->get_gallery_image_ids() as $image_id ) {
 
-	    	echo sm_get_image_markup($image_id);
+			echo sm_get_image_markup($image_id);
 
-	    }
+		}
 
 	    // Return buffered content
-	    return ob_get_clean();
+		return ob_get_clean();
 	}
 	return $html;
 }
@@ -240,32 +236,32 @@ add_filter('woocommerce_reset_variations_link', '__return_empty_string');
 add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'sm_filter_dropdown_option_html', 12, 2 );
 
 function sm_filter_dropdown_option_html( $html, $args ) {
-    $show_option_none_text = $args['show_option_none'] ? $args['show_option_none'] : __( 'Choose an option', 'woocommerce' );
-    $show_option_none_html = '<option value="">' . esc_html( $show_option_none_text ) . '</option>';
+	$show_option_none_text = $args['show_option_none'] ? $args['show_option_none'] : __( 'Choose an option', 'woocommerce' );
+	$show_option_none_html = '<option value="">' . esc_html( $show_option_none_text ) . '</option>';
 
-    $html = str_replace($show_option_none_html, '', $html);
+	$html = str_replace($show_option_none_html, '', $html);
 
-    return $html;
+	return $html;
 }
 
 // Add subtitles to product pages
 add_action( 'woocommerce_single_product_summary', 'woocommerce_single_item_subtitle', 5 );
 
 function woocommerce_single_item_subtitle() {
-    global $post, $product;
-    $product_id = $product->get_id();
-    $subtitle = get_field('product_subtitle', $product_id);
-    echo "<h2 class='sm-product-subtitle'>$subtitle</h2>";
+	global $post, $product;
+	$product_id = $product->get_id();
+	$subtitle = get_field('product_subtitle', $product_id);
+	echo "<h2 class='sm-product-subtitle'>$subtitle</h2>";
 }
 
 // Add subtitles to thumb listings (home page thumbs, related products etc)
 add_action( 'woocommerce_shop_loop_item_title', 'sm_woocommerce_shop_loop_item_subtitle', 20 );
 
 function sm_woocommerce_shop_loop_item_subtitle() {
-    global $post, $product;
-    $product_id = $product->get_id();
-    $subtitle = get_field('product_subtitle', $product_id);
-    echo "<p class='sm-thumb-subtitle'>$subtitle</p>";
+	global $post, $product;
+	$product_id = $product->get_id();
+	$subtitle = get_field('product_subtitle', $product_id);
+	echo "<p class='sm-thumb-subtitle'>$subtitle</p>";
 }
 
 // Process product variation change ajax calls
@@ -275,16 +271,16 @@ add_action( 'wp_ajax_nopriv_update_variation_elements', 'sm_on_product_variation
 function sm_on_product_variation_change() {
 
 	// Check for nonce security      
-    if ( ! wp_verify_nonce( $_GET['nonce'], 'ajax-nonce' ) ) {
-     	wp_send_json_error ('The request could not be processed due to possible security issues') ;
-         die ( 'Insecure request' );
-    }
-    if ( ! isset ($_REQUEST['to_update'])) { (wp_send_json_error( "Missing required argument: 'to_update'" )); }
-    if ( ! isset ($_REQUEST['quantity'])) { wp_send_json_error( "Missing required argument: 'quantity'" ); }
-    if ( ! isset ($_REQUEST['product_id'])) { wp_send_json_error( "Missing required argument: 'product_id'" ); }
+	if ( ! wp_verify_nonce( $_GET['nonce'], 'ajax-nonce' ) ) {
+		wp_send_json_error ('The request could not be processed due to possible security issues') ;
+		die ( 'Insecure request' );
+	}
+	if ( ! isset ($_REQUEST['to_update'])) { (wp_send_json_error( "Missing required argument: 'to_update'" )); }
+	if ( ! isset ($_REQUEST['quantity'])) { wp_send_json_error( "Missing required argument: 'quantity'" ); }
+	if ( ! isset ($_REQUEST['product_id'])) { wp_send_json_error( "Missing required argument: 'product_id'" ); }
 
-    $to_update = sanitize_text_field(filter_input(INPUT_GET, 'to_update'));
-   
+	$to_update = sanitize_text_field(filter_input(INPUT_GET, 'to_update'));
+	
 	$quantity = intval(sanitize_text_field(filter_input(INPUT_GET, 'quantity')));
 	$product_id = intval(sanitize_text_field(filter_input(INPUT_GET, 'product_id')));
 	$product = wc_get_product($product_id);
@@ -298,11 +294,11 @@ function sm_on_product_variation_change() {
 	);
 
 	if ( isset ($_REQUEST['size'])) { 
-    	$buy_now_button_settings['size'] = sanitize_text_field(filter_input(INPUT_GET, 'size')); 
-    }
-    if ( isset ($_REQUEST['colour'])) { 
-    	$buy_now_button_settings['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour')); 
-    }
+		$buy_now_button_settings['size'] = sanitize_text_field(filter_input(INPUT_GET, 'size')); 
+	}
+	if ( isset ($_REQUEST['colour'])) { 
+		$buy_now_button_settings['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour')); 
+	}
 
 	$buy_now_button = get_buy_now_button($buy_now_button_settings);
 	$return_data = array('buy_now_button' => $buy_now_button);
@@ -321,20 +317,20 @@ add_filter('acf/load_field/name=colour', 'acf_load_color_field_choices');
 function acf_load_color_field_choices( $field ) {
 
 	// reset choices
-    $field['choices'] = array();
+	$field['choices'] = array();
 
 	$choices = get_terms('pa_colour');
 
 	$field['choices'][ 'none' ] = 'No Colour Variations';
 	if( is_array($choices) ) {
-		 foreach( $choices as $choice ) {
+		foreach( $choices as $choice ) {
 
-		 	 $field['choices'][ $choice->slug ] = $choice->name;
-		 }
+			$field['choices'][ $choice->slug ] = $choice->name;
+		}
 	}
 
-    return $field;
-    
+	return $field;
+	
 }
 
 // Customise product page tabs
@@ -403,7 +399,7 @@ function get_image_gallery($product_id, $colour){
 			$image_gallery[] = sm_get_image_markup($image_id);
 		} 
 	}
-		return $image_gallery;
+	return $image_gallery;
 }
 
 function sm_get_image_markup($image_id) {
@@ -435,16 +431,16 @@ function sm_get_image_markup($image_id) {
 	$sizes = '(min-width: 1200px) 540px, (min-width: 1000px) 440px, (min-width: 780px) 330px, (min-width: 620px) 540px, 90vw';
 
 	return "<picture>
-	    <source type='image/webp'
-	            srcset='$webp_srcset'
-	            sizes='$sizes'
-	             />
-	    <source srcset='$srcset'
-	            sizes='$sizes'
-	            />
-	    <img src='($src_540'
-	    class='wp-post-image' alt='$image_alt' title='$image_title' />
-	  </picture>";
+	<source type='image/webp'
+	srcset='$webp_srcset'
+	sizes='$sizes'
+	/>
+	<source srcset='$srcset'
+	sizes='$sizes'
+	/>
+	<img src='($src_540'
+	class='wp-post-image' alt='$image_alt' title='$image_title' />
+	</picture>";
 }
 
 function make_srcset_entry($image_url, $image_size) {
@@ -458,7 +454,7 @@ function get_webp_url($image_url) {
 function replace_first($search, $replace, $subject) {
 	$pos = strpos($subject, $search);
 	if ($pos !== false) {
-	    return substr_replace($subject, $replace, $pos, strlen($search));
+		return substr_replace($subject, $replace, $pos, strlen($search));
 	}
 	return $subject;
 }
@@ -481,7 +477,7 @@ function get_buy_now_button($settings) {
 
 		$data_store = WC_Data_Store::load( 'product' );
 		$variation_id = $data_store->find_matching_product_variation(
-		  new \WC_Product($settings['product_id']), $match_attributes
+			new \WC_Product($settings['product_id']), $match_attributes
 		);
 	}
 	$checkout_url = wc_get_checkout_url();

@@ -1,31 +1,31 @@
 var SM_product = (function () {
 
 	var $ = jQuery,
-		current_colour = '';
-		current_size = '',
-		update_actions = {
-			buy_now_button: function(settings) {
-				settings.to_update = 'buy_now_button';
-				do_action(settings);
-			},
-			all: function(settings) {
-				settings.to_update = 'all';
-				do_action(settings);
-			}
+	current_colour = '';
+	current_size = '',
+	update_actions = {
+		buy_now_button: function(settings) {
+			settings.to_update = 'buy_now_button';
+			do_action(settings);
+		},
+		all: function(settings) {
+			settings.to_update = 'all';
+			do_action(settings);
 		}
-		success_callbacks = {
-			buy_now_button: function(data, settings) {
-				$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
-				current_colour = settings.colour;
-				current_size = settings.size;
-			},
-			all: function(data, settings) {
-				$('.woocommerce-product-gallery__wrapper').html(data.image_gallery);
-				$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
-				current_colour = settings.colour;
-				current_size = settings.size;
-			}
-		};
+	}
+	success_callbacks = {
+		buy_now_button: function(data, settings) {
+			$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
+			current_colour = settings.colour;
+			current_size = settings.size;
+		},
+		all: function(data, settings) {
+			$('.woocommerce-product-gallery__wrapper').html(data.image_gallery);
+			$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
+			current_colour = settings.colour;
+			current_size = settings.size;
+		}
+	};
 
 	function update_variation_elements(toUpdate) {
 		// Call appropriate function
@@ -38,13 +38,13 @@ var SM_product = (function () {
 	function get_product_settings() {
 
 		var product_settings = {
-				quantity: $('.quantity input.qty').first().val()
-			}, i, curr, ps_keys;
+			quantity: $('.quantity input.qty').first().val()
+		}, i, curr, ps_keys;
 
-			for (var i = 0; i < config.product_variation_attributes.length; i++) {
-				curr = config.product_variation_attributes[i];
-				product_settings[curr.replace('pa_', '')] = $('#' + curr).val();
-			}
+		for (var i = 0; i < config.product_variation_attributes.length; i++) {
+			curr = config.product_variation_attributes[i];
+			product_settings[curr.replace('pa_', '')] = $('#' + curr).val();
+		}
 
 		ps_keys = Object.keys(product_settings);
 
@@ -67,9 +67,9 @@ var SM_product = (function () {
 	function update_buy_now_button(clicked_class){
 
 		var buy_now_button = $('#buy_now_button'),
-			quantity_adjustment = 0,
-			quantity,
-			checkout_url;
+		quantity_adjustment = 0,
+		quantity,
+		checkout_url;
 
 		if(buy_now_button.length){
 			checkout_url = buy_now_button.attr('href');
@@ -95,21 +95,21 @@ var SM_product = (function () {
 		$.ajax({
 			type : 'get',
 			dataType : 'json',
-         url : config.url,
-         data : settings,
-         success: function(response) {
-         	if(response.success) {
-         		success_callbacks[settings.to_update](response.data, settings);
-            }
-            else {
-               console.log(response.data);
-            }
-         },
-         error: function(xhr, ajaxOptions, thrownError) {
-         	console.log(xhr.status);
-         	console.log(thrownError);
-         }
-      });
+			url : config.url,
+			data : settings,
+			success: function(response) {
+				if(response.success) {
+					success_callbacks[settings.to_update](response.data, settings);
+				}
+				else {
+					console.log(response.data);
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(xhr.status);
+				console.log(thrownError);
+			}
+		});
 
 	}
 
@@ -128,12 +128,12 @@ var SM_product = (function () {
 		// On product colour change, get new Buy Now button and image gallery
 		$('#pa_colour').change( function() {
 			update_variation_elements('all');
-		 });
+		});
 
 		// On product size change, get new Buy Now button - requires ajax call as we need the variation code
 		$('#pa_size').change( function() {
 			update_variation_elements('buy_now_button');
-		 });
+		});
 
 		// Make radio button clicks trigger change event on corresponding select menu entry
 		$('.variation-radios input').change( function() {
@@ -143,27 +143,27 @@ var SM_product = (function () {
 				var thisVal  = $el.attr('value');
 				$('select[name="'+thisName+'"]').val(thisVal).trigger('change');
 			});
-		 });
+		});
 
 		// Enable appropriate radio buttons after variations have been selected
 		$(document).on('woocommerce_update_variation_values', function() {
-		  $('.variation-radios input').each(function(index, element) {
-		    var $el = $(element);
-		    var thisName = $el.attr('name');
-		    var thisVal  = $el.attr('value');
-		    $el.removeAttr('disabled');
-		    if($('select[name="'+thisName+'"] option[value="'+thisVal+'"]').is(':disabled')) {
-		      $el.prop('disabled', true);
-		    }
-		  });
+			$('.variation-radios input').each(function(index, element) {
+				var $el = $(element);
+				var thisName = $el.attr('name');
+				var thisVal  = $el.attr('value');
+				$el.removeAttr('disabled');
+				if($('select[name="'+thisName+'"] option[value="'+thisVal+'"]').is(':disabled')) {
+					$el.prop('disabled', true);
+				}
+			});
 		});
 
 		// On product quantity change, update Buy Now button - no ajax call needed as we're just updating quantity
 		$('input[name="quantity"]').first().blur( function() {
 			update_buy_now_button();
-		 });
+		});
 		$('.qty-handle').click( function() {
 			update_buy_now_button($(this).attr('class'));
-		 });
+		});
 	});
 }());

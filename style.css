@@ -13,62 +13,65 @@ Text Domain: netochild
 
 /* Typography */
 @font-face {
-    font-family: 'TT Norms Pro Normal';
-    src: url('fonts/TTNormsPro-Normal.eot');
-    src: url('fonts/TTNormsPro-Normal.eot?#iefix') format('embedded-opentype'),
-        url('fonts/TTNormsPro-Normal.woff2') format('woff2'),
-        url('fonts/TTNormsPro-Normal.woff') format('woff'),
-        url('fonts/TTNormsPro-Normal.ttf') format('truetype'),
-        url('fonts/TTNormsPro-Normal.svg#TTNormsPro-Normal') format('svg');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
+	font-family: 'TT Norms Pro Normal';
+	src: url('fonts/TTNormsPro-Normal.eot');
+	src: url('fonts/TTNormsPro-Normal.eot?#iefix') format('embedded-opentype'),
+	url('fonts/TTNormsPro-Normal.woff2') format('woff2'),
+	url('fonts/TTNormsPro-Normal.woff') format('woff'),
+	url('fonts/TTNormsPro-Normal.ttf') format('truetype'),
+	url('fonts/TTNormsPro-Normal.svg#TTNormsPro-Normal') format('svg');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
 }
 /* Bold  */
 @font-face {
-    font-family: 'TT Norms Pro';
-    src: url('fonts/TTNormsPro-Bd.eot');
-    src: url('fonts/TTNormsPro-Bd.eot?#iefix') format('embedded-opentype'),
-        url('fonts/TTNormsPro-Bd.woff2') format('woff2'),
-        url('fonts/TTNormsPro-Bd.woff') format('woff'),
-        url('fonts/TTNormsPro-Bd.ttf') format('truetype'),
-        url('fonts/TTNormsPro-Bd.svg#TTNormsPro-Bd') format('svg');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
+	font-family: 'TT Norms Pro';
+	src: url('fonts/TTNormsPro-Bd.eot');
+	src: url('fonts/TTNormsPro-Bd.eot?#iefix') format('embedded-opentype'),
+	url('fonts/TTNormsPro-Bd.woff2') format('woff2'),
+	url('fonts/TTNormsPro-Bd.woff') format('woff'),
+	url('fonts/TTNormsPro-Bd.ttf') format('truetype'),
+	url('fonts/TTNormsPro-Bd.svg#TTNormsPro-Bd') format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
 }
 @font-face {
-  font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?q3c06e');
-  src:  url('fonts/icomoon.eot?q3c06e#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?q3c06e') format('truetype'),
-    url('fonts/icomoon.woff?q3c06e') format('woff'),
-    url('fonts/icomoon.svg?q3c06e#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+	font-family: 'icomoon';
+	src:  url('fonts/icomoon.eot?q3c06e');
+	src:  url('fonts/icomoon.eot?q3c06e#iefix') format('embedded-opentype'),
+	url('fonts/icomoon.ttf?q3c06e') format('truetype'),
+	url('fonts/icomoon.woff?q3c06e') format('woff'),
+	url('fonts/icomoon.svg?q3c06e#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
 }
 [class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'icomoon' !important;
+	speak: never;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-content th, .navigation-main > li > a, .navigation-header-secondary > li > a, .footer .nav-list-inline, .mast-head-right > a, .entry-sticky-notice, .entry-item-title, .item-title, .widget-title, .section-title, .module-callout-title, .product_meta > span, .wc-tabs a, .woocommerce-thankyou-order-details li strong, .wc-bacs-bank-details li strong, .woocommerce-EditAccountForm legend, .product_list_widget .product-title, .widget_shopping_cart .total, .site-logo, .head-search-input, .vc_general.vc_tta.vc_tta-tabs .vc_tta-panel-title > a, .elementor-2066 .elementor-element.elementor-element-54afa230 .elementor-heading-title {
-    font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif; !important; font-weight: 500; font-style: normal;
+	font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif; !important; font-weight: 500; font-style: normal;
 }
 .nav, .woocommerce-breadcrumb, .label, select, .woocommerce select option, h1, h2, h3, h4, h5, h6 {
 	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important; font-weight: bold; font-style: normal;
 	text-transform: uppercase;
+}
+.sm-bold {
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important; font-weight: bold; font-style: normal;	
 }
 
 .variations select,
@@ -80,9 +83,9 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	justify-content: center;
 }
 .variation-radios input[type="radio"] {
-  opacity: 0;
-  position: fixed;
-  width: 0;
+	opacity: 0;
+	position: fixed;
+	width: 0;
 }
 .woocommerce-breadcrumb a {
 	display: inline-block;
@@ -114,7 +117,7 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	background: #fff url('assets/images/roundel.png') left center/contain no-repeat !important;
 }
 .site-logo img {
-	 max-width: 280px !important;
+	max-width: 280px !important;
 }
 
 /* menus */
@@ -134,10 +137,10 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	font-size: 1.6rem;
 	height: 1.78rem;
 	color: #555;
-  display: inline-block;
-  font-family: 'icomoon' !important;
-  position: relative;
-  transition: color .18s ease;
+	display: inline-block;
+	font-family: 'icomoon' !important;
+	position: relative;
+	transition: color .18s ease;
 }
 .mast-head-right > a:first-child{
 	line-height: 0; 
@@ -146,12 +149,12 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 }
 .mast-head-right > a:first-child:before {
 	content: "\e902";
-  top: 0.26rem; 
+	top: 0.26rem; 
 }
 .mast-head-right > a:hover:before,
 .fas.fa-shopping-cart:hover:before,
 .fas.fa-search:hover:before {
-    color: #f1f1f1;
+	color: #f1f1f1;
 }
 /* Cart quantity element */
 .head-cart-toggle {
@@ -162,9 +165,9 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	width: 1.7rem;
 }
 .fas.fa-shopping-cart:before {
-  content: "\e900";
-  top: -.28rem;
-  width: 1.7rem;
+	content: "\e900";
+	top: -.28rem;
+	width: 1.7rem;
 }
 .fas.fa-shopping-cart {
 	left: 0;
@@ -226,7 +229,6 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	border-bottom: 0;
 }
 
-/* Product listings */
 .item-product {
 	text-align: center;
 }
@@ -283,97 +285,97 @@ body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-
 	 *	Inner (option) element has further 4px either side
 	 *	Total = 32px
 	 */
-	width: calc(60% - 32px);
-}
-
-.product-template-default .entry-item-sharing {
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 1rem;
-	width: 70px;
-}
-
-.product-template-default .summary .sku_wrapper,
-.product-template-default .summary .posted_in,
-.product-template-default .summary .product_title,
-.product-template-default .summary bdi {
-	text-align: center;
-}
-
-.product-template-default .summary bdi {
-	display: block;
-}
-
-.product-template-default .variations .label ,
-.product-template-default .variations .value {
-	text-align: center;
-	display: block;
-	width: 100%
-}
-
-/* Customised product tabs  */
-.woocommerce-tabs.wc-tabs-wrapper {
-	margin-left: -15px;
-	margin-right: -15px;
-}
-
-/* Hide tab headings */
-.woocommerce-Tabs-panel h2 {
-	display:  none;
-}
-
-/* Render list as two column */
-#tab-description.woocommerce-Tabs-panel ul {
-	columns: 2;
-	-webkit-columns: 2;
-	-moz-columns: 2;
-}
-
-/* Maxslider homepage carousel */
-.maxslider-slide-title,
-.maxslider-slide-subtitle {
-	text-transform: uppercase;
-	font-size: 52px;
-	line-height: 64px;
-	font-weight: bold;
-}
-
-.maxslider .maxslider-btn {
-	text-transform: uppercase;
-	font-size: 15px;
-	line-height: 15px;
-	font-weight: bold;	
-}
-
-@media only screen and (max-width: 1024px) {
-
-	/* Generic page text blocks */
-	.sm-generic-pg.sm-content.sm-text {
-		padding: 2rem 2rem 0 2rem;
-	}
-	/* Footer menu items */
-	.footer .col-md-6 {
-		width: 33%;
+	 width: calc(60% - 32px);
 	}
 
-}
-
-@media only screen and (max-width: 767px) {
-
-	/* Home page banner */
-	.elementor-2374 .elementor-element.elementor-element-37e4df66:not(.elementor-motion-effects-element-type-background) {
-		background-position-x: -40rem;
+	.product-template-default .entry-item-sharing {
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 1rem;
+		width: 70px;
 	}
-	/* Footer menu items */
-	.footer .footer-widgets .container {
+
+	.product-template-default .summary .sku_wrapper,
+	.product-template-default .summary .posted_in,
+	.product-template-default .summary .product_title,
+	.product-template-default .summary bdi {
 		text-align: center;
 	}
-	.footer .col-md-6 {
-		width: 100%;
+
+	.product-template-default .summary bdi {
+		display: block;
 	}
-	/* Generic page text blocks */
-	.sm-generic-pg.sm-content.sm-text {
-		padding: 0;
+
+	.product-template-default .variations .label ,
+	.product-template-default .variations .value {
+		text-align: center;
+		display: block;
+		width: 100%
 	}
-	
-}
+
+	/* Customised product tabs  */
+	.woocommerce-tabs.wc-tabs-wrapper {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+
+	/* Hide tab headings */
+	.woocommerce-Tabs-panel h2 {
+		display:  none;
+	}
+
+	/* Render list as two column */
+	#tab-description.woocommerce-Tabs-panel ul {
+		columns: 2;
+		-webkit-columns: 2;
+		-moz-columns: 2;
+	}
+
+	/* Maxslider homepage carousel */
+	.maxslider-slide-title,
+	.maxslider-slide-subtitle {
+		text-transform: uppercase;
+		font-size: 52px;
+		line-height: 64px;
+		font-weight: bold;
+	}
+
+	.maxslider .maxslider-btn {
+		text-transform: uppercase;
+		font-size: 15px;
+		line-height: 15px;
+		font-weight: bold;	
+	}
+
+	@media only screen and (max-width: 1024px) {
+
+		/* Generic page text blocks */
+		.sm-generic-pg.sm-content.sm-text {
+			padding: 2rem 2rem 0 2rem;
+		}
+		/* Footer menu items */
+		.footer .col-md-6 {
+			width: 33%;
+		}
+
+	}
+
+	@media only screen and (max-width: 767px) {
+
+		/* Home page banner */
+		.elementor-2374 .elementor-element.elementor-element-37e4df66:not(.elementor-motion-effects-element-type-background) {
+			background-position-x: -40rem;
+		}
+		/* Footer menu items */
+		.footer .footer-widgets .container {
+			text-align: center;
+		}
+		.footer .col-md-6 {
+			width: 100%;
+		}
+		/* Generic page text blocks */
+		.sm-generic-pg.sm-content.sm-text {
+			padding: 0;
+		}
+
+	}
