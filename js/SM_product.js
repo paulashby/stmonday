@@ -151,13 +151,14 @@ var SM_product = (function () {
 		});
 
 		// Make radio button clicks trigger change event on corresponding select menu entry
-		$('.variation-radios input').change( function() {
-			$('.variation-radios input:checked').each(function(index, element) {
-				var $el = $(element);
-				var thisName = $el.attr('name');
-				var thisVal  = $el.attr('value');
-				$('select[name="'+thisName+'"]').val(thisVal).trigger('change');
-			});
+		$('.variation-radios input').change( function(e) {
+			var e_target = $(e.target);
+			var e_target_name = e_target.attr('name');
+			var e_target_value = e_target.attr('value');
+
+			if(e_target_name && e_target_value){
+				$('select[name="' + e_target_name + '"]').val(e_target_value).trigger('change');
+			}
 		});
 
 		// Enable appropriate radio buttons after variations have been selected
