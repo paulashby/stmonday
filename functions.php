@@ -424,6 +424,8 @@ function get_image_gallery($product_id, $colour){
 
 function sm_get_display_button_markup($button_count){
 
+	// Only a single product image is displayed at narrow widths. These buttons are displayed under the image and control which product image is shown.
+
 	if($button_count < 1){ return; }
 
 	$buttons = "<div class='sm_gallery_display_buttons'>";

@@ -491,6 +491,7 @@ a:visited,
 			padding: 0;
 		}
 		.sm_gallery_display_buttons {
+			margin-top: 1rem;
 			display: flex;
 			justify-content: center;
 			gap: 1rem;
