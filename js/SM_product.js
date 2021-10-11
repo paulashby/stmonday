@@ -135,7 +135,6 @@ var SM_product = (function () {
 		if(config.product_variation_attributes.length){
 			// Load image gallery and Buy Now button
 			update_variation_elements('all');
-			// capitalise_select_options();
 		} else {
 			// Load only buy now button - the image gallery is already loaded as we didn't need to filter by variation
 			update_variation_elements('buy_now_button');
