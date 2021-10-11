@@ -20,19 +20,22 @@ var SM_product = (function () {
 			current_size = settings.size;
 		},
 		all: function(data, settings) {
-			$('.woocommerce-product-gallery__wrapper').html(data.image_gallery);
+			if(data.image_gallery !== false) {
+				// data.image_gallery is false if image not found for colour variation
+				$('.woocommerce-product-gallery__wrapper').html(data.image_gallery);
+				$('.sm_gallery_display_button').click( function(){
+
+					var gallery_images;
+					var now_active_num = $(this).data('num');
+
+					if($(this).hasClass('active')){
+						return;
+					}
+					update_active('.woocommerce-product-gallery__wrapper picture', now_active_num);
+					update_active('.sm_gallery_display_buttons .sm_gallery_display_button', now_active_num);
+				});
+			}
 			$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
-			$('.sm_gallery_display_button').click( function(){
-
-				var gallery_images;
-				var now_active_num = $(this).data('num');
-
-				if($(this).hasClass('active')){
-					return;
-				}
-				update_active('.woocommerce-product-gallery__wrapper picture', now_active_num);
-				update_active('.sm_gallery_display_buttons .sm_gallery_display_button', now_active_num);
-			});
 			current_colour = settings.colour;
 			current_size = settings.size;
 		}

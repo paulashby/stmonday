@@ -392,34 +392,61 @@ function get_image_gallery($product_id, $colour){
 
 	$product = new WC_Product_Variable( $product_id );
 	$image_gallery = array();
+	$default_image_id = $product->get_image_id();
 
-	// Include the main image if its colour field matches the value of $colour
-	$image_colour = get_field( "colour", $product->get_image_id());
+	$default_colour = get_field( "colour", $default_image_id);
+	$default_image_ids = array();
+	$image_colour = $default_colour;
 
 	// $colour is false if product has no colour variations
 	if($colour === false || $image_colour === $colour) {
-		$image_gallery[] = sm_get_image_markup($product->get_image_id(), true);
+		// If product has colour variations, only include the main image if its colour field matches the value of $colour
+		$image_gallery[] = sm_get_image_markup($default_image_id, true);
+	} else {
+		$default_image_ids[] = $default_image_id;
 	}
 
-	// Loop through gallery Image Ids
-	foreach( $product->get_gallery_image_ids() as $image_id ) {
+	$image_data = get_gallery_images($product->get_gallery_image_ids(), $default_colour, $colour, $image_gallery);
+	$default_image_ids = array_merge($default_image_ids, $image_data['default_image_ids']);
+	
+	$num_images = count($image_data['gallery_images']);
+	if($num_images > 0){
+		$image_gallery[] = sm_get_display_button_markup($num_images);
+		return $image_data['gallery_images'];
+	}
 
+	// No images found for colour variation - use default images as fallback
+	$image_data = get_gallery_images($default_image_ids, $default_colour, $colour, $image_gallery, true);
+	$image_gallery = $image_data['gallery_images'];
+
+	$num_images = count($image_gallery);
+	if($num_images > 0){
+
+		$image_gallery[] = sm_get_display_button_markup($num_images);
+		return $image_gallery;
+	}
+
+	return false;
+}
+function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery, $fallback = false) {
+
+	foreach( $image_ids as $image_id ) {
 		$attachment = get_post($image_id);
 		
 		$description = strtolower($attachment->post_content);
 		$image_colour  = get_field( "colour", $image_id );
 		$active_image = count($image_gallery) === 0;
 		
-		if($colour === false || $image_colour  === $colour) {
-			
+		if($fallback || $colour === false || $image_colour === $colour) {
+			error_log(__LINE__);
 			$image_gallery[] = sm_get_image_markup($image_id, $active_image);
-		} 
+		}  else if($image_colour === $default_colour) {
+			// Store default image id
+			$default_image_ids[] = $image_id;
+		}
 	}
-	$num_images = count($image_gallery);
-	if($num_images > 0){
-		$image_gallery[] = sm_get_display_button_markup($num_images);
-	}
-	return $image_gallery;
+
+	return array( "gallery_images" => $image_gallery, "default_image_ids" => $default_image_ids);
 }
 
 function sm_get_display_button_markup($button_count){
