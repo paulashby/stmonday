@@ -131,9 +131,8 @@ var SM_product = (function () {
 
 	$( document ).ready(function() {
 
-		// Get images on page load
-		if(config.product_variation_attributes.length){
-			// Load image gallery and Buy Now button
+		if(config.product_variation_attributes && config.product_variation_attributes.indexOf('pa_colour') > -1){
+			// Product has colour variations - load image gallery via ajax so we can exclude images of non-selected colour variations. Buy Now button also required
 			update_variation_elements('all');
 		} else {
 			// Load only buy now button - the image gallery is already loaded as we didn't need to filter by variation
