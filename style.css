@@ -105,11 +105,6 @@ a:visited,
 .woocommerce-breadcrumb {
 	border-bottom:  none;
 }
-.woocommerce-breadcrumb a {
-/*	display: inline-block;
-	vertical-align: top;
-	margin-top: 0.05rem;*/
-}
 .woocommerce-breadcrumb {
 	display: flex;
 }
@@ -167,7 +162,6 @@ a:visited,
 .mast-head-right > a:first-child{
 	line-height: 0; 
 	font-size: 0;
-	color: red; 
 }
 .mast-head-right > a:first-child:before {
 	content: "\e902";

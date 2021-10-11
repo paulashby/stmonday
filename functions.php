@@ -29,7 +29,7 @@ function sm_enqueue_resources() {
 
 	if ( is_product() ){
 
-    	// enqueue child theme scripts - have to use get_stylesheet_directory_uri() for child path - clear as mud then!
+		// enqueue child theme scripts - have to use get_stylesheet_directory_uri() for child path - clear as mud then!
 		// https://wordpress.stackexchange.com/questions/230085/get-template-directory-uri-pointing-to-parent-theme-not-child-theme
 		wp_enqueue_script( 'neto-child-script', get_stylesheet_directory_uri() . '/js/SM_product.js', array(), '1.0.0', true );
 		$admin_url = admin_url('admin-ajax.php');
@@ -78,6 +78,7 @@ function sm_change_breadcrumb_delimiter( $defaults ) {
 add_filter('woocommerce_dropdown_variation_attribute_options_html', 'variation_radio_buttons', 20, 2);
 
 function variation_radio_buttons($html, $args) {
+
 	$args = wp_parse_args(apply_filters('woocommerce_dropdown_variation_attribute_options_args', $args), array(
 		'options'          => false,
 		'attribute'        => false,
@@ -136,10 +137,11 @@ function variation_radio_buttons($html, $args) {
 	return $html.$radios;
 }
 
-// Added when replacing select menu with radio buttons
+// Exclude out-of-stock variations if backorders are not allowed. Added when replacing select menu with radio buttons.
 add_filter('woocommerce_variation_is_active', 'variation_check', 10, 2);
 
 function variation_check($active, $variation) {
+
 	if(!$variation->is_in_stock() && !$variation->backorders_allowed()) {
 		return false;
 	}
@@ -229,7 +231,17 @@ function remove_short_description() {
 add_action( 'woocommerce_after_add_to_cart_form', 'sm_after_add_to_cart_form' );
 
 function sm_after_add_to_cart_form(){
-	echo "<div id='sm_buy_now_button_wrapper' class='fade-in'></div>";
+
+	global $product;
+
+	$product_id = $product->get_id();
+	$settings = array(
+		'product_id' => $product->get_id(),
+		'quantity' => 1,
+		'placeholder' => true
+	);
+	$buy_now_button = get_buy_now_button($settings);
+	echo "<div id='sm_buy_now_button_wrapper'>$buy_now_button</div>";
 }
 
 // Remove reset variation button from variable products
@@ -485,12 +497,12 @@ function replace_first($search, $replace, $subject) {
 
 function get_buy_now_button($settings) {
 
-	if( ! $settings['product']->is_type( 'variable' )){
+	// We're using a placeholder button on page load just so a Buy Now button is in place from the get go
+	// An immediate ajax call replaces this with a version with the correct variation details
+	if( array_key_exists('placeholder', $settings) || ! $settings['product']->is_type( 'variable' )){
 		$variation_id = $settings['product_id'];
 	} else {
-		$match_attributes =  array(
-			'attribute_pa_size' => $settings['size']
-		);
+		$match_attributes =  array();
 
 		if($settings['colour'] !== false) {
 			$match_attributes['attribute_pa_colour'] = $settings['colour'];
