@@ -501,7 +501,6 @@ a:visited,
 			width: 0.6rem;
 			background-color: #c4c2c2;
 			border-radius: 50%;
-			/*display: inline-block;*/
 		} 
 		.sm_gallery_display_button.active {
 			background-color: #999;
