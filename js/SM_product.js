@@ -16,6 +16,9 @@ var SM_product = (function () {
 	success_callbacks = {
 		buy_now_button: function(data, settings) {
 			$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
+			if(data.sizing_tab_content !== false) {
+				$('#tab-sizing_tab').html(data.sizing_tab_content);
+			}
 			current_colour = settings.colour;
 			current_size = settings.size;
 		},
@@ -34,6 +37,9 @@ var SM_product = (function () {
 					update_active('.woocommerce-product-gallery__wrapper picture', now_active_num);
 					update_active('.sm_gallery_display_buttons .sm_gallery_display_button', now_active_num);
 				});
+			}
+			if(data.sizing_tab_content !== false) {
+				$('#tab-sizing_tab').html(data.sizing_tab_content);
 			}
 			$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
 			current_colour = settings.colour;

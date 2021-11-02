@@ -300,27 +300,27 @@ function sm_on_product_variation_change() {
 	$product_id = intval(sanitize_text_field(filter_input(INPUT_GET, 'product_id')));
 	$product = wc_get_product($product_id);
 
-	$buy_now_button_settings = array(
+	$product_details = array(
 		'size' => false,
 		'colour' => false,
 		'quantity' => $quantity,
 		'product_id' => $product_id,
 		'product' => $product
 	);
+	$return_data = array('sizing_tab_content' => false);
 
 	if ( isset ($_REQUEST['size'])) { 
-		$buy_now_button_settings['size'] = sanitize_text_field(filter_input(INPUT_GET, 'size')); 
+		// Provide markup to update the sizing tab as a new size has been selected
+		$product_details['pa_size'] = sanitize_text_field(filter_input(INPUT_GET, 'size')); 
+		$return_data['sizing_tab_content'] = get_sizing_tab_content($product_details);
 	}
 	if ( isset ($_REQUEST['colour'])) { 
-		$buy_now_button_settings['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour')); 
+		$product_details['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour')); 
 	}
-
-	$buy_now_button = get_buy_now_button($buy_now_button_settings);
-	$return_data = array('buy_now_button' => $buy_now_button);
+	$return_data['buy_now_button'] = get_buy_now_button($product_details);
 
 	if($to_update === 'all') {
-
-		$return_data['image_gallery'] = get_image_gallery($product_id, $buy_now_button_settings['colour']);
+		$return_data['image_gallery'] = get_image_gallery($product_id, $product_details['colour']);
 	}
 
 	exit(wp_send_json_success($return_data));
@@ -349,13 +349,27 @@ function acf_load_color_field_choices( $field ) {
 }
 
 // Customise product page tabs
-add_filter( 'woocommerce_product_tabs', 'sm_customise_tabs', 98 );
+// add_filter( 'woocommerce_product_tabs', 'sm_customise_tabs', 98 );
+add_filter( 'woocommerce_product_tabs', 'sm_customise_tabs', 98, 1 );
 
 function sm_customise_tabs( $tabs ) {
 
-	// Rename product data tabs
-	$tabs['additional_information']['title'] = __( 'Sizing' );
+	global $product;
+	$default_attributes = $product->get_default_attributes();
 
+	// Remove Sizing/Additional Information tab
+	unset( $tabs['additional_information'] );
+
+	if(array_key_exists('pa_size', $default_attributes)) {
+		//TODO: Might be easier to NOT unset additional_information, but rather to append image to end... or not...?
+		unset( $tabs['additional_information'] );
+		$tabs['sizing_tab'] = array(
+			'title' 	=> __( 'Sizing', 'woocommerce' ),
+			'priority' 	=> 50,
+			'callback' 	=> 'sm_sizing_product_tab_content'
+		);
+	}
+	
 	// Remove Reviews tab
 	unset( $tabs['reviews'] );
 
@@ -372,11 +386,23 @@ function sm_customise_tabs( $tabs ) {
 	);
 
 	return $tabs;
-
 }
 
 // Utility functions ///////////////////////////////////////////////////////
 
+
+// Populate Sizing tab on product page
+function sm_sizing_product_tab_content() {
+	global $product;
+
+	$settings = array(
+		'product' => $product,
+		'product_id' => $product->get_id()
+	);
+
+	echo "<h2>Sizing</h2>";
+	echo get_sizing_tab_content($settings);
+}
 // Populate Shipping tab on product page
 function sm_shipping_product_tab_content() {
 	echo "<h2>Shipping</h2>
@@ -386,6 +412,31 @@ function sm_shipping_product_tab_content() {
 function sm_returns_product_tab_content() {
 	echo "<h2>Returns</h2>
 	<p>Some returns information.</p>";
+}
+// This function is called indirectly by sm_customise_tabs( $tabs ) when page loads
+// And by sm_on_product_variation_change() to ensure correct size details are displayed
+function get_sizing_tab_content($settings) {
+
+	$default_attributes = $settings['product']->get_default_attributes();
+	$match_attributes =  array();
+
+	if(array_key_exists('pa_size', $settings)){
+		$match_attributes['attribute_pa_size'] = $settings['pa_size'];	
+	} else {
+		$match_attributes['attribute_pa_size'] = $default_attributes['pa_size'];
+	}
+
+	if(array_key_exists('pa_colour', $default_attributes)) {
+		$match_attributes['attribute_pa_colour'] = $default_attributes['pa_colour'];	
+	}
+	// error_log(print_r($match_attributes, true));
+	$data_store = WC_Data_Store::load( 'product' );
+	$variation_id = $data_store->find_matching_product_variation(
+		new \WC_Product($settings['product_id']), $match_attributes
+	);
+	$variation = new WC_Product_Variation($variation_id);
+	$image_tag = $variation->get_image();
+	return $image_tag;
 }
 
 function get_image_gallery($product_id, $colour){
@@ -436,9 +487,9 @@ function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery
 		$description = strtolower($attachment->post_content);
 		$image_colour  = get_field( "colour", $image_id );
 		$active_image = count($image_gallery) === 0;
+		$default_image_ids = array();
 		
 		if($fallback || $colour === false || $image_colour === $colour) {
-			error_log(__LINE__);
 			$image_gallery[] = sm_get_image_markup($image_id, $active_image);
 		}  else if($image_colour === $default_colour) {
 			// Store default image id
