@@ -57,6 +57,13 @@ function sm_enqueue_resources() {
 //  return $mimes;
 // }
 
+// Add email signup to header 
+add_action('wp_body_open', 'add_header_email_signup');
+
+function add_header_email_signup(){
+	echo "<div class='email_signup'><h2>This is an email signup</h2></div>";
+};
+
 // Add div before footer to push it to bottom of screen when content is short
 add_action( 'get_footer', 'sm_add_foot_pusher' );
 
@@ -168,7 +175,11 @@ function sm_move_sharing_position() {
 add_action( 'woocommerce_before_single_variation', 'sm_size_info' );
 
 function sm_size_info() {
-	echo "<p class='sm-product-size-instruction'>See Additional Information about size below</p>";
+	global $product;
+	$default_attributes = $product->get_default_attributes();
+	if(array_key_exists('pa_size', $default_attributes)) {
+		echo "<p class='sm-product-size-instruction'>See Additional Information about size below</p>";	
+	}
 }
 
 // Remove thumbnails from product page
@@ -242,6 +253,44 @@ function sm_after_add_to_cart_form(){
 	);
 	$buy_now_button = get_buy_now_button($settings);
 	echo "<div id='sm_buy_now_button_wrapper'>$buy_now_button</div>";
+}
+
+// Variation images are sizing guides, so we want to load our thumbnails from the image gallery
+add_filter( 'woocommerce_cart_item_thumbnail', 'getCartItemThumbnail', 111, 2 );
+
+function getCartItemThumbnail( $img, $cart_item ) {
+
+    if ( isset( $cart_item['product_id'] ) ) {
+
+        $product = wc_get_product($cart_item['product_id']);
+
+        if ( $product && $product->is_type( 'variable' ) ) {
+
+        	$item_data = $cart_item['data'];
+			$attributes = $item_data->get_attributes();
+
+			if(array_key_exists('pa_colour', $attributes)) {
+
+				// Product has colour variations, so need to get correct pic from image gallery
+				$cart_item_colour = $attributes['pa_colour'];
+
+				foreach( $product->get_gallery_image_ids() as $image_id ) {
+
+					$gallery_image_colour  = get_field( "colour", $image_id );
+
+					if($gallery_image_colour == $cart_item_colour) {
+
+						// Image's 'colour' field matches $cart_item colour - this is the correct image
+						return sm_get_image_markup($image_id);
+					}
+				}
+			}
+        	// No match found or product doesn't have colours variations - just return the main image
+        	return $product->get_image();
+        }
+    }
+    // Product doesn't have variations, so no need to worry about sizing graphic being used as cart thumbnail
+    return $img;
 }
 
 // Remove reset variation button from variable products
