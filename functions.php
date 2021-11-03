@@ -309,13 +309,14 @@ function sm_on_product_variation_change() {
 	);
 	$return_data = array('sizing_tab_content' => false);
 
+	
+	if ( isset ($_REQUEST['colour'])) { 
+		$product_details['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour'));
+	}
 	if ( isset ($_REQUEST['size'])) { 
 		// Provide markup to update the sizing tab as a new size has been selected
-		$product_details['pa_size'] = sanitize_text_field(filter_input(INPUT_GET, 'size')); 
+		$product_details['size'] = sanitize_text_field(filter_input(INPUT_GET, 'size')); 
 		$return_data['sizing_tab_content'] = get_sizing_tab_content($product_details);
-	}
-	if ( isset ($_REQUEST['colour'])) { 
-		$product_details['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour')); 
 	}
 	$return_data['buy_now_button'] = get_buy_now_button($product_details);
 
@@ -349,7 +350,6 @@ function acf_load_color_field_choices( $field ) {
 }
 
 // Customise product page tabs
-// add_filter( 'woocommerce_product_tabs', 'sm_customise_tabs', 98 );
 add_filter( 'woocommerce_product_tabs', 'sm_customise_tabs', 98, 1 );
 
 function sm_customise_tabs( $tabs ) {
@@ -361,8 +361,7 @@ function sm_customise_tabs( $tabs ) {
 	unset( $tabs['additional_information'] );
 
 	if(array_key_exists('pa_size', $default_attributes)) {
-		//TODO: Might be easier to NOT unset additional_information, but rather to append image to end... or not...?
-		unset( $tabs['additional_information'] );
+		
 		$tabs['sizing_tab'] = array(
 			'title' 	=> __( 'Sizing', 'woocommerce' ),
 			'priority' 	=> 50,
@@ -390,9 +389,9 @@ function sm_customise_tabs( $tabs ) {
 
 // Utility functions ///////////////////////////////////////////////////////
 
-
 // Populate Sizing tab on product page
 function sm_sizing_product_tab_content() {
+
 	global $product;
 
 	$settings = array(
@@ -405,11 +404,13 @@ function sm_sizing_product_tab_content() {
 }
 // Populate Shipping tab on product page
 function sm_shipping_product_tab_content() {
+	//TODO: Populate shipping page once shipping module installed then determine what we should include here
 	echo "<h2>Shipping</h2>
 	<p>Some shipping information.</p>";
 }
 // Populate Returns tab on product page
 function sm_returns_product_tab_content() {
+	//TODO: Sort out where this info is coming from so Jules can then populate
 	echo "<h2>Returns</h2>
 	<p>Some returns information.</p>";
 }
@@ -420,23 +421,38 @@ function get_sizing_tab_content($settings) {
 	$default_attributes = $settings['product']->get_default_attributes();
 	$match_attributes =  array();
 
-	if(array_key_exists('pa_size', $settings)){
-		$match_attributes['attribute_pa_size'] = $settings['pa_size'];	
+	// 'size' will be provided when different variation selected
+	if(array_key_exists('size', $settings)){
+		// Get sizing image for provided size
+		$match_attributes['attribute_pa_size'] = $settings['size'];	
 	} else {
+		// Get sizing image for default size
 		$match_attributes['attribute_pa_size'] = $default_attributes['pa_size'];
 	}
 
 	if(array_key_exists('pa_colour', $default_attributes)) {
+		// We get the sizing images from the default colour variations (they're stored as variation images)
 		$match_attributes['attribute_pa_colour'] = $default_attributes['pa_colour'];	
 	}
-	// error_log(print_r($match_attributes, true));
+	
 	$data_store = WC_Data_Store::load( 'product' );
 	$variation_id = $data_store->find_matching_product_variation(
 		new \WC_Product($settings['product_id']), $match_attributes
 	);
+
 	$variation = new WC_Product_Variation($variation_id);
-	$image_tag = $variation->get_image();
-	return $image_tag;
+	
+	$image_id = $variation->get_image_id('edit');
+	if ($image_id){
+		// Image exists on the variation itself - this is our sizing image
+		$fading_image = sprintf("<div class='fade-in'>%s</div>", $variation->get_image());
+		return $fading_image;
+	} else {
+		// Variation doesn't have image - use textual alternative
+		$width = $variation->get_width() . get_option( 'woocommerce_dimension_unit' );
+		$length = $variation->get_length() . get_option( 'woocommerce_dimension_unit' );
+		return "<p>Size: $width x $length</p>";
+	}
 }
 
 function get_image_gallery($product_id, $colour){
@@ -596,6 +612,7 @@ function get_buy_now_button($settings) {
 			new \WC_Product($settings['product_id']), $match_attributes
 		);
 	}
+
 	$checkout_url = wc_get_checkout_url();
 
 	return "<div class='sm_buy_now__pre'><p class='sm_buy_now__pre-txt'>Or</p></div><a id='buy_now_button' class='single_add_to_cart_button button alt' href='{$checkout_url}?add-to-cart=$variation_id&quantity=" . $settings['quantity'] . "'>Buy Now</a>";
