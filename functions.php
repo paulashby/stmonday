@@ -199,8 +199,8 @@ function sm_pre_footer() {
 		if($modes && array_search("launch", $modes) !== false){
 		
 			// Add container for email signup feedback messages
-			$pre.= '<div id="signup-message" class="signup-message signup-message--inactive">
-			</div>';
+			$pre.= '<div class="signup-feedback"><a class="signup-message__button-wrap"><div class="signup-message__button"></div></a><div id="signup-message" class="signup-message signup-message--inactive">
+			</div></div>';
 		}
 	}
 	// Add div before footer to push it to bottom of screen when content is short

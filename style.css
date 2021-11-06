@@ -324,7 +324,7 @@ body:not(.launch) .mast-head .container .nav {
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
-	animation-duration: 900ms;
+	animation-duration: 450ms;
 }
 @keyframes fadeInOpacity {
 	0% {
@@ -493,7 +493,6 @@ body:not(.launch) .mast-head .container .nav {
 .emaillist input[type="checkbox"]:checked {
 	background: #fff url('assets/images/StM_Checkbox_On.png') left center/contain no-repeat !important;
 }
-
 .es_caption {
   display: none;
 }
@@ -553,26 +552,57 @@ input[type="submit"].es_submit_button {
   	text-align: right;
   	top: -0.3rem;
 }
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
 
 .es_subscription_message {
 	display: none;
+}
+
+.signup-feedback {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s 100ms, opacity 200ms linear;
+	left: calc(50% - 250px);
+	position: absolute;
+	top: 2rem;
+	width: 500px;
+	z-index: 200;
+}
+
+.signup-feedback--active {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 100ms linear;
+}
+
+.signup-message__title {
+	margin-bottom: 0.5rem;
 }
 
 .signup-message {
   background-color: #fff;
   border: 2px solid #252525;
   box-sizing: border-box;
-  display: none;
-  left: calc(50% - 250px);
   padding: 25px;
-  position: absolute;
-  top: 3rem;
-  width: 500px;
-  z-index: 200;
+  width: 100%;
 }
 
-.signup-message--active {
-	display: block;
+.signup-message__button-wrap {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	cursor: pointer;
+}
+
+.signup-message__button {
+	width: 15px;
+	height: 15px;
+	border: 1px solid #e6e6e6;
+	background: #fff url('assets/images/StM_Checkbox_On.png') left center/contain no-repeat !important;	
 }
 /* End Email sign up*/
 
@@ -586,6 +616,14 @@ input[type="submit"].es_submit_button {
 	/* Footer menu items */
 	.footer .col-md-6 {
 		width: 33%;
+	}
+	.signup-feedback {
+		width: 44%;
+		left: 28%;
+	}
+	.signup-feedback {
+		width: 44%;
+		left: 28%;
 	}
 }
 
@@ -673,12 +711,9 @@ input[type="submit"].es_submit_button {
 	.maxslider .slick-dots {
 		bottom: -3rem;
 	}
-	.es_subscription_message.success {
-		width: 100%;
-		position: absolute;
-		left: 0;
-		right: auto;
-		top: 1.65rem;
+	.signup-feedback {
+		width: 60%;
+		left: 20%;
 	}
 }
 
@@ -691,6 +726,10 @@ input[type="submit"].es_submit_button {
 	}
 	.launch .mast-head {
 		padding-bottom: 8.3rem;
+	}
+	.signup-feedback {
+		width: 80%;
+		left: 10%;
 	}
 }
 
