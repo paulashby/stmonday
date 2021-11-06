@@ -128,7 +128,7 @@ a:visited,
 	z-index: 10;
 }
 
-.mast-head .container .nav {
+body:not(.launch) .mast-head .container .nav {
 	height: 1.2rem;
 	margin-top:  1.15rem;
 	background: #fff url('assets/images/roundel.png') left center/contain no-repeat !important;
@@ -196,8 +196,8 @@ a:visited,
 	top: 0.26rem; 
 	content: "\e901";
 }
-.sm-home-title .elementor-heading-title {
-	line-height: 4rem;
+.main .container .row > div:first-of-type .elementor-widget-wrap {
+	padding: 10px 0;
 }
 .entry-summary .product_title,
 .entry-summary .entry_title {
@@ -443,99 +443,258 @@ a:visited,
 	}
 
 	/* Maxslider homepage carousel */
+	.sm-home-title .elementor-heading-title,
 	.maxslider-slide-title,
 	.maxslider-slide-subtitle {
 		text-transform: uppercase;
 		font-size: 52px;
 		line-height: 64px;
-		font-family: 'TT Norms Pro';
+		font-family: 'TT Norms Pro'!important;
 	}
 
+	.elementor-button-text,
 	.maxslider .maxslider-btn {
 		text-transform: uppercase;
 		font-size: 15px;
 		line-height: 15px;
-		font-family: 'TT Norms Pro';
+		font-family: 'TT Norms Pro'!important;
 	}
 
-	@media only screen and (max-width: 1024px) {
+/* Email sign up */
+.launch .mast-head {
+	padding-bottom: 1.5rem;
+}
+.mast-head .container .row-table {
+	position: relative;
+}
+.row-table .emaillist {
+	position: absolute;
+	left: 15px;
+	top: 0.34rem;
+	width: 29%;
+}
+.row-table .emaillist label {
+	display: inline;
+	font-size: 0.65rem;
+	position: relative;
+	top: -4px;
+}
 
-		/* Generic page text blocks */
-		.sm-generic-pg.sm-content.sm-text {
-			padding: 2rem 2rem 0 2rem;
-		}
-		/* Footer menu items */
-		.footer .col-md-6 {
-			width: 33%;
-		}
+.emaillist input[type="checkbox"] {
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	-o-appearance:none;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border: 1px solid #e6e6e6;
+}
 
+.emaillist input[type="checkbox"]:checked {
+	background: #fff url('assets/images/StM_Checkbox_On.png') left center/contain no-repeat !important;
+}
+
+.es_caption {
+  display: none;
+}
+
+.es_subscription_form {
+	position: relative;
+}
+
+.es_subscription_form p {
+	margin-bottom:  0;
+	position: relative;
+}
+
+.es_subscription_form p label {
+	display: inline;
+	font-size: 0.75rem;
+	margin-left: 0.2rem;
+}
+/* Email placeholder text - these as they won't work if the declarations are grouped! */
+.es_subscription_form input[type="email"] {
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+	appearance: textfield;
+	border: none;
+	border-bottom: 1px solid #e6e6e6;
+	font-size: 14px;
+}
+.es_subscription_form .ig_es_form_field_email::placeholder {
+	color: #000;
+	font-size: 12px;
+	opacity: 1;
+}
+.es_subscription_form .ig_es_form_field_email:-ms-input-placeholder {
+	color: #000;
+	opacity: 1;
+}
+.es_subscription_form .ig_es_form_field_email::-ms-input-placeholder {
+	color: #000;
+	opacity: 1;
+}
+.es-field-wrap {
+  margin-bottom: 0;
+  margin-top: 1.8rem;
+  width: 100%;
+}
+input[type="submit"].es_submit_button {
+	font-family: 'TT Norms Pro Normal';
+	font-weight: 400;
+	position: absolute;
+  	background-color: transparent;
+  	border: 1px solid #e6e6e6;
+  	border-bottom: none;
+  	border-left: none;
+  	color: #000;
+  	padding: 10px 15px 10px;
+  	right: 0;
+  	text-align: right;
+  	top: -0.3rem;
+}
+
+.es_subscription_message {
+	display: none;
+}
+
+.signup-message {
+  background-color: #fff;
+  border: 2px solid #252525;
+  box-sizing: border-box;
+  display: none;
+  left: calc(50% - 250px);
+  padding: 25px;
+  position: absolute;
+  top: 3rem;
+  width: 500px;
+  z-index: 200;
+}
+
+.signup-message--active {
+	display: block;
+}
+/* End Email sign up*/
+
+
+@media only screen and (max-width: 1024px) {
+
+	/* Generic page text blocks */
+	.sm-generic-pg.sm-content.sm-text {
+		padding: 2rem 2rem 0 2rem;
+	}
+	/* Footer menu items */
+	.footer .col-md-6 {
+		width: 33%;
+	}
+}
+
+@media only screen and (max-width: 990px) {
+
+	.entry-summary .button,
+	.tabs.wc-tabs a {
+		font-size: 0.7rem;
+	}
+	.mast-head .row-table .emaillist {
+		left: 330px;
+		width: 240px;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+
+	/* Home page banner */
+	.elementor-2374 .elementor-element.elementor-element-37e4df66:not(.elementor-motion-effects-element-type-background) {
+		background-position-x: -40rem;
+	}
+	/* product summary width */
+	.product .col-lg-5 {
+	    margin-left: auto;
+	    width: 100%;
+	}
+	/* menu icons */
+	.head-cart {
+		margin-top: -0.35rem;
 	}
 
-	@media only screen and (max-width: 990px) {
-
-		.entry-summary .button,
-		.tabs.wc-tabs a {
-			font-size: 0.7rem;
-		}
-
+	.mast-head-right a.head-search-trigger {
+		margin-top: -0.7rem;
 	}
 
-	@media only screen and (max-width: 767px) {
-
-		/* Home page banner */
-		.elementor-2374 .elementor-element.elementor-element-37e4df66:not(.elementor-motion-effects-element-type-background) {
-			background-position-x: -40rem;
-		}
-		/* product summary width */
-		.product .col-lg-5 {
-		    margin-left: auto;
-		    width: 100%;
-		}
-		/* menu icons */
-		.head-cart {
-			margin-top: -0.35rem;
-		}
-
-		.mast-head-right a.head-search-trigger {
-			margin-top: -0.7rem;
-		}
-
-		/* Footer menu items */
-		.footer .footer-widgets .container {
-			text-align: center;
-		}
-		.footer .col-md-6 {
-			width: 100%;
-		}
-		/* Generic page text blocks */
-		.sm-generic-pg.sm-content.sm-text {
-			padding: 0;
-		}
-		.sm_gallery_display_buttons {
-			margin-top: 1rem;
-			display: flex;
-			justify-content: center;
-			gap: 1rem;
-		}
-		.sm_gallery_display_button {
-			height: 0.6rem;
-			width: 0.6rem;
-			background-color: #c4c2c2;
-			border-radius: 50%;
-		} 
-		.sm_gallery_display_button.active {
-			background-color: #999;
-		}
-		.woocommerce-product-gallery__wrapper picture {
-			display: none;
-		}
-		.woocommerce-product-gallery__wrapper picture.active {
-			display: inline;
-		}
-
+	/* Footer menu items */
+	.footer .footer-widgets .container {
+		text-align: center;
 	}
+	.footer .col-md-6 {
+		width: 100%;
+	}
+	/* Generic page text blocks */
+	.sm-generic-pg.sm-content.sm-text {
+		padding: 0;
+	}
+	.sm_gallery_display_buttons {
+		margin-top: 1rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+	}
+	.sm_gallery_display_button {
+		height: 0.6rem;
+		width: 0.6rem;
+		background-color: #c4c2c2;
+		border-radius: 50%;
+	} 
+	.sm_gallery_display_button.active {
+		background-color: #999;
+	}
+	.woocommerce-product-gallery__wrapper picture {
+		display: none;
+	}
+	.woocommerce-product-gallery__wrapper picture.active {
+		display: inline;
+	}
+	.mast-head .row-table .emaillist {
+		top: 4.1rem;
+		width: calc(100% - 200px);
+		max-width: 235px;
+		left: 25px;
+	}
+	.launch .mast-head .row-table .emaillist + div {
+		position: absolute;
+		width: 153px;
+		right: 0;
+	}
+	.launch .mast-head {
+		padding-bottom: 5.5rem;
+	}
+	.maxslider {
+		overflow: visible;
+	}
+	.maxslider .slick-dots {
+		bottom: -3rem;
+	}
+	.es_subscription_message.success {
+		width: 100%;
+		position: absolute;
+		left: 0;
+		right: auto;
+		top: 1.65rem;
+	}
+}
 
-	@media only screen and (max-width: 330px) {
+@media only screen and (max-width: 400px) {
+
+	.mast-head .row-table .emaillist {
+	    top: 7.1rem;
+	    width: calc(100% - 50px);
+	    max-width: none;
+	}
+	.launch .mast-head {
+		padding-bottom: 8.3rem;
+	}
+}
+
+@media only screen and (max-width: 330px) {
 
 	.variation-radios {
 		flex-wrap: wrap;

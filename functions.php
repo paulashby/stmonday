@@ -27,24 +27,51 @@ function sm_enqueue_resources() {
     // parent theme enqueues child theme styles
     // https://wordpress.stackexchange.com/questions/329875/how-to-avoid-loading-style-css-twice-in-child-theme
 
-	if ( is_product() ){
+    // enqueue child theme scripts - have to use get_stylesheet_directory_uri() for child path - clear as mud then!
+    // https://wordpress.stackexchange.com/questions/230085/get-template-directory-uri-pointing-to-parent-theme-not-child-theme
+	wp_enqueue_script( 'stmonday-script', get_stylesheet_directory_uri() . '/js/SM_stmonday.js', array(), '1.0.0', true );
 
-		// enqueue child theme scripts - have to use get_stylesheet_directory_uri() for child path - clear as mud then!
-		// https://wordpress.stackexchange.com/questions/230085/get-template-directory-uri-pointing-to-parent-theme-not-child-theme
-		wp_enqueue_script( 'neto-child-script', get_stylesheet_directory_uri() . '/js/SM_product.js', array(), '1.0.0', true );
+	$email_signup_form = -1;
+
+	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
+		
+		$id = $post->ID; 
+		$modes = get_field('modes', $id);
+
+		if($modes && array_search("launch", $modes) !== false){
+			
+			// Get email sign up form from Email Subscribers plug in
+			$email_signup_form = do_shortcode("[email-subscribers-form id='2']");
+
+			// Customise email sign up form
+			$email_signup_form = str_replace(array("Sign Up*<br />", "Subscribe"), array("", "Sign up"), $email_signup_form);
+
+			// Remove tabs (they mangle the config object)
+			$email_signup_form = json_encode(trim(preg_replace('/\t+/', '', $email_signup_form)));
+		}
+	}
+
+	$js_data = "var sm_config = {
+		email_signup_form: $email_signup_form
+	};";
+
+	wp_add_inline_script('stmonday-script', $js_data);
+
+	if ( is_product() ){
+		wp_enqueue_script( 'stmonday-product-script', get_stylesheet_directory_uri() . '/js/SM_product.js', array(), '1.0.0', true );
 		$admin_url = admin_url('admin-ajax.php');
 		$nonce = wp_create_nonce('ajax-nonce');
 		$product_id = get_queried_object_id();
 		$product = wc_get_product($product_id);
 		$attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array());
-		$js_data = "var config = {
+
+		$js_data = "var sm_product_config = {
 			url: '$admin_url',
 			nonce: '$nonce',
 			product_id: '$product_id',
-			product_variation_attributes: $attributes 
+			product_variation_attributes: $attributes
 		};";
-
-		wp_add_inline_script('neto-child-script', $js_data);
+		wp_add_inline_script('stmonday-product-script', $js_data);
 	}
 }
 
@@ -57,19 +84,128 @@ function sm_enqueue_resources() {
 //  return $mimes;
 // }
 
-// Add email signup to header 
-add_action('wp_body_open', 'add_header_email_signup');
 
-function add_header_email_signup(){
-	echo "<div class='email_signup'><h2>This is an email signup</h2></div>";
-};
+//////////////////////////////////////////////////////////////
+// Custom Site Settings page /////////////////////////////////
 
-// Add div before footer to push it to bottom of screen when content is short
-add_action( 'get_footer', 'sm_add_foot_pusher' );
+// Disable Gutenberg on Site Settings page
+add_filter('use_block_editor_for_post', 'disable_gutenberg_on_settings_page', 5, 2);
 
-function sm_add_foot_pusher() {
-	$f_pusher = '<div class="sm-footer-pusher"></div>';
-	echo $f_pusher;
+function disable_gutenberg_on_settings_page($can, $post){
+    if($post){
+        if($post->post_name === "site-settings"){
+            return false;
+        }
+    }
+    return $can;
+}
+
+// Remove page from pages listing
+add_action('pre_get_posts', 'hide_settings_page');
+
+function hide_settings_page($query) {
+	
+	$sm_query = new WP_Query();
+	
+    if ( !is_admin() && ! $sm_query->is_main_query() ) {
+        return;
+    }    
+    global $typenow;
+    if ($typenow === "page") {
+        $settings_page = get_page_by_path("site-settings",NULL,"page")->ID;
+        $query->set( 'post__not_in', array($settings_page) );    
+    }
+    return;
+
+}
+
+// Add the page to admin menu
+add_action( 'admin_menu', 'add_site_settings_to_menu' );
+
+function add_site_settings_to_menu(){
+    add_menu_page( 'Site Settings', 'Site Setttings', 'manage_options', 'post.php?post='.get_page_by_path("site-settings",NULL,"page")->ID.'&action=edit', '', 'dashicons-admin-tools', 20);
+}
+
+// Change the active menu item
+add_filter('parent_file', 'higlight_custom_settings_page');
+
+function higlight_custom_settings_page($file) {
+    global $parent_file;
+    global $pagenow;
+    global $typenow, $self;
+
+    $settings_page = get_page_by_path("site-settings",NULL,"page")->ID;
+    $post = false;
+
+    foreach ($_GET as $key => $entry) {
+    	if($key == "post") {
+    		$post = (int) htmlspecialchars($entry);
+    	}
+    }
+    if ($pagenow === "post.php" && $post === $settings_page) {
+    	$file = "post.php?post=$settings_page&action=edit";
+    }
+    return $file;
+}
+
+// Add custom title to settings page
+add_action( 'admin_title', 'edit_site_settings_title' );
+
+function edit_site_settings_title() {
+    global $post, $title, $action, $current_screen;
+    if( isset( $current_screen->post_type ) && $current_screen->post_type === 'page' && $action == 'edit' && $post->post_name === "site-settings") {
+        $title = $post->post_title.' - '.get_bloginfo('name');           
+    }
+    return $title;  
+}
+
+
+// -- Apply Site Settings --------------------------------- //
+
+// Add mode classes to body tag
+add_filter('body_class', 'apply_modes');
+
+function apply_modes($classes) {
+
+	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
+		
+		$id = $post->ID;
+
+		$modes = get_field('modes', $id);
+		if( $modes ){
+			foreach ($modes as $mode) {
+				$classes[] = $mode;
+			} 	
+		}
+	}
+    return $classes;
+}
+
+// END Custom Site Settings page /////////////////////////////
+//////////////////////////////////////////////////////////////
+
+// Add elements before footer
+add_action( 'get_footer', 'sm_pre_footer' );
+
+function sm_pre_footer() {
+
+	$pre = "";
+
+	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
+		
+		$id = $post->ID; 
+		$modes = get_field('modes', $id);
+
+		if($modes && array_search("launch", $modes) !== false){
+		
+			// Add container for email signup feedback messages
+			$pre.= '<div id="signup-message" class="signup-message signup-message--inactive">
+			</div>';
+		}
+	}
+	// Add div before footer to push it to bottom of screen when content is short
+	$pre .= '<div class="sm-footer-pusher"></div>';
+	echo $pre;
 }
 
 // Change breadcrumb separator to pipe character
@@ -78,6 +214,13 @@ add_filter( 'woocommerce_breadcrumb_defaults', 'sm_change_breadcrumb_delimiter',
 function sm_change_breadcrumb_delimiter( $defaults ) {
 	$defaults['delimiter'] = "<span class='breadcrumb-delimiter'> | </span>";
 	return $defaults;
+}
+
+// Remove 'Select options' and 'Add to basket' on listings
+add_filter('woocommerce_loop_add_to_cart_link', 'sm_remove_listings_buttons');
+
+function sm_remove_listings_buttons( $product ){
+	return;
 }
 
 // Use radio buttons for variations
@@ -171,15 +314,16 @@ function sm_move_sharing_position() {
 	add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 35 );
 }
 
-// Add dimensions under product variations
+// Add message directing customers to sizing info tab
 add_action( 'woocommerce_before_single_variation', 'sm_size_info' );
 
 function sm_size_info() {
+
 	global $product;
+
 	$default_attributes = $product->get_default_attributes();
-	if(array_key_exists('pa_size', $default_attributes)) {
-		echo "<p class='sm-product-size-instruction'>See Additional Information about size below</p>";	
-	}
+	$message = array_key_exists('pa_size', $default_attributes) ? "See Additional Information about size below" : "This product comes in a single size";
+	echo "<p class='sm-product-size-instruction'>$message</p>";	
 }
 
 // Remove thumbnails from product page
@@ -336,7 +480,7 @@ function sm_on_product_variation_change() {
 
 	// Check for nonce security      
 	if ( ! wp_verify_nonce( $_GET['nonce'], 'ajax-nonce' ) ) {
-		wp_send_json_error ('The request could not be processed due to possible security issues') ;
+		wp_send_json_error ('The request could not be processed') ;
 		die ( 'Insecure request' );
 	}
 	if ( ! isset ($_REQUEST['to_update'])) { (wp_send_json_error( "Missing required argument: 'to_update'" )); }

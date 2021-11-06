@@ -66,8 +66,8 @@ var SM_product = (function () {
 			quantity: $('.quantity input.qty').first().val()
 		}, i, curr, ps_keys;
 
-		for (var i = 0; i < config.product_variation_attributes.length; i++) {
-			curr = config.product_variation_attributes[i];
+		for (var i = 0; i < sm_product_config.product_variation_attributes.length; i++) {
+			curr = sm_product_config.product_variation_attributes[i];
 			product_settings[curr.replace('pa_', '')] = $('#' + curr).val();
 		}
 
@@ -84,8 +84,8 @@ var SM_product = (function () {
 		}
 		// add additional settings
 		product_settings.action = 'update_variation_elements';
-		product_settings.product_id = config.product_id;
-		product_settings.nonce = config.nonce;
+		product_settings.product_id = sm_product_config.product_id;
+		product_settings.nonce = sm_product_config.nonce;
 
 		return product_settings;
 	}
@@ -120,7 +120,7 @@ var SM_product = (function () {
 		$.ajax({
 			type : 'get',
 			dataType : 'json',
-			url : config.url,
+			url : sm_product_config.url,
 			data : settings,
 			success: function(response) {
 				if(response.success) {
@@ -139,8 +139,8 @@ var SM_product = (function () {
 	}
 
 	$( document ).ready(function() {
-
-		if(config.product_variation_attributes && config.product_variation_attributes.indexOf('pa_colour') > -1){
+		
+		if(sm_product_config.product_variation_attributes && sm_product_config.product_variation_attributes.indexOf('pa_colour') > -1){
 			// Product has colour variations - load image gallery via ajax so we can exclude images of non-selected colour variations. Buy Now button also required
 			update_variation_elements('all');
 		} else {
