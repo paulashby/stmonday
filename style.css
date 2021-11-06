@@ -733,6 +733,14 @@ input[type="submit"].es_submit_button {
 	}
 }
 
+@media only screen and (max-width: 360px) {
+	.maxslider .maxslider-slide .maxslider-slide-content .maxslider-slide-title,
+	.maxslider .maxslider-slide .maxslider-slide-content .maxslider-slide-subtitle {
+		font-size: 2.5rem;
+		line-height: 3rem;
+	}
+}
+
 @media only screen and (max-width: 330px) {
 
 	.variation-radios {
