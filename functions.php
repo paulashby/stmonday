@@ -32,23 +32,17 @@ function sm_enqueue_resources() {
 	wp_enqueue_script( 'stmonday-script', get_stylesheet_directory_uri() . '/js/SM_stmonday.js', array(), '1.0.0', true );
 
 	$email_signup_form = -1;
-
-	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
-		
-		$id = $post->ID; 
-		$modes = get_field('modes', $id);
-
-		if($modes && array_search("launch", $modes) !== false){
+	
+	if(mode_is_active('launch')){
 			
-			// Get email sign up form from Email Subscribers plug in
-			$email_signup_form = do_shortcode("[email-subscribers-form id='2']");
+		// Get email sign up form from Email Subscribers plug in
+		$email_signup_form = do_shortcode("[email-subscribers-form id='2']");
 
-			// Customise email sign up form
-			$email_signup_form = str_replace(array("Sign Up*<br />", "Subscribe"), array("", "Sign up"), $email_signup_form);
+		// Customise email sign up form
+		$email_signup_form = str_replace(array("Sign Up*<br />", "Subscribe"), array("", "Sign up"), $email_signup_form);
 
-			// Remove tabs (they mangle the config object)
-			$email_signup_form = json_encode(trim(preg_replace('/\t+/', '', $email_signup_form)));
-		}
+		// Remove tabs (they mangle the config object)
+		$email_signup_form = json_encode(trim(preg_replace('/\t+/', '', $email_signup_form)));
 	}
 
 	$js_data = "var sm_config = {
@@ -191,22 +185,41 @@ function sm_pre_footer() {
 
 	$pre = "";
 
-	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
-		
-		$id = $post->ID; 
-		$modes = get_field('modes', $id);
+	if(mode_is_active('launch')){
 
-		if($modes && array_search("launch", $modes) !== false){
-		
-			// Add container for email signup feedback messages
-			$pre.= '<div class="signup-feedback"><a class="signup-message__button-wrap"><div class="signup-message__button"></div></a><div id="signup-message" class="signup-message signup-message--inactive">
-			</div></div>';
-		}
+		// Add container for email signup feedback messages
+		$pre.= '<div class="signup-feedback"><a class="signup-message__button-wrap"><div class="signup-message__button"></div></a><div id="signup-message" class="signup-message signup-message--inactive">
+		</div></div>';
 	}
+	
 	// Add div before footer to push it to bottom of screen when content is short
 	$pre .= '<div class="sm-footer-pusher"></div>';
 	echo $pre;
 }
+
+// Hide cart buttons if in launch mode
+add_filter( 'woocommerce_is_purchasable', 'sm_hide_add_to_cart_button', 10, 2);
+
+function sm_hide_add_to_cart_button( $value, $product ) {
+
+	if(mode_is_active('launch')){
+		 $value = false;
+	}
+	
+	return $value;
+}
+
+// Hide prices if in launch mode
+add_filter( 'woocommerce_get_price_html', 'sm_remove_price', 100, 2);
+
+function sm_remove_price( $price, $product ){     
+     
+     if(mode_is_active('launch')){
+     	return ;	
+     }
+     return $price;
+}
+
 
 // Change breadcrumb separator to pipe character
 add_filter( 'woocommerce_breadcrumb_defaults', 'sm_change_breadcrumb_delimiter', 999 );
@@ -387,16 +400,18 @@ add_action( 'woocommerce_after_add_to_cart_form', 'sm_after_add_to_cart_form' );
 
 function sm_after_add_to_cart_form(){
 
-	global $product;
+	if( ! mode_is_active('launch')) {
+		global $product;
 
-	$product_id = $product->get_id();
-	$settings = array(
-		'product_id' => $product->get_id(),
-		'quantity' => 1,
-		'placeholder' => true
-	);
-	$buy_now_button = get_buy_now_button($settings);
-	echo "<div id='sm_buy_now_button_wrapper'>$buy_now_button</div>";
+		$product_id = $product->get_id();
+		$settings = array(
+			'product_id' => $product->get_id(),
+			'quantity' => 1,
+			'placeholder' => true
+		);
+		$buy_now_button = get_buy_now_button($settings);
+		echo "<div id='sm_buy_now_button_wrapper'>$buy_now_button</div>";
+	}
 }
 
 // Variation images are sizing guides, so we want to load our thumbnails from the image gallery
@@ -809,4 +824,18 @@ function get_buy_now_button($settings) {
 	$checkout_url = wc_get_checkout_url();
 
 	return "<div class='sm_buy_now__pre'><p class='sm_buy_now__pre-txt'>Or</p></div><a id='buy_now_button' class='single_add_to_cart_button button alt' href='{$checkout_url}?add-to-cart=$variation_id&quantity=" . $settings['quantity'] . "'>Buy Now</a>";
+}
+
+function mode_is_active($mode) {
+
+	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
+		
+		$id = $post->ID; 
+		$modes = get_field('modes', $id);
+
+		if($modes && array_search($mode, $modes) !== false){
+			 return true;
+		}
+	}
+	return false;
 }
