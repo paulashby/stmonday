@@ -488,7 +488,7 @@ body:not(.launch) .mast-head .container .nav {
 	position: absolute;
 	left: 15px;
 	top: 0.34rem;
-	width: 29%;
+	width: 250px;
 }
 .row-table .emaillist label {
 	display: inline;
@@ -662,6 +662,9 @@ input[type="submit"].es_submit_button {
 		left: 330px;
 		width: 240px;
 	}
+	.launch .mast-head .row-table .emaillist {
+		left: 420px;
+	}
 	#content_page_banner .elementor-container {
 		width: 690px;
 	}
@@ -724,16 +727,15 @@ input[type="submit"].es_submit_button {
 	.woocommerce-product-gallery__wrapper picture.active {
 		display: inline;
 	}
-	.mast-head .row-table .emaillist {
-		top: 4.1rem;
-		width: calc(100% - 200px);
-		max-width: 235px;
-		left: 25px;
-	}
 	.launch .mast-head .row-table .emaillist + div {
 		position: absolute;
 		width: 153px;
 		right: 0;
+	}
+	.launch .mast-head .row-table .emaillist {
+		top: 4.1rem;
+		left: 15px;
+		right: auto;
 	}
 	.launch .mast-head {
 		padding-bottom: 5.5rem;
@@ -784,14 +786,6 @@ input[type="submit"].es_submit_button {
 
 @media only screen and (max-width: 400px) {
 
-	.mast-head .row-table .emaillist {
-	    top: 7.1rem;
-	    width: calc(100% - 50px);
-	    max-width: none;
-	}
-	.launch .mast-head {
-		padding-bottom: 8.3rem;
-	}
 	.signup-feedback {
 		width: 80%;
 		left: 10%;
