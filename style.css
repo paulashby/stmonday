@@ -252,7 +252,7 @@ body:not(.launch) .mast-head .container .nav {
 
 /* Footer menu */
 .footer {
-	font-family: 'TT Norms Pro';
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 }
 .sm-footer-top-level {
 	text-transform: uppercase;
@@ -286,7 +286,7 @@ body:not(.launch) .mast-head .container .nav {
 .item-product .item-title,
 .item-product .sm-thumb-subtitle {
 	text-transform: none;
-	font-family: 'TT Norms Pro';
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 	letter-spacing: 0;
 	font-size: 0.8rem;
 	margin-bottom: -0.15rem;
@@ -296,7 +296,7 @@ body:not(.launch) .mast-head .container .nav {
 	color: #aaa;
 }
 .item-product .price {
-	font-family: 'TT Norms Pro';
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 }
 
 /* Product page elements (excluding typography) */
@@ -362,7 +362,7 @@ body:not(.launch) .mast-head .container .nav {
 }
 .button,
 #buy_now_button {
-	font-family: 'TT Norms Pro';
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 }
 
 .product-template-default .variations {
@@ -388,7 +388,7 @@ body:not(.launch) .mast-head .container .nav {
 	}
 	.entry-summary .product_meta > span,
 	.entry-summary .product_meta .posted_in {
-		font-family: 'TT Norms Pro';
+		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 		color: #737373;
 	}
 
@@ -427,7 +427,7 @@ body:not(.launch) .mast-head .container .nav {
 		text-align: center;
 	}
 	.wc-tabs li a {	
-		font-family: 'TT Norms Pro';	
+		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;	
 		font-weight: bold;	
 		margin-left: auto;
 		margin-right: auto;
@@ -437,7 +437,7 @@ body:not(.launch) .mast-head .container .nav {
 		border-bottom: 2px solid #000;
 	}
 	.wc-tabs-wrapper p a {
-		font-family: 'TT Norms Pro';
+		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 		color: #282828;
 		transition: color .18s ease, background-color .18s ease, border-color .18s ease;
 		text-decoration: underline solid #c4c2c2;
@@ -466,7 +466,7 @@ body:not(.launch) .mast-head .container .nav {
 		text-transform: uppercase;
 		font-size: 52px;
 		line-height: 64px;
-		font-family: 'TT Norms Pro'!important;
+		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif!important;
 	}
 
 	.elementor-button-text,
@@ -474,7 +474,7 @@ body:not(.launch) .mast-head .container .nav {
 		text-transform: uppercase;
 		font-size: 15px;
 		line-height: 15px;
-		font-family: 'TT Norms Pro'!important;
+		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif!important;
 	}
 
 /* Email sign up */
@@ -556,7 +556,7 @@ body:not(.launch) .mast-head .container .nav {
   width: 100%;
 }
 input[type="submit"].es_submit_button {
-	font-family: 'TT Norms Pro Normal';
+	font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif;
 	font-weight: 400;
 	position: absolute;
   	background-color: transparent;
