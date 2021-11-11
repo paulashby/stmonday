@@ -623,6 +623,18 @@ input[type="submit"].es_submit_button {
 }
 /* End Email sign up*/
 
+/* Scroll product gallery images */
+.woocommerce-product-gallery__wrapper.images {
+	
+	max-height: 900px;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.woocommerce-product-gallery__wrapper.images::-webkit-scrollbar {
+	display: none;
+}
+
 @media only screen and (max-width: 1200px) {
 	#content_page_banner .elementor-container {
 		width: 910px;
