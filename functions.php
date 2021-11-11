@@ -686,7 +686,7 @@ function get_image_gallery($product_id, $colour){
 	
 	$num_images = count($image_data['gallery_images']);
 	if($num_images > 0){
-		$image_gallery[] = sm_get_display_button_markup($num_images);
+		$image_data['gallery_images'][] = sm_get_display_button_markup($num_images);
 		return $image_data['gallery_images'];
 	}
 
@@ -696,7 +696,6 @@ function get_image_gallery($product_id, $colour){
 
 	$num_images = count($image_gallery);
 	if($num_images > 0){
-
 		$image_gallery[] = sm_get_display_button_markup($num_images);
 		return $image_gallery;
 	}
@@ -726,9 +725,9 @@ function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery
 
 function sm_get_display_button_markup($button_count){
 
-	// Only a single product image is displayed at narrow widths. These buttons are displayed under the image and control which product image is shown.
+	// Product images are displayed one at a time at narrow widths. These buttons are positioned under the image and control which product image is shown.
 
-	if($button_count < 1){ return; }
+	if($button_count < 2){ return; }
 
 	$buttons = "<div class='sm_gallery_display_buttons'>";
 	$active_class = "active";
