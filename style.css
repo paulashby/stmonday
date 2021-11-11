@@ -634,6 +634,9 @@ input[type="submit"].es_submit_button {
 .woocommerce-product-gallery__wrapper.images::-webkit-scrollbar {
 	display: none;
 }
+.woocommerce-product-gallery__wrapper.images picture:last-child .wp-post-image {
+	margin-bottom: 10rem;
+}
 
 @media only screen and (max-width: 1200px) {
 	#content_page_banner .elementor-container {
