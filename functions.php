@@ -319,6 +319,13 @@ function sm_move_tab_position() {
 	add_action( 'woocommerce_single_product_summary', 'woocommerce_output_product_data_tabs', 60 );
 }
 
+// Add lightbox container
+add_action( 'woocommerce_after_single_product_summary', 'sm_render_lightbox', 10 );
+
+function sm_render_lightbox() {
+	echo "<div class='sm_lightbox fade-in'></div>";
+}
+
 // position of social media buttons above sku on product page
 add_action( 'wp', 'sm_move_sharing_position' );
 
@@ -485,6 +492,25 @@ function sm_woocommerce_shop_loop_item_subtitle() {
 	$product_id = $product->get_id();
 	$subtitle = get_field('product_subtitle', $product_id);
 	echo "<p class='sm-thumb-subtitle'>$subtitle</p>";
+}
+
+// Handle lightbox ajax calls
+add_action( 'wp_ajax_populate_lightbox', 'sm_populate_lightbox' );
+add_action( 'wp_ajax_nopriv_populate_lightbox', 'sm_populate_lightbox' );
+
+function sm_populate_lightbox() {
+
+	// Check for nonce security      
+	if ( ! wp_verify_nonce( $_GET['nonce'], 'ajax-nonce' ) ) {
+		wp_send_json_error ('The request could not be processed') ;
+		die ( 'Insecure request' );
+	}
+	if ( ! isset ($_REQUEST['image_id'])) { wp_send_json_error( "Missing required argument: 'image_id'" ); }
+
+	$image_id = intval(sanitize_text_field(filter_input(INPUT_GET, 'image_id')));
+	$markup = sm_get_image_markup($image_id);
+	
+	exit(wp_send_json_success(sm_get_image_markup($image_id)));
 }
 
 // Process product variation change ajax calls
@@ -778,7 +804,7 @@ function sm_get_image_markup($image_id, $active_image = false) {
 	sizes='$sizes'
 	/>
 	<img src='($src_540'
-	class='wp-post-image' alt='$image_alt' title='$image_title' />
+	class='wp-post-image' alt='$image_alt' title='$image_title' data-id='$image_id'/>
 	</picture>";
 }
 

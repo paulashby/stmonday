@@ -11,6 +11,10 @@ var SM_product = (function () {
 		all: function(settings) {
 			settings.to_update = 'all';
 			do_action(settings);
+		},
+		open_lightbox: function(settings) {
+			settings.to_update = 'lightbox';
+			do_action(settings);
 		}
 	}
 	success_callbacks = {
@@ -44,6 +48,19 @@ var SM_product = (function () {
 			$('#sm_buy_now_button_wrapper').html(data.buy_now_button);
 			current_colour = settings.colour;
 			current_size = settings.size;
+		},
+		lightbox: function(data) {
+			$('html').addClass('no-scroll');
+			$('.sm_lightbox').html(data).addClass('sm_lightbox--active show').click( function(e) {
+				
+				$(this).removeClass('sm_lightbox--active').unbind();
+				
+				$(this).one("transitionend", function(event) {
+				    // Empty only when transition completes
+				    $('html').removeClass('no-scroll');
+				    $(this).empty().removeClass('show');
+				});
+			});
 		}
 	};
 
@@ -63,30 +80,16 @@ var SM_product = (function () {
 	function get_product_settings() {
 
 		var product_settings = {
-			quantity: $('.quantity input.qty').first().val()
+			quantity: $('.quantity input.qty').first().val(),
+			action: 'update_variation_elements',
+			product_id: sm_product_config.product_id,
+			nonce: sm_product_config.nonce
 		}, i, curr, ps_keys;
 
 		for (var i = 0; i < sm_product_config.product_variation_attributes.length; i++) {
 			curr = sm_product_config.product_variation_attributes[i];
 			product_settings[curr.replace('pa_', '')] = $('#' + curr).val();
 		}
-
-		ps_keys = Object.keys(product_settings);
-
-		// Check product_settings object has captured product variation values
-		for(i = 0; i < ps_keys.length; i++) {
-
-			curr = product_settings[ps_keys[i]];
-
-			if( curr === undefined || curr.length === 0) { 
-				return ('Unable to get data for product ' + ps_keys[i]); 
-			}
-		}
-		// add additional settings
-		product_settings.action = 'update_variation_elements';
-		product_settings.product_id = sm_product_config.product_id;
-		product_settings.nonce = sm_product_config.nonce;
-
 		return product_settings;
 	}
 	function update_buy_now_button(clicked_class){
@@ -188,6 +191,24 @@ var SM_product = (function () {
 		});
 		$('.qty-handle').click( function() {
 			update_buy_now_button($(this).attr('class'));
+		});
+
+		$('.woocommerce-product-gallery').click( function(e) {
+
+			if(! $(e.target).hasClass('wp-post-image') || $(window).width() <= 650) {
+				return;
+			}
+			var image_id = $(e.target).data('id');
+			
+			if(image_id){
+				var product_settings = {
+					action: 'populate_lightbox',
+					product_id: sm_product_config.product_id,
+					image_id: image_id.toString(),
+					nonce: sm_product_config.nonce
+				}
+				update_actions.open_lightbox(product_settings);
+			}
 		});
 	});
 }());

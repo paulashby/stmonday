@@ -347,6 +347,7 @@ body:not(.launch) .mast-head .container .nav {
 		opacity: 1;
 	}
 }
+
 .launch .woocommerce-variation-add-to-cart .single_add_to_cart_button {
 	display: none;
 }
@@ -358,7 +359,6 @@ body:not(.launch) .mast-head .container .nav {
 }
 #buy_now_button {
 	margin-top: -0.7rem;
-	/*margin-bottom: 1.8rem;*/
 }
 .button,
 #buy_now_button {
@@ -569,11 +569,6 @@ input[type="submit"].es_submit_button {
   	text-align: right;
   	top: -0.3rem;
 }
-.visible {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 2s linear;
-}
 
 .es_subscription_message {
 	display: none;
@@ -624,14 +619,17 @@ input[type="submit"].es_submit_button {
 /* End Email sign up*/
 
 /* Scroll product gallery images */
-.woocommerce-product-gallery__wrapper.images {
-	
-	max-height: 900px;
+.woocommerce-product-gallery__wrapper.images,
+.sm_lightbox {
 	overflow-y: scroll;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
-.woocommerce-product-gallery__wrapper.images::-webkit-scrollbar {
+.woocommerce-product-gallery__wrapper.images {
+	max-height: 900px;
+}
+.woocommerce-product-gallery__wrapper.images::-webkit-scrollbar,
+.sm_lightbox::-webkit-scrollbar {
 	display: none;
 }
 .woocommerce-product-gallery__wrapper.images picture:last-of-type .wp-post-image {
@@ -639,6 +637,44 @@ input[type="submit"].es_submit_button {
 }
 .woocommerce-product-gallery__wrapper.images picture:only-of-type .wp-post-image {
 	margin-bottom: 0;
+}
+
+.sm_lightbox {
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	display: none;
+	opacity:  0;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	z-index: 201;
+	transition: opacity 200ms linear;
+}
+
+.sm_lightbox--active {
+	opacity: 1;
+}
+.sm_lightbox picture {
+	display: block;
+	width: 1000px;
+}
+.sm_lightbox picture .wp-post-image {
+	width: 100%;
+}
+html.no-scroll,
+html.no-scroll body {
+	overflow: hidden;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
+.show {
+	display: flex;
 }
 
 @media only screen and (max-width: 1200px) {
