@@ -21,6 +21,7 @@ add_action( 'wp_loaded', function() {
 add_action( 'wp_enqueue_scripts', 'sm_enqueue_resources' );
 
 function sm_enqueue_resources() {
+
 	// enqueue parent styles
 	wp_enqueue_style( 'parent-theme', get_template_directory_uri() . '/style.css' );
 
@@ -52,16 +53,21 @@ function sm_enqueue_resources() {
 	wp_add_inline_script('stmonday-script', $js_data);
 
 	if ( is_product() ){
+
 		wp_enqueue_script( 'stmonday-product-script', get_stylesheet_directory_uri() . '/js/SM_product.js', array(), '1.0.0', true );
 		$admin_url = admin_url('admin-ajax.php');
-		$nonce = wp_create_nonce('ajax-nonce');
+		
+		$variation_change_nonce = wp_create_nonce('variation_change_nonce');
+		$lightbox_nonce = wp_create_nonce('lightbox_nonce');
+error_log("lightbox_nonce created: $lightbox_nonce");
 		$product_id = get_queried_object_id();
 		$product = wc_get_product($product_id);
 		$attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array());
-
+		
 		$js_data = "var sm_product_config = {
 			url: '$admin_url',
-			nonce: '$nonce',
+			variation_change_nonce: '$variation_change_nonce',
+			lightbox_nonce: '$lightbox_nonce',
 			product_id: '$product_id',
 			product_variation_attributes: $attributes
 		};";
@@ -501,16 +507,26 @@ add_action( 'wp_ajax_nopriv_populate_lightbox', 'sm_populate_lightbox' );
 function sm_populate_lightbox() {
 
 	// Check for nonce security      
-	if ( ! wp_verify_nonce( $_GET['nonce'], 'ajax-nonce' ) ) {
+	if ( ! wp_verify_nonce( $_GET['nonce'], 'lightbox_nonce' ) ) {
 		wp_send_json_error ('The request could not be processed') ;
 		die ( 'Insecure request' );
 	}
 	if ( ! isset ($_REQUEST['image_id'])) { wp_send_json_error( "Missing required argument: 'image_id'" ); }
 
+	$return_data = array(
+		'lightbox_nonce' => wp_create_nonce('lightbox_nonce')	
+	);
+
 	$image_id = intval(sanitize_text_field(filter_input(INPUT_GET, 'image_id')));
-	$markup = sm_get_image_markup($image_id);
-	
-	exit(wp_send_json_success(sm_get_image_markup($image_id)));
+
+	$return_data = array(
+		'lightbox_content' => sm_get_image_markup($image_id),
+		'nonce' => array(
+			'name'=>'lightbox_nonce',
+			'value'=>wp_create_nonce('lightbox_nonce')
+		)
+	);
+	exit(wp_send_json_success($return_data));
 }
 
 // Process product variation change ajax calls
@@ -518,9 +534,8 @@ add_action( 'wp_ajax_update_variation_elements', 'sm_on_product_variation_change
 add_action( 'wp_ajax_nopriv_update_variation_elements', 'sm_on_product_variation_change' );
 
 function sm_on_product_variation_change() {
-
-	// Check for nonce security      
-	if ( ! wp_verify_nonce( $_GET['nonce'], 'ajax-nonce' ) ) {
+	
+	if ( ! wp_verify_nonce( $_GET['nonce'], 'variation_change_nonce' ) ) {
 		wp_send_json_error ('The request could not be processed') ;
 		die ( 'Insecure request' );
 	}
@@ -541,9 +556,10 @@ function sm_on_product_variation_change() {
 		'product_id' => $product_id,
 		'product' => $product
 	);
-	$return_data = array('sizing_tab_content' => false);
+	$return_data = array(
+		'sizing_tab_content' => false
+	);
 
-	
 	if ( isset ($_REQUEST['colour'])) { 
 		$product_details['colour'] = sanitize_text_field(filter_input(INPUT_GET, 'colour'));
 	}
@@ -557,6 +573,11 @@ function sm_on_product_variation_change() {
 	if($to_update === 'all') {
 		$return_data['image_gallery'] = get_image_gallery($product_id, $product_details['colour']);
 	}
+
+	$return_data['nonce'] = array(
+		'name'=>'variation_change_nonce',
+		'value'=>wp_create_nonce('variation_change_nonce')
+	);
 
 	exit(wp_send_json_success($return_data));
 }

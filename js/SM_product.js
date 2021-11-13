@@ -23,6 +23,7 @@ var SM_product = (function () {
 			if(data.sizing_tab_content !== false) {
 				$('#tab-sizing_tab').html(data.sizing_tab_content);
 			}
+
 			current_colour = settings.colour;
 			current_size = settings.size;
 		},
@@ -51,7 +52,7 @@ var SM_product = (function () {
 		},
 		lightbox: function(data) {
 			$('html').addClass('no-scroll');
-			$('.sm_lightbox').html(data).addClass('sm_lightbox--active show').click( function(e) {
+			$('.sm_lightbox').html(data.lightbox_content).addClass('sm_lightbox--active show').click( function(e) {
 				
 				$(this).removeClass('sm_lightbox--active').unbind();
 				
@@ -83,7 +84,7 @@ var SM_product = (function () {
 			quantity: $('.quantity input.qty').first().val(),
 			action: 'update_variation_elements',
 			product_id: sm_product_config.product_id,
-			nonce: sm_product_config.nonce
+			nonce: sm_product_config.variation_change_nonce
 		}, i, curr, ps_keys;
 
 		for (var i = 0; i < sm_product_config.product_variation_attributes.length; i++) {
@@ -126,6 +127,10 @@ var SM_product = (function () {
 			url : sm_product_config.url,
 			data : settings,
 			success: function(response) {
+				// Update nonce
+				if(response.data.nonce){
+					sm_product_config[response.data.nonce['name']] = response.data.nonce['value'];
+				}
 				if(response.success) {
 					success_callbacks[settings.to_update](response.data, settings);
 				}
@@ -205,7 +210,7 @@ var SM_product = (function () {
 					action: 'populate_lightbox',
 					product_id: sm_product_config.product_id,
 					image_id: image_id.toString(),
-					nonce: sm_product_config.nonce
+					nonce: sm_product_config.lightbox_nonce
 				}
 				update_actions.open_lightbox(product_settings);
 			}
