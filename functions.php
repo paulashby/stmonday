@@ -59,7 +59,7 @@ function sm_enqueue_resources() {
 		
 		$variation_change_nonce = wp_create_nonce('variation_change_nonce');
 		$lightbox_nonce = wp_create_nonce('lightbox_nonce');
-error_log("lightbox_nonce created: $lightbox_nonce");
+
 		$product_id = get_queried_object_id();
 		$product = wc_get_product($product_id);
 		$attributes = $product->is_type( 'variable' ) ? json_encode(array_keys($product->get_variation_attributes())) : json_encode(array());
@@ -361,6 +361,7 @@ add_filter( 'woocommerce_single_product_image_thumbnail_html', 'sm_render_all_pr
 function sm_render_all_product_shots ( $html ) {
 
 	$button_count = 0;
+	$responsive_image_sizes = get_product_gallery_image_sizes();
 
 	// Single product pages (woocommerce)
 	if ( is_product() ) {
@@ -382,12 +383,12 @@ function sm_render_all_product_shots ( $html ) {
 
 		ob_start(); // Start buffering
 
-		echo sm_get_image_markup($image_id, true);
+		echo sm_get_image_markup($image_id, $responsive_image_sizes, true);
 
 	    // Loop through gallery Image Ids
 		foreach( $product->get_gallery_image_ids() as $image_id ) {
 
-			echo sm_get_image_markup($image_id);
+			echo sm_get_image_markup($image_id, $responsive_image_sizes);
 			$button_count++;
 
 		}
@@ -446,6 +447,12 @@ function getCartItemThumbnail( $img, $cart_item ) {
 				// Product has colour variations, so need to get correct pic from image gallery
 				$cart_item_colour = $attributes['pa_colour'];
 
+				$responsive_image_sizes = array(
+					'media_library_sizes' => array(100, 150, 300),
+					'fallback_size' => 200,
+					'sizes_attribute' =>'70px' // Match width up to 1000vw. 1000px for wider vw
+				);
+
 				foreach( $product->get_gallery_image_ids() as $image_id ) {
 
 					$gallery_image_colour  = get_field( "colour", $image_id );
@@ -453,7 +460,7 @@ function getCartItemThumbnail( $img, $cart_item ) {
 					if($gallery_image_colour == $cart_item_colour) {
 
 						// Image's 'colour' field matches $cart_item colour - this is the correct image
-						return sm_get_image_markup($image_id);
+						return sm_get_image_markup($image_id, $responsive_image_sizes);
 					}
 				}
 			}
@@ -506,6 +513,12 @@ add_action( 'wp_ajax_nopriv_populate_lightbox', 'sm_populate_lightbox' );
 
 function sm_populate_lightbox() {
 
+	$responsive_image_sizes = array(
+		'media_library_sizes' => array(768, 1024, 1536, 2048),
+		'fallback_size' => 1024,
+		'sizes_attribute' =>'(min-width: 1000px) 1024px, 100vw' // Match width up to 1000vw. 1000px for wider vw
+	);
+
 	// Check for nonce security      
 	if ( ! wp_verify_nonce( $_GET['nonce'], 'lightbox_nonce' ) ) {
 		wp_send_json_error ('The request could not be processed') ;
@@ -520,7 +533,7 @@ function sm_populate_lightbox() {
 	$image_id = intval(sanitize_text_field(filter_input(INPUT_GET, 'image_id')));
 
 	$return_data = array(
-		'lightbox_content' => sm_get_image_markup($image_id),
+		'lightbox_content' => sm_get_image_markup($image_id, $responsive_image_sizes),
 		'nonce' => array(
 			'name'=>'lightbox_nonce',
 			'value'=>wp_create_nonce('lightbox_nonce')
@@ -720,10 +733,12 @@ function get_image_gallery($product_id, $colour){
 	$default_image_ids = array();
 	$image_colour = $default_colour;
 
+	$responsive_image_sizes = get_product_gallery_image_sizes();
+
 	// $colour is false if product has no colour variations
 	if($colour === false || $image_colour === $colour) {
 		// If product has colour variations, only include the main image if its colour field matches the value of $colour
-		$image_gallery[] = sm_get_image_markup($default_image_id, true);
+		$image_gallery[] = sm_get_image_markup($default_image_id, $responsive_image_sizes, true);
 	} else {
 		$default_image_ids[] = $default_image_id;
 	}
@@ -749,9 +764,19 @@ function get_image_gallery($product_id, $colour){
 
 	return false;
 }
+function get_product_gallery_image_sizes() {
+	return array(
+		'media_library_sizes' => array(300, 1024, 150, 768, 100, 1500),
+		'fallback_size' => 540,
+		'sizes_attribute' =>'(min-width: 1200px) 540px, (min-width: 1000px) 440px, (min-width: 780px) 330px, (min-width: 620px) 540px, 90vw' 
+	);	
+}
 function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery, $fallback = false) {
 
+	$responsive_image_sizes = get_product_gallery_image_sizes();
+
 	foreach( $image_ids as $image_id ) {
+
 		$attachment = get_post($image_id);
 		
 		$description = strtolower($attachment->post_content);
@@ -760,7 +785,7 @@ function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery
 		$default_image_ids = array();
 		
 		if($fallback || $colour === false || $image_colour === $colour) {
-			$image_gallery[] = sm_get_image_markup($image_id, $active_image);
+			$image_gallery[] = sm_get_image_markup($image_id, $responsive_image_sizes, $active_image);
 		}  else if($image_colour === $default_colour) {
 			// Store default image id
 			$default_image_ids[] = $image_id;
@@ -787,20 +812,18 @@ function sm_get_display_button_markup($button_count){
 	return "$buttons</div>";
 }
 
-function sm_get_image_markup($image_id, $active_image = false) {
+function sm_get_image_markup($image_id, $custom_image_sizes, $active_image = false) {
 
 	$attachment = get_post($image_id);
 	$image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
 	$image_title = $attachment->post_title;
 	$picture_class = $active_image ? 'fade-in active' : 'fade-in';
-
-	// Make 540 wide image to use as fallback
-	$src_540 = wp_get_attachment_image_url($image_id, array(540, 540));
-
-	// Sizes ordered as per output when using single image (ie not overridden by sm_get_image_markup)
-	$image_sizes = array(300, 1024, 150, 768, 100, 1500);
-	$srcset = make_srcset_entry($src_540, '540');
-	$webp_srcset = make_srcset_entry(get_webp_url($src_540), '540');
+	$image_sizes = $custom_image_sizes['media_library_sizes'];
+	$sizes = $custom_image_sizes['sizes_attribute'];
+	$fallback_size = $custom_image_sizes['fallback_size'];
+	$fallback = wp_get_attachment_image_url($image_id, array($fallback_size, $fallback_size));
+	$srcset = make_srcset_entry($fallback, "$fallback_size");
+	$webp_srcset = make_srcset_entry(get_webp_url($fallback), "$fallback_size");
 
 	// Add all sizes to srcsets
 	foreach ($image_sizes as $image_size) {
@@ -814,17 +837,17 @@ function sm_get_image_markup($image_id, $active_image = false) {
 
 	$srcset = rtrim($srcset, ", ");
 	$webp_srcset = rtrim($webp_srcset, ", ");
-	$sizes = '(min-width: 1200px) 540px, (min-width: 1000px) 440px, (min-width: 780px) 330px, (min-width: 620px) 540px, 90vw';
 
 	return "<picture class='$picture_class'>
 	<source type='image/webp'
 	srcset='$webp_srcset'
 	sizes='$sizes'
 	/>
-	<source srcset='$srcset'
+	<source  type='image/jpeg'
+	srcset='$srcset'
 	sizes='$sizes'
 	/>
-	<img src='($src_540'
+	<img src='($fallback'
 	class='wp-post-image' alt='$image_alt' title='$image_title' data-id='$image_id'/>
 	</picture>";
 }
