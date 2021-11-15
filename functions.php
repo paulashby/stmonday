@@ -84,6 +84,26 @@ function sm_enqueue_resources() {
 //  return $mimes;
 // }
 
+// Remove theme image sizes that aren't used for product shots - these will need to be commented out when adding Neto or Max Slider images
+add_action('init', 'remove_extra_image_sizes');
+
+function remove_extra_image_sizes( $name ) {
+
+	global $_wp_additional_image_sizes;
+    $image_keys = array(
+    	'maxslider_slide',
+    	'neto_item',
+    	'neto_fullwidth',
+    	'neto_hero',
+    	'neto_about'
+    );
+
+    foreach ($image_keys as $key) {
+    	if ( isset( $_wp_additional_image_sizes[ $key ] ) ) {
+           unset( $_wp_additional_image_sizes[ $key ] );
+       }
+    }
+}
 
 //////////////////////////////////////////////////////////////
 // Custom Site Settings page /////////////////////////////////
