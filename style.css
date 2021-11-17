@@ -635,6 +635,10 @@ input[type="submit"].es_submit_button {
 .woocommerce-product-gallery__wrapper.images picture:last-of-type .wp-post-image {
 	margin-bottom: 10rem;
 }
+.woocommerce-product-gallery__wrapper.images picture {
+	display: block;
+	margin-bottom: 2.5%;
+}
 .woocommerce-product-gallery__wrapper.images picture:only-of-type .wp-post-image {
 	margin-bottom: 0;
 }
@@ -775,8 +779,9 @@ html.no-scroll body {
 	.sm_gallery_display_button.active {
 		background-color: #999;
 	}
-	.woocommerce-product-gallery__wrapper picture {
+	.woocommerce-product-gallery__wrapper.images picture {
 		display: none;
+		margin-bottom: 0;
 	}
 	.woocommerce-product-gallery__wrapper picture.active {
 		display: inline;
@@ -810,6 +815,9 @@ html.no-scroll body {
 	.sm-content-title,
 	.sm-content-intro p {
 		width: 75%!important;
+	}
+	.wc-tabs li {
+		margin-bottom: 0;
 	}
 
 

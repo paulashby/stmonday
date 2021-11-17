@@ -404,6 +404,7 @@ function sm_render_all_product_shots ( $html ) {
 		ob_start(); // Start buffering
 
 		echo sm_get_image_markup($image_id, $responsive_image_sizes, true);
+		$button_count++;
 
 	    // Loop through gallery Image Ids
 		foreach( $product->get_gallery_image_ids() as $image_id ) {
@@ -818,7 +819,6 @@ function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery
 function sm_get_display_button_markup($button_count){
 
 	// Product images are displayed one at a time at narrow widths. These buttons are positioned under the image and control which product image is shown.
-
 	if($button_count < 2){ return; }
 
 	$buttons = "<div class='sm_gallery_display_buttons'>";

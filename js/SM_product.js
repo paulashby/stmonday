@@ -31,17 +31,7 @@ var SM_product = (function () {
 			if(data.image_gallery !== false) {
 				// data.image_gallery is false if image not found for colour variation
 				$('.woocommerce-product-gallery__wrapper').html(data.image_gallery);
-				$('.sm_gallery_display_button').click( function(){
-
-					var gallery_images;
-					var now_active_num = $(this).data('num');
-
-					if($(this).hasClass('active')){
-						return;
-					}
-					update_active('.woocommerce-product-gallery__wrapper picture', now_active_num);
-					update_active('.sm_gallery_display_buttons .sm_gallery_display_button', now_active_num);
-				});
+				$('.sm_gallery_display_button').click(update_product_shot_view);
 			}
 			if(data.sizing_tab_content !== false) {
 				$('#tab-sizing_tab').html(data.sizing_tab_content);
@@ -118,6 +108,17 @@ var SM_product = (function () {
 			buy_now_button.attr('href', checkout_url );
 		}
 	}
+	function update_product_shot_view(){
+
+		var gallery_images;
+		var now_active_num = $(this).data('num');
+
+		if($(this).hasClass('active')){
+			return;
+		}
+		update_active('.woocommerce-product-gallery__wrapper picture', now_active_num);
+		update_active('.sm_gallery_display_buttons .sm_gallery_display_button', now_active_num);
+	}
 
 	function do_action(settings) {
 
@@ -154,6 +155,9 @@ var SM_product = (function () {
 		} else {
 			// Load only buy now button - the image gallery is already loaded as we didn't need to filter by variation
 			update_variation_elements('buy_now_button');
+
+			// Add listeners to product shot 'carousel' buttons
+			$('.sm_gallery_display_button').click(update_product_shot_view);
 		}
 
 		// On product colour change, get new Buy Now button and image gallery
