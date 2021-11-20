@@ -477,6 +477,18 @@ body:not(.launch) .mast-head .container .nav {
 		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif!important;
 	}
 
+	.lookbook .main .container .row {
+		display: flex;
+		justify-content: center;
+	}
+	.lookbook .main .container .col-xl-3 {
+		display: none;
+	}
+	.lookbook .entry-title {
+	  text-align: center;
+	}
+
+
 /* Email sign up */
 .launch .mast-head {
 	padding-bottom: 1.5rem;
@@ -710,7 +722,7 @@ html.no-scroll body {
 	}
 }
 
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 991px) {
 
 	.entry-summary .button,
 	.tabs.wc-tabs a {

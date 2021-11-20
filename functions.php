@@ -204,6 +204,8 @@ function apply_modes($classes) {
 // END Custom Site Settings page /////////////////////////////
 //////////////////////////////////////////////////////////////
 
+// When Site Settings > Lookbook is active, footer is removed by neto-child/footer.php
+
 // Add elements before footer
 add_action( 'get_footer', 'sm_pre_footer' );
 
@@ -222,6 +224,7 @@ function sm_pre_footer() {
 	$pre .= '<div class="sm-footer-pusher"></div>';
 	echo $pre;
 }
+
 
 // Hide cart buttons if in launch mode
 add_filter( 'woocommerce_is_purchasable', 'sm_hide_add_to_cart_button', 10, 2);
