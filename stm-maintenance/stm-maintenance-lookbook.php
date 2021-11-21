@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>S  O  O  N</title>
-	<link rel="icon" href="http://stmonday.io/wp-content/uploads/2021/11/cropped-StM_Logotype_Favicon_512px_Oct21-32x32.png" sizes="32x32">
+	<link rel="icon" href="<?php echo content_url() ?>/uploads/2021/11/cropped-StM_Logotype_Favicon_512px_Oct21-32x32.png" sizes="32x32">
 	<style>
 		main {
 			max-width: 80%;
@@ -24,7 +24,7 @@
 		  width:  100%;
 		  margin-left: auto;
 		  margin-right: auto;
-		  max-width: 800px;
+		  max-width: 700px;
 		}
 		.marque {
 		  margin-left: auto;
