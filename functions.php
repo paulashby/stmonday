@@ -1,21 +1,41 @@
 <?php
 add_action( 'wp_loaded', function() {
 	global $pagenow;
+	$request_uri = $_SERVER['REQUEST_URI'];
+
 	if(
+		// Allow log in and lookbook pages (the lookbook page is a fully functional WordPress page, viewable during launch when site is in maintenance mode)
+
 		defined( 'IN_MAINTENANCE' )
 		&& IN_MAINTENANCE
 		&& $pagenow !== 'wp-login.php'
+		&& $request_uri !== '/lookbook/'
 		&& ! is_user_logged_in()
 	) {
-		header( 'HTTP/1.1 Service Unavailable', true, 503 );
-		header( 'Content-Type: text/html; charset=utf-8' );
-		header( 'Retry-After: 3600' );
-		if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' ) ) {
+		http_response_code(503);
+
+		if(mode_is_active('lookbook')) {
+			if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance-lookbook.php' ) ) {
+				require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance-lookbook.php' );
+			}
+		}
+		else if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' ) ) {
 			require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' );
 		}
 		die();
 	}
 });
+
+ 
+add_action( 'wp', 'serve_maintenance_page' );
+
+function serve_maintenance_page() {
+  // using is_page conditional for specific page ID
+  if ( is_page( 126 ) ) {
+    setcookie( "wpdocs-my-custom-cookie", "true", time() + ( YEAR_IN_SECONDS * 5 ), COOKIEPATH, COOKIE_DOMAIN, false ); 
+  }
+}
+
 
 // enqueue parent styles and custom scripts and provide config data to page
 add_action( 'wp_enqueue_scripts', 'sm_enqueue_resources' );
@@ -203,6 +223,7 @@ function apply_modes($classes) {
 
 // END Custom Site Settings page /////////////////////////////
 //////////////////////////////////////////////////////////////
+
 
 // When Site Settings > Lookbook is active, footer is removed by neto-child/footer.php
 

@@ -38,30 +38,32 @@ Text Domain: netochild
 	font-display: swap;
 }
 @font-face {
-	font-family: 'icomoon';
-	src:  url('fonts/icomoon.eot?q3c06e');
-	src:  url('fonts/icomoon.eot?q3c06e#iefix') format('embedded-opentype'),
-	url('fonts/icomoon.ttf?q3c06e') format('truetype'),
-	url('fonts/icomoon.woff?q3c06e') format('woff'),
-	url('fonts/icomoon.svg?q3c06e#icomoon') format('svg');
-	font-weight: normal;
-	font-style: normal;
-	font-display: block;
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?j20qq0');
+  src:  url('fonts/icomoon.eot?j20qq0#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?j20qq0') format('truetype'),
+    url('fonts/icomoon.woff?j20qq0') format('woff'),
+    url('fonts/icomoon.svg?j20qq0#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
-[class^="icon-"], [class*=" icon-"] {
-	/* use !important to prevent issues with browser extensions that change fonts */
-	font-family: 'icomoon' !important;
-	speak: never;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 
 body, h1, h2, h3, h4, h5, h6, .sm-product-subtitle, .entry-content th, .comment-content th, .navigation-main > li > a, .navigation-header-secondary > li > a, .footer .nav-list-inline, .mast-head-right > a, .entry-sticky-notice, .entry-item-title, .item-title, .widget-title, .section-title, .module-callout-title, .product_meta > span, .wc-tabs a, .woocommerce-thankyou-order-details li strong, .wc-bacs-bank-details li strong, .woocommerce-EditAccountForm legend, .product_list_widget .product-title, .widget_shopping_cart .total, .site-logo, .head-search-input, .vc_general.vc_tta.vc_tta-tabs .vc_tta-panel-title > a, .elementor-2066 .elementor-element.elementor-element-54afa230 .elementor-heading-title {
 	font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif; !important; 
@@ -175,7 +177,8 @@ body:not(.launch) .mast-head .container .nav {
 .fas.fa-search:hover:before {
 	color: #f1f1f1;
 }
-.launch .head-cart {
+.launch .head-cart,
+.launch .head-search-trigger {
 	visibility: hidden;
 }
 /* Cart quantity element */
@@ -476,7 +479,9 @@ body:not(.launch) .mast-head .container .nav {
 		line-height: 15px;
 		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif!important;
 	}
-
+	.lookbook #page {
+		min-height: auto;
+	}
 	.lookbook .main .container .row {
 		display: flex;
 		justify-content: center;
@@ -484,9 +489,46 @@ body:not(.launch) .mast-head .container .nav {
 	.lookbook .main .container .col-xl-3 {
 		display: none;
 	}
-	.lookbook .entry-title {
-	  text-align: center;
+	.lookbook .entry-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 0.5rem;
 	}
+	.lookbook .entry-header .entry-title {
+		background: #fff url('assets/images/StM_Lookbook_Bttn.svg') left center/contain no-repeat !important;
+	  height: 4.5rem;
+	  margin-top: -1rem;
+	  padding-top: 1.4rem;
+	  text-align: right;
+	  width: 15.5rem;
+	}
+	
+	.lookbook .elementor-swiper-button.swiper-button-disabled {
+		opacity: 0.15;
+	}
+	.lookbook .eicon-chevron-left,
+	.lookbook .eicon-chevron-right {
+		width: 3rem;
+		height: 3rem;
+		position: relative;
+		left: -1.5rem;
+	}
+	.lookbook .eicon-chevron-right {
+		left: 2.2rem;
+	}
+	.lookbook .eicon-chevron-right::before,
+	.lookbook .eicon-chevron-left::before {
+		font-family: 'icomoon' !important;
+		color: #000;
+		font-size: 2rem;
+	}
+	.lookbook .elementor-swiper-button:hover .eicon-chevron-right::before,
+	.lookbook .elementor-swiper-button:hover .eicon-chevron-left::before {
+		font-family: 'icomoon' !important;
+		color: #f00;
+	}
+
 
 
 /* Email sign up */
@@ -700,6 +742,9 @@ html.no-scroll body {
 	.sm-content-title,
 	.sm-content-intro p {
 		width: 75%!important;
+	}	
+	.lookbook .col-lg-8 {
+		width: 100%;
 	}
 }
 @media only screen and (max-width: 1024px) {
@@ -849,6 +894,12 @@ html.no-scroll body {
 	}
 }	
 
+@media only screen and (max-width: 645px) {
+	.lookbook .container {
+		max-width: 90%;
+	}
+}
+
 @media only screen and (max-width: 575px) {
 
 	#content_page_banner .elementor-container {
@@ -871,6 +922,16 @@ html.no-scroll body {
 	.maxslider .maxslider-slide .maxslider-slide-content .maxslider-slide-subtitle {
 		font-size: 2.2rem!important;
 		line-height: 2.65rem!important;
+	}
+	.lookbook .eicon-chevron-right::before,
+	.lookbook .eicon-chevron-left::before {
+		font-size: 1.5rem;
+	}
+	.lookbook .eicon-chevron-left {
+		left: -0.15rem;
+	}
+	.lookbook .eicon-chevron-right {
+		left: 1.6rem;
 	}
 }
 
@@ -899,5 +960,16 @@ html.no-scroll body {
 	.variation-radios label {
 		width:  152px;
 		margin: -1px 0;
+	}
+	.lookbook .main {
+		padding-top: 2rem;
+	}
+	.lookbook .entry-header {
+		margin-bottom: 1rem;
+	}
+	.lookbook .entry-header .entry-title {
+		background-position-x: center !important;
+		padding-top: 80px;
+		text-align: center;
 	}
 }
