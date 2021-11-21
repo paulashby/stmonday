@@ -26,17 +26,6 @@ add_action( 'wp_loaded', function() {
 	}
 });
 
- 
-add_action( 'wp', 'serve_maintenance_page' );
-
-function serve_maintenance_page() {
-  // using is_page conditional for specific page ID
-  if ( is_page( 126 ) ) {
-    setcookie( "wpdocs-my-custom-cookie", "true", time() + ( YEAR_IN_SECONDS * 5 ), COOKIEPATH, COOKIE_DOMAIN, false ); 
-  }
-}
-
-
 // enqueue parent styles and custom scripts and provide config data to page
 add_action( 'wp_enqueue_scripts', 'sm_enqueue_resources' );
 
