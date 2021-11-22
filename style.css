@@ -219,8 +219,8 @@ body:not(.launch) .mast-head .container .nav {
 }
 .sm-product-subtitle, 
 .entry-summary .price {
-	font-size: 1.38rem;
-	line-height: 1.55rem;
+	font-size: 0.7rem;
+	line-height: 1rem;
 	text-align: center;
 	margin-bottom: 1rem;
 	color: #999;
@@ -528,7 +528,9 @@ body:not(.launch) .mast-head .container .nav {
 		font-family: 'icomoon' !important;
 		color: #f00;
 	}
-
+	.lookbook .elementor img {
+		max-height: 500px;
+	}
 
 
 /* Email sign up */
