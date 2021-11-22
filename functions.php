@@ -277,11 +277,13 @@ function sm_remove_listings_buttons( $product ){
 	return;
 }
 
-// Use radio buttons for variations
+// Use radio buttons for variations - this is called separately for each product attribute
 // https://stackoverflow.com/questions/36219833/woocommerce-variations-as-radio-buttons
 add_filter('woocommerce_dropdown_variation_attribute_options_html', 'variation_radio_buttons', 20, 2);
 
 function variation_radio_buttons($html, $args) {
+
+	$MAX_PER_ROW = 3;
 
 	$args = wp_parse_args(apply_filters('woocommerce_dropdown_variation_attribute_options_args', $args), array(
 		'options'          => false,
@@ -315,6 +317,9 @@ function variation_radio_buttons($html, $args) {
 
 	$radios = '<div class="variation-radios">';
 
+	// Store radio entries in array so we can structure html according to number of items
+	$radio_entries = array();
+
 	if(!empty($options)) {
 		if($product && taxonomy_exists($attribute)) {
 			$terms = wc_get_product_terms($product->get_id(), $attribute, array(
@@ -324,18 +329,45 @@ function variation_radio_buttons($html, $args) {
 			foreach($terms as $term) {
 				if(in_array($term->slug, $options, true)) {
 					$id = $name.'-'.$term->slug;
-					$radios .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($term->slug).'" '.checked(sanitize_title($args['selected']), $term->slug, false).'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $term->name)).'</label>';
+					$radio_entries[] = '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($term->slug).'" '.checked(sanitize_title($args['selected']), $term->slug, false).'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $term->name)).'</label>';
 				}
 			}
 		} else {
 			foreach($options as $option) {
 				$id = $name.'-'.$option;
-				$checked    = sanitize_title($args['selected']) === $args['selected'] ? checked($args['selected'], sanitize_title($option), false) : checked($args['selected'], $option, false);
-				$radios    .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($option).'" id="'.sanitize_title($option).'" '.$checked.'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $option)).'</label>';
+				$checked = sanitize_title($args['selected']) === $args['selected'] ? checked($args['selected'], sanitize_title($option), false) : checked($args['selected'], $option, false);
+				$radio_entries[] = '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($option).'" id="'.sanitize_title($option).'" '.$checked.'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $option)).'</label>';
 			}
 		}
 	}
+	if($attribute == "pa_size" || $radio_entries <= $MAX_PER_ROW) {
 
+		// All radio buttons will fit on single row
+		$radios .= "<div class='variation-radio-row'>" . implode("", $radio_entries) . "</div";
+	} else {
+
+		// Multiple rows of buttons required
+		$count = 0;
+
+		foreach ($radio_entries as $radio) {
+			
+			switch ($count % $MAX_PER_ROW) {
+
+				case 0:
+				$radios .= "<div class='variation-radio-row'>$radio";
+				break;
+
+				case $MAX_PER_ROW - 1:
+				$radios .= "$radio</div>";
+				break;
+
+				default:
+				$radios .= $radio;
+				break;
+			} 
+			$count++;
+		}
+	}
 	$radios .= '</div>';
 
 	return $html.$radios;

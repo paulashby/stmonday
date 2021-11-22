@@ -96,6 +96,8 @@ a:visited,
 }
 .variation-radios{
 	min-width: 152px;
+}
+.variation-radio-row {
 	display: flex;
 	justify-content: center;
 }
@@ -123,6 +125,7 @@ a:visited,
 	font-size: 12px;
 	box-shadow: #c4c2c2 0px 0px 0px 1px;
 	background-color: #fff;
+	margin: 0.5px 0;
 }
 .variation-radios input[type="radio"]:checked + label {
 	color: #000;
@@ -785,6 +788,12 @@ html.no-scroll body {
 	#content_page_banner .elementor-container {
 		width: 690px;
 	}
+	.col-md-6.col-xs-12:nth-child(1) {
+		width:  45%;
+	}
+	.col-md-6.col-xs-12:nth-child(2) {
+		width:  55%;
+	}
 }
 
 @media only screen and (max-width: 767px) {
@@ -878,6 +887,12 @@ html.no-scroll body {
 	.wc-tabs li {
 		margin-bottom: 0;
 	}
+	.col-md-6.col-xs-12:nth-child(1),
+	.col-md-6.col-xs-12:nth-child(2) {
+		/* These are overriden at 767 */
+		width:  100%;
+	}
+
 
 
 	/* Scroll product gallery images */
@@ -943,26 +958,27 @@ html.no-scroll body {
 		width: 80%;
 		left: 10%;
 	}
-}
-
-/*@media only screen and (max-width: 360px) {
-	.maxslider .maxslider-slide .maxslider-slide-content .maxslider-slide-title,
-	.maxslider .maxslider-slide .maxslider-slide-content .maxslider-slide-subtitle {
-		font-size: 2.5rem;
-		line-height: 3rem;
+	.variation-radio-row {
+		display: block;
 	}
-}*/
+	.variation-radios label {
+		margin: 0.5px auto;
+		position: relative;
+		min-width: 200px;
+		width: calc(60% - 48px)
+	}
+}
 
 @media only screen and (max-width: 330px) {
 
-	.variation-radios {
+/*	.variation-radios {
 		flex-wrap: wrap;
 		justify-content: center;
 	}
 	.variation-radios label {
 		width:  152px;
 		margin: -1px 0;
-	}
+	}*/
 	.lookbook .main {
 		padding-top: 2rem;
 	}
