@@ -9,8 +9,10 @@ add_action( 'wp_loaded', function() {
 		defined( 'IN_MAINTENANCE' )
 		&& IN_MAINTENANCE
 		&& $pagenow !== 'wp-login.php'
-		&& $request_uri !== '/lookbook/'
+		&& ! is_admin()
+		&& ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
 		&& ! is_user_logged_in()
+		&& $request_uri !== '/lookbook/'
 	) {
 		http_response_code(503);
 
