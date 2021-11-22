@@ -765,6 +765,11 @@ function get_image_gallery($product_id, $colour){
 	$image_gallery = array();
 	$default_image_id = $product->get_image_id();
 
+	if(! is_string($default_image_id) || strlen($default_image_id) == 0) {
+		error_log("Error: Default image unavailable for " . $product->get_title());
+		return wc_placeholder_img();
+	}
+
 	$default_colour = get_field( "colour", $default_image_id);
 	$default_image_ids = array();
 	$image_colour = $default_colour;
@@ -773,7 +778,7 @@ function get_image_gallery($product_id, $colour){
 
 	// $colour is false if product has no colour variations
 	if($colour === false || $image_colour === $colour) {
-		// If product has colour variations, only include the main image if its colour field matches the value of $colour
+		// If product has colour variations, the main image should only be included if its colour field matches the value of $colour
 		$image_gallery[] = sm_get_image_markup($default_image_id, $responsive_image_sizes, true);
 	} else {
 		$default_image_ids[] = $default_image_id;
@@ -787,7 +792,6 @@ function get_image_gallery($product_id, $colour){
 		$image_data['gallery_images'][] = sm_get_display_button_markup($num_images);
 		return $image_data['gallery_images'];
 	}
-
 	// No images found for colour variation - use default images as fallback
 	$image_data = get_gallery_images($default_image_ids, $default_colour, $colour, $image_gallery, true);
 	$image_gallery = $image_data['gallery_images'];
@@ -810,15 +814,12 @@ function get_product_gallery_image_sizes() {
 function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery, $fallback = false) {
 
 	$responsive_image_sizes = get_product_gallery_image_sizes();
+	$default_image_ids = array();
 
 	foreach( $image_ids as $image_id ) {
-
-		$attachment = get_post($image_id);
-		
-		$description = strtolower($attachment->post_content);
 		$image_colour  = get_field( "colour", $image_id );
 		$active_image = count($image_gallery) === 0;
-		$default_image_ids = array();
+		// $default_image_ids = array();
 		
 		if($fallback || $colour === false || $image_colour === $colour) {
 			$image_gallery[] = sm_get_image_markup($image_id, $responsive_image_sizes, $active_image);
