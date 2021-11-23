@@ -506,7 +506,6 @@ body:not(.launch) .mast-head .container .nav {
 	  text-align: right;
 	  width: 15.5rem;
 	}
-	
 	.lookbook .elementor-swiper-button.swiper-button-disabled {
 		opacity: 0.15;
 	}
@@ -533,6 +532,9 @@ body:not(.launch) .mast-head .container .nav {
 	}
 	.lookbook .elementor img {
 		max-height: 500px;
+	}
+	.lookbook .swiper-pagination {
+		visibility: hidden;
 	}
 
 

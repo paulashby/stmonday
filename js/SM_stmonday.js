@@ -4,6 +4,7 @@ var SM_stmonday = (function () {
 		message = '';
 
 	$( document ).ready(function() {
+		
 		if(sm_config.email_signup_form !== -1) {
 			$('.mast-head .row-table div').eq(1).after(sm_config.email_signup_form);
 			$('.es_txt_email').attr('value', '');
@@ -18,5 +19,16 @@ var SM_stmonday = (function () {
 				});
 			}
 		}
+		// Go back to first slide if no more to show
+		$('.eicon-chevron-right').click(on_next);
 	});
+
+	function on_next (e) {
+		
+		if($(this).parent().hasClass('swiper-button-disabled')) {
+			e.stopPropagation()
+			e.preventDefault();
+			$('.swiper-pagination-bullet:eq(0)').trigger('click');
+		}
+	}
 }());
