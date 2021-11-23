@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'TT Norms Pro';
+    src: url('fonts/TTNormsPro-DmBd.eot');
+    src: url('fonts/TTNormsPro-DmBd.eot?#iefix') format('embedded-opentype'),
+        url('fonts/TTNormsPro-DmBd.woff2') format('woff2'),
+        url('fonts/TTNormsPro-DmBd.woff') format('woff'),
+        url('fonts/TTNormsPro-DmBd.ttf') format('truetype'),
+        url('fonts/TTNormsPro-DmBd.svg#TTNormsPro-DmBd') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}

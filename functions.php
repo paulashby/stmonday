@@ -43,6 +43,10 @@ function sm_enqueue_resources() {
     // https://wordpress.stackexchange.com/questions/230085/get-template-directory-uri-pointing-to-parent-theme-not-child-theme
 	wp_enqueue_script( 'stmonday-script', get_stylesheet_directory_uri() . '/js/SM_stmonday.js', array(), '1.0.0', true );
 
+	if(is_page('lookbook')) {
+		wp_enqueue_style( 'lookbook-font', get_stylesheet_directory_uri() . '/style_lookbook.css' );
+	}
+
 	$email_signup_form = -1;
 	
 	if(mode_is_active('launch')){
