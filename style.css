@@ -554,7 +554,8 @@ body:not(.launch) .mast-head .container .nav {
 	width: 250px;
 }
 .row-table .emaillist label {
-	display: inline;
+	display: inline-block;
+	width: calc(100% - 30px);
 	font-size: 0.65rem;
 	position: relative;
 	top: -4px;
