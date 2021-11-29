@@ -558,7 +558,7 @@ body:not(.launch) .mast-head .container .nav {
 }
 .row-table .emaillist label {
 	display: inline-block;
-	width: calc(100% - 30px);
+	width: 100%;
 	font-size: 0.65rem;
 	position: relative;
 	top: -4px;
@@ -595,7 +595,7 @@ body:not(.launch) .mast-head .container .nav {
 	font-size: 0.75rem;
 	margin-left: 0.2rem;
 }
-/* Email placeholder text - these as they won't work if the declarations are grouped! */
+/* Email placeholder text - these separate as they won't work if the declarations are grouped! */
 .es_subscription_form input[type="email"] {
 	-moz-appearance: textfield;
 	-webkit-appearance: textfield;
