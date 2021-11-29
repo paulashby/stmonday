@@ -26,7 +26,7 @@ var SM_stmonday = (function () {
 	function on_next (e) {
 		
 		if($(this).parent().hasClass('swiper-button-disabled')) {
-			e.stopPropagation()
+			e.stopPropagation();
 			e.preventDefault();
 			$('.swiper-pagination-bullet:eq(0)').trigger('click');
 		}
