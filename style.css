@@ -498,7 +498,7 @@ body:not(.launch) .mast-head .container .nav {
 		justify-content: center;
 		margin-bottom: 0.5rem;
 	}
-	.lookbook .entry-header .entry-title {
+	.slug__lookbook .entry-header .entry-title {
 		font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 		font-weight: 600;
 		background: #fff url('assets/images/StM_Lookbook_Bttn.svg') left center/contain no-repeat !important;
