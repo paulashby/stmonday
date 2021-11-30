@@ -4,27 +4,32 @@ add_action( 'wp_loaded', function() {
 	$request_uri = $_SERVER['REQUEST_URI'];
 
 	if(
-		// Allow log in and lookbook pages (the lookbook page is a fully functional WordPress page, viewable during launch when site is in maintenance mode)
-
-		defined( 'IN_MAINTENANCE' )
-		&& IN_MAINTENANCE
-		&& $pagenow !== 'wp-login.php'
-		&& ! is_admin()
-		&& ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
+		$pagenow !== 'wp-login.php' 
+		&& ! is_admin() 
+		&& ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) 
 		&& ! is_user_logged_in()
-		&& $request_uri !== '/lookbook/'
 	) {
-		http_response_code(503);
 
-		if(mode_is_active('lookbook')) {
+		if (
+			defined( 'IN_MAINTENANCE' )
+			&& IN_MAINTENANCE
+		) {
+			http_response_code(503);
+			if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' ) ) {
+
+				// Show maintenance page
+				require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' );
+			}
+			die();
+		}
+		else if ( mode_is_active('lookbook') && $request_uri !== '/lookbook/' ) {
 			if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance-lookbook.php' ) ) {
+				
+				// Show soft launch holding page with link to lookbook
 				require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance-lookbook.php' );
 			}
+			die();
 		}
-		else if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' ) ) {
-			require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance.php' );
-		}
-		die();
 	}
 });
 
