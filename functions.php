@@ -212,13 +212,16 @@ function edit_site_settings_title() {
 // -- Apply Site Settings --------------------------------- //
 
 // Add mode classes to body tag
-add_filter('body_class', 'apply_modes');
+add_filter('body_class', 'add_body_classes');
 
-function apply_modes($classes) {
+function add_body_classes($classes) {
 
 	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
 		
 		$id = $post->ID;
+		$slug = get_queried_object()->post_name;
+		
+		$classes[] = "slug__$slug";
 
 		$modes = get_field('modes', $id);
 		if( $modes ){
