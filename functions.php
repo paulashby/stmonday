@@ -2,7 +2,10 @@
 add_action( 'wp_loaded', function() {
 	global $pagenow;
 	$request_uri = $_SERVER['REQUEST_URI'];
-
+	$complianz_request = strpos($request_uri, "/wp-json/complianz/v1") !== false;
+	$cookie_policy_request = strpos($request_uri, "/cookie-policy") !== false;
+	$privacy_statement_request = strpos($request_uri, "/privacy-statement") !== false;
+	
 	if(
 		$pagenow !== 'wp-login.php' 
 		&& ! is_admin() 
@@ -22,9 +25,15 @@ add_action( 'wp_loaded', function() {
 			}
 			die();
 		}
-		else if ( mode_is_active('lookbook') && $request_uri !== '/lookbook/' ) {
+		else if ( 
+			mode_is_active('lookbook') 
+			&& $request_uri !== '/lookbook/'
+			&& !$complianz_request 
+			&& !$cookie_policy_request
+			&& !$privacy_statement_request 
+		) {
 			if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance-lookbook.php' ) ) {
-				
+
 				// Show soft launch holding page with link to lookbook
 				require_once( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance-lookbook.php' );
 			}
