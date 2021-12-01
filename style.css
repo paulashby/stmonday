@@ -542,6 +542,9 @@ body:not(.launch) .mast-head .container .nav {
 		color: #0052b5;
 	}
 
+.privacy-policy .cmplz-show {
+  display: none;
+}
 
 /* Email sign up */
 .launch .mast-head {
