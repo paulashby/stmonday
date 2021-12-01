@@ -217,13 +217,17 @@ add_filter('body_class', 'add_body_classes');
 function add_body_classes($classes) {
 
 	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
-		
-		$id = $post->ID;
-		$slug = get_queried_object()->post_name;
-		
-		$classes[] = "slug__$slug";
 
+		$queried_ob = get_queried_object();
+
+		if ( is_object($queried_ob) ) {
+			$slug = get_queried_object()->post_name;
+			$classes[] = "slug__$slug";
+		}
+
+		$id = $post->ID;
 		$modes = get_field('modes', $id);
+		
 		if( $modes ){
 			foreach ($modes as $mode) {
 				$classes[] = $mode;
