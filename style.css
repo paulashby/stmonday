@@ -506,7 +506,7 @@ body:not(.launch) .mast-head .container .nav {
 	  margin-top: -1rem;
 	  padding-top: 1.4rem;
 	  text-align: right;
-	  width: 15.5rem;
+	  width: 17.2rem;
 	}
 	.lookbook .elementor-swiper-button.swiper-button-disabled {
 		opacity: 0.15;
@@ -541,11 +541,11 @@ body:not(.launch) .mast-head .container .nav {
 	.lookbook .es_subscription_form.es_shortcode_form a {
 		color: #0052b5;
 	}
-
+/*
 .privacy-policy .cmplz-show {
   display: none;
 }
-
+*/
 /* Email sign up */
 .launch .mast-head {
 	padding-bottom: 1.5rem;
