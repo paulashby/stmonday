@@ -6,9 +6,8 @@
 		
 		$id = $sm_site_settings->ID; 
 		$modes = get_field('modes', $id);
-		$lookbook = $modes && (array_search('lookbook', $modes) != false);
+		$lookbook = $modes && (array_search('lookbook', $modes) !== false);
 	}
-
 
 	if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_location( 'footer' ) ) : ?>
 

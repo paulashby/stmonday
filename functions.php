@@ -63,7 +63,7 @@ function sm_enqueue_resources() {
 
 	$email_signup_form = -1;
 	
-	if(mode_is_active('launch')){
+	if(mode_is_active('emailsubtop')){
 			
 		// Get email sign up form from Email Subscribers plug in
 		$email_signup_form = do_shortcode("[email-subscribers-form id='2']");
@@ -250,7 +250,7 @@ function sm_pre_footer() {
 
 	$pre = "";
 
-	if(mode_is_active('launch')){
+	if(mode_is_active('emailsubtop')){
 
 		// Add container for email signup feedback messages
 		$pre.= '<div class="signup-feedback"><a class="signup-message__button-wrap"><div class="signup-message__button"></div></a><div id="signup-message" class="signup-message signup-message--inactive">
@@ -261,31 +261,6 @@ function sm_pre_footer() {
 	$pre .= '<div class="sm-footer-pusher"></div>';
 	echo $pre;
 }
-
-
-// Hide cart buttons if in launch mode
-add_filter( 'woocommerce_is_purchasable', 'sm_hide_add_to_cart_button', 10, 2);
-
-function sm_hide_add_to_cart_button( $value, $product ) {
-
-	if(mode_is_active('launch')){
-		 $value = false;
-	}
-	
-	return $value;
-}
-
-// Hide prices if in launch mode
-add_filter( 'woocommerce_get_price_html', 'sm_remove_price', 100, 2);
-
-function sm_remove_price( $price, $product ){     
-     
-     if(mode_is_active('launch')){
-     	return ;	
-     }
-     return $price;
-}
-
 
 // Change breadcrumb separator to pipe character
 add_filter( 'woocommerce_breadcrumb_defaults', 'sm_change_breadcrumb_delimiter', 999 );
@@ -507,18 +482,17 @@ add_action( 'woocommerce_after_add_to_cart_form', 'sm_after_add_to_cart_form' );
 
 function sm_after_add_to_cart_form(){
 
-	if( ! mode_is_active('launch')) {
-		global $product;
+	global $product;
 
-		$product_id = $product->get_id();
-		$settings = array(
-			'product_id' => $product->get_id(),
-			'quantity' => 1,
-			'placeholder' => true
-		);
-		$buy_now_button = get_buy_now_button($settings);
-		echo "<div id='sm_buy_now_button_wrapper'>$buy_now_button</div>";
-	}
+	$product_id = $product->get_id();
+	$settings = array(
+		'product_id' => $product->get_id(),
+		'quantity' => 1,
+		'placeholder' => true
+	);
+	$buy_now_button = get_buy_now_button($settings);
+	echo "<div id='sm_buy_now_button_wrapper'>$buy_now_button</div>";
+
 }
 
 // Variation images are sizing guides, so we want to load our thumbnails from the image gallery
