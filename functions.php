@@ -30,7 +30,7 @@ add_action( 'wp_loaded', function() {
 			&& $request_uri !== '/lookbook/'
 			&& !$complianz_request 
 			&& !$cookie_policy_request
-			&& !$privacy_statement_request 
+			&& !$privacy_statement_request
 		) {
 			if ( file_exists( WP_CONTENT_DIR . '/stm-maintenance/stm-maintenance-lookbook.php' ) ) {
 
@@ -227,7 +227,7 @@ function add_body_classes($classes) {
 
 		$id = $post->ID;
 		$modes = get_field('modes', $id);
-		
+
 		if( $modes ){
 			foreach ($modes as $mode) {
 				$classes[] = $mode;

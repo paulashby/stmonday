@@ -21,17 +21,6 @@ var SM_stmonday = (function () {
 		}
 		// Go back to first slide if no more to show
 		$('.eicon-chevron-right').click(on_next);
-
-		if($('body').hasClass('launch') && $('body').hasClass('lookbook')) {
-
-			$('.cmplz-link').click( function(e) {
-				// No ajax load when in lookbook mode
-				e.stopPropagation();
-				e.preventDefault();
-				window.open(this.href);
-				return false;
-			});
-		}
 	});
 
 	function on_next (e) {
