@@ -150,6 +150,9 @@ body:not(.launch) .mast-head .container .nav {
 .mast-head-right .mobile-nav-trigger {
 	display: none;
 }
+.mobmenu .mast-head-right .mobile-nav-trigger {
+	display: block;	
+}
 .mast-head-right {
 	margin-top: 1.6rem;
 }
@@ -210,6 +213,25 @@ body:not(.launch) .mast-head .container .nav {
 .fas.fa-search:before {
 	top: 0.26rem; 
 	content: "\e901";
+}
+#mobilemenu {
+	background-color: #fff;
+	box-shadow: 0px 0px 25px 0px #aaa;
+}
+#mobilemenu .mm-navbar {
+	border-bottom: none;
+}
+#mobilemenu .mm-title {
+	display: none;
+}
+#mobilemenu .menu-item {
+	color: #000;
+	font-family: "TT Norms Pro", Verdana, Arial, sans-serif;
+	font-size: 1rem;
+	letter-spacing: 1px;
+	text-align: center;
+	text-transform: uppercase;
+	border-color: #fff;
 }
 .main .container .row > div:first-of-type .elementor-widget-wrap {
 	padding: 10px 0;
@@ -541,11 +563,10 @@ body:not(.launch) .mast-head .container .nav {
 	.lookbook .es_subscription_form.es_shortcode_form a {
 		color: #0052b5;
 	}
-/*
 .privacy-policy .cmplz-show {
   display: none;
 }
-*/
+
 /* Email sign up */
 .launch .mast-head {
 	padding-bottom: 1.5rem;
