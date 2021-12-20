@@ -133,15 +133,30 @@ a:visited,
 	z-index: 10;
 }
 body:not(.lookbooklinktop) .mast-head .container .nav {
-	height: 1.2rem;
-	margin-top:  1.15rem;
+	margin-top: 0.85rem;
+}
+.ukroundeltop .mast-head .container .nav {
 	background: #fff url('assets/images/roundel.png') left center/contain no-repeat !important;
 }
 .row-table .col-lg-2 .site-logo	{
 	text-align: center;
 }
-.col-lg-2.col-md-5.col-xs-12 {
+.topmenu .mast-head::after {
+	border-bottom: 1px solid #e6e6e6;
+	content: "";
 	width: 100%;
+	position: absolute;
+	bottom: 2.5rem;
+}
+.col-lg-2.col-md-5.col-xs-12,
+.topmenu .col-lg-5.col-md-12.col-xs-12 {
+	width: 100%;
+}
+.topmenu .col-lg-5.col-md-12.col-xs-12 {
+	top: 6.5rem;
+}
+#menu-lookbook-product-categories {
+	text-align: center;
 }
 .site-logo img {
 	max-width: 280px !important;
@@ -169,6 +184,15 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 .iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
 .iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 	top: 0.7rem;
+}
+.mm-close::after,
+.head-search-dismiss .fas.fa-times::before {
+    content: '\e903';
+    font-family: 'icomoon' !important;
+}
+.head-search-dismiss {
+	font-size: 1rem;
+	margin-top: -9px;
 }
 .topmenu .mast-head-right .mobile-nav-trigger .fa-bars:before {
 	font-size: 1.488rem;
@@ -612,6 +636,9 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 .emailsubtop .mast-head {
 	padding-bottom: 1.5rem;
 }
+.topmenu .mast-head {
+	padding-bottom: 5rem;
+}
 .mast-head .container .row-table {
 	position: relative;
 }
@@ -851,6 +878,10 @@ html.no-scroll body {
 	.tabs.wc-tabs a {
 		font-size: 0.7rem;
 	}
+	body:not(.lookbooklinktop) .mast-head .container .nav {
+		height: 1.2rem;
+		margin-top: 1.15rem;
+	}
 	.topmenu .mast-head-right .mobile-nav-trigger {
 		display: block;	
 	}
@@ -859,6 +890,9 @@ html.no-scroll body {
 	    display: flex;
 	    flex-direction: row;
 	    justify-content: flex-start;
+	}
+	.topmenu .mast-head::after {
+		border-bottom: 0;
 	}
 	.mast-head-right a.head-search-trigger {
 		margin-top: -0.7rem;
