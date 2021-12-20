@@ -160,10 +160,15 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 .header .col-lg-5.col-md-7.col-xs-12 {
 	position: absolute;
 	right: 0;
+	width: 10rem;
 }
 .mast-head-right .mobile-nav-trigger {
 	display: none;
 	visibility: hidden; 
+}
+.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
+.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+	top: 0.7rem;
 }
 .topmenu .mast-head-right .mobile-nav-trigger .fa-bars:before {
 	font-size: 1.488rem;
@@ -871,17 +876,24 @@ html.no-scroll body {
 	.emailsubtop .mast-head {
 		padding-bottom: 5.5rem;
 	}
+
 	.mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		position: absolute;
 		width: 153px;
 		right: -0.5rem;
 	}
+	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12, 
+	.iconstop.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		top: 4.85rem;
+	}
+	.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
+	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+			top: 1.55rem;	
+	}
 	.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: 1.8rem;
+		right: 2.35rem;
 	}
-	.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: 2.28rem;
-	}
+
 	#content_page_banner .elementor-container {
 		width: 690px;
 	}
@@ -1000,10 +1012,25 @@ html.no-scroll body {
 	.mast-head-right .mobile-nav-trigger {
 		margin-left:  0px;
 	}
-	.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: 30px;
-		left: auto;
+
+
+	.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
+	.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
+	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		display: flex;
+		justify-content: center;
+		right: 0;
+		width: 100%;
+		top: 4rem;
 	}
+	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		right: -13px;
+	}
+	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
+	.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		right: 0.9rem;
+		width: 8rem;
+	}	
 }	
 
 @media only screen and (max-width: 645px) {
@@ -1061,6 +1088,10 @@ html.no-scroll body {
 	.topmenu .mast-head .row-table .emaillist + div {
 	    left: calc(50% - 98px);
 	}
+	.topmenu.emailsubtop .mast-head .row-table .emaillist + div {
+	    left: auto;
+	    right: 0.9rem;
+	}
 	.head-cart-wrap {
 		right: 50%;
 	}
@@ -1081,6 +1112,13 @@ html.no-scroll body {
 		min-width: 200px;
 		width: calc(60% - 48px)
 	}
+	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		right: 0;
+		width: 100%;
+	}
+	.iconstop.emailsubtop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		right: -26px;
+	}
 	.emailsubtop.iconstop .mast-head .row-table .emaillist,
 	.topmenu.emailsubtop.iconstop .mast-head .row-table .emaillist {
 		width: calc(100% - 32px);	
@@ -1089,17 +1127,10 @@ html.no-scroll body {
 	.topmenu.emailsubtop .mast-head .row-table .emaillist {
 		width: 75%;
 	}
-	.emailsubtop.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
-	.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
-	.topmenu.emailsubtop.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		display: flex;
-		justify-content: center;
-		right: -13px;
-		width: 100%;
-	}
-	.emailsubtop.iconstop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
-	.iconstop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: 0;
+	.topmenu .mast-head-right .mobile-nav-trigger .fa-bars:before {
+		position: relative;
+		top: -6.5rem;
+		right: -4.2rem;
 	}
 }
 
