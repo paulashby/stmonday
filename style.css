@@ -1105,9 +1105,6 @@ html.no-scroll body {
 	    left: auto;
 	    right: 0.9rem;
 	}
-	.head-cart-wrap {
-		right: 50%;
-	}
 }
 
 @media only screen and (max-width: 400px) {
@@ -1152,6 +1149,10 @@ html.no-scroll body {
 		right: 0;
 		width: 100%;
 		top: 4rem;
+	}
+	.head-cart-wrap {
+		left: calc(50% - 127px);
+		right: calc(50% - 127px);
 	}
 }
 
