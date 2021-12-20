@@ -175,8 +175,7 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 	font-family: 'icomoon' !important;
 	position: absolute;
 	display: inline-block;
-	top: -0.485rem;
-	top: -5.3rem; /* top menu only */
+	top: -5.3rem;
 	visibility: visible;
 	left: 0.4rem;
 }
@@ -873,10 +872,13 @@ html.no-scroll body {
 		left: 15px;
 		right: auto;
 	}
+	.emailsubtop:not(.iconstop):not(.topmenu) .mast-head .row-table .emaillist{
+		left: calc(50% - 125px);
+		right: calc(50% - 125px);
+	}
 	.emailsubtop .mast-head {
 		padding-bottom: 5.5rem;
 	}
-
 	.mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		position: absolute;
 		width: 153px;
@@ -1013,7 +1015,6 @@ html.no-scroll body {
 		margin-left:  0px;
 	}
 
-
 	.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
 	.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
 	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
@@ -1023,6 +1024,12 @@ html.no-scroll body {
 		width: 100%;
 		top: 4rem;
 	}
+	.topmenu:not(.iconstop):not(.emailsubtop) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		display: block;
+		right: 2.35rem;
+		width: 153px;
+		top: auto;
+	}
 	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		right: -13px;
 	}
@@ -1031,6 +1038,7 @@ html.no-scroll body {
 		right: 0.9rem;
 		width: 8rem;
 	}	
+
 }	
 
 @media only screen and (max-width: 645px) {
@@ -1076,6 +1084,11 @@ html.no-scroll body {
 		top: 8rem;
 		width: calc(100% - 30px);
 	}
+	.emailsubtop:not(.iconstop):not(.topmenu) .mast-head .row-table .emaillist {
+		top: 4.1rem;
+		left: 15px;
+		right: auto;
+	}
 	.topmenu.emailsubtop .mast-head .row-table .emaillist,
 	.emailsubtop.iconstop .mast-head .row-table .emaillist,
 	.topmenu.emailsubtop.iconstop .mast-head .row-table .emaillist {
@@ -1112,13 +1125,6 @@ html.no-scroll body {
 		min-width: 200px;
 		width: calc(60% - 48px)
 	}
-	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: 0;
-		width: 100%;
-	}
-	.iconstop.emailsubtop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: -26px;
-	}
 	.emailsubtop.iconstop .mast-head .row-table .emaillist,
 	.topmenu.emailsubtop.iconstop .mast-head .row-table .emaillist {
 		width: calc(100% - 32px);	
@@ -1127,10 +1133,25 @@ html.no-scroll body {
 	.topmenu.emailsubtop .mast-head .row-table .emaillist {
 		width: 75%;
 	}
-	.topmenu .mast-head-right .mobile-nav-trigger .fa-bars:before {
-		position: relative;
+	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		right: 0;
+		width: 100%;
+	}
+	.iconstop.emailsubtop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		right: -13px;
+	}
+	.topmenu:not(.iconstop) .mast-head-right .mobile-nav-trigger .fa-bars:before {
 		top: -6.5rem;
 		right: -4.2rem;
+	}
+	.topmenu.emailsubtop:not(.iconstop) .mast-head-right .mobile-nav-trigger .fa-bars:before {
+		left: -5rem;
+	}
+	.topmenu:not(.iconstop):not(.emailsubtop) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		display: flex;
+		right: 0;
+		width: 100%;
+		top: 4rem;
 	}
 }
 
