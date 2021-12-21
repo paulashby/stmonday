@@ -179,8 +179,16 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 	width: 10rem;
 }
 .mast-head-right .mobile-nav-trigger {
-	display: none;
-	visibility: hidden; 
+/*	display: none;
+	visibility: hidden; */
+	font-size: 1px;
+	letter-spacing: -1px;
+	color: transparent;
+}
+.iconstop .mast-head-right > a:first-child {
+	position: absolute;
+	left: 1rem;
+	top: 2.33rem;
 }
 .iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
 .iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
@@ -196,12 +204,12 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 	margin-top: -9px;
 }
 .topmenu .mast-head-right .mobile-nav-trigger .fa-bars:before {
+	color: #000;
 	font-size: 1.488rem;
 	font-family: 'icomoon' !important;
 	position: absolute;
 	display: inline-block;
 	top: -5.3rem;
-	visibility: visible;
 	left: 0.4rem;
 }
 .topmenu.emailsubtop .mast-head-right .mobile-nav-trigger .fa-bars:before,
@@ -892,6 +900,9 @@ html.no-scroll body {
 	    flex-direction: row;
 	    justify-content: flex-start;
 	}
+	.topmenu .mast-head {
+		padding-bottom: 1rem;
+	}
 	.topmenu .mast-head::after {
 		border-bottom: 0;
 	}
@@ -899,6 +910,9 @@ html.no-scroll body {
 		margin-top: -0.7rem;
 	}
 		/* menu icons */
+	.iconstop .mast-head-right > a:first-child {
+		position: static;
+	}
 	.head-cart {
 		margin-top: -0.35rem;
 	}
@@ -1046,6 +1060,15 @@ html.no-scroll body {
 	.lookbook .mast-head {
 		padding-bottom: 1rem;
 	}
+	.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
+		margin-left: 0.9rem;
+	}
+	.iconstop:not(.emailsubtop) .mast-head {
+		padding-bottom:  3.4rem;
+	}
+	.iconstop.topmenu.emailsubtop .mast-head-right {
+		margin-left: -3rem;
+	}
 	.mast-head-right .mobile-nav-trigger {
 		margin-left:  0px;
 	}
@@ -1080,6 +1103,11 @@ html.no-scroll body {
 	.lookbook .container {
 		max-width: 90%;
 	}
+	.mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+	  left: auto;
+	  right: auto;
+	}
+
 }
 
 @media only screen and (max-width: 575px) {
@@ -1130,9 +1158,6 @@ html.no-scroll body {
 		width: 52%;	
 		top: 4.3rem;
 	}
-	.emailsubtop .mast-head {
-		padding-bottom: 9.5rem;
-	}
 	.topmenu .mast-head .row-table .emaillist + div {
 	    left: calc(50% - 98px);
 	}
@@ -1157,6 +1182,9 @@ html.no-scroll body {
 		min-width: 200px;
 		width: calc(60% - 48px)
 	}
+	.iconstop.emailsubtop .mast-head {
+		padding-bottom:  9.2rem;
+	}
 	.emailsubtop.iconstop .mast-head .row-table .emaillist,
 	.topmenu.emailsubtop.iconstop .mast-head .row-table .emaillist {
 		width: calc(100% - 32px);	
@@ -1165,12 +1193,27 @@ html.no-scroll body {
 	.topmenu.emailsubtop .mast-head .row-table .emaillist {
 		width: 75%;
 	}
+	.mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
+		width: 25px;
+	}
 	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: 0;
+	/*	right: 0;*/
 		width: 100%;
 	}
 	.iconstop.emailsubtop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		right: -13px;
+		/*right: -13px;*/
+	}
+	.iconstop.emailsubtop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
+		margin-left: 4rem;
+	}
+	.topmenu:not(.iconstop):not(.emailsubtop) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		display: flex;
+		/*right: 0;*/
+		width: 100%;
+		top: 4rem;
+	}
+	.topmenu:not(.iconstop):not(.emailsubtop) .mast-head-right .mobile-nav-trigger .fa-bars:before {
+		left: 4rem;
 	}
 	.topmenu:not(.iconstop) .mast-head-right .mobile-nav-trigger .fa-bars:before {
 		top: -6.5rem;
@@ -1179,12 +1222,7 @@ html.no-scroll body {
 	.topmenu.emailsubtop:not(.iconstop) .mast-head-right .mobile-nav-trigger .fa-bars:before {
 		left: -5rem;
 	}
-	.topmenu:not(.iconstop):not(.emailsubtop) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		display: flex;
-		right: 0;
-		width: 100%;
-		top: 4rem;
-	}
+
 	.head-cart-wrap {
 		left: calc(50% - 127px);
 		right: calc(50% - 127px);
