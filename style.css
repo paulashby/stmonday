@@ -134,6 +134,7 @@ a:visited,
 }
 body:not(.lookbooklinktop) .mast-head .container .nav {
 	margin-top: 0.85rem;
+	letter-spacing: 0.75px;
 }
 .ukroundeltop .mast-head .container .nav {
 	background: #fff url('assets/images/roundel.png') left center/contain no-repeat !important;
