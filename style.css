@@ -132,7 +132,7 @@ a:visited,
 	box-shadow: #000 0px 0px 0px 1px;
 	z-index: 10;
 }
-body:not(.lookbooklinktop) .mast-head .container .nav {
+body .mast-head .container .nav {
 	margin-top: 0.85rem;
 	letter-spacing: 0.75px;
 }
@@ -582,17 +582,17 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 	line-height: 15px;
 	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif!important;
 }
-.lookbook #page {
+.slug__lookbook #page {
 	min-height: auto;
 }
-.lookbook .main .container .row {
+.slug__lookbook .main .container .row {
 	display: flex;
 	justify-content: center;
 }
-.lookbook .main .container .col-xl-3 {
+.slug__lookbook .main .container .col-xl-3 {
 	display: none;
 }
-.lookbook .entry-header {
+.slug__lookbook .entry-header {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -640,7 +640,7 @@ body:not(.lookbooklinktop) .mast-head .container .nav {
 .slug__lookbook .swiper-pagination {
 	visibility: hidden;
 }
-.lookbook .es_subscription_form.es_shortcode_form a {
+.slug__lookbook .es_subscription_form.es_shortcode_form a {
 	color: #0052b5;
 	}
 .privacy-policy .cmplz-show {
@@ -863,7 +863,7 @@ html.no-scroll body {
 	.sm-content-intro p {
 		width: 75%!important;
 	}	
-	.lookbook .col-lg-8 {
+	.slug__lookbook .col-lg-8 {
 		width: 100%;
 	}
 }
@@ -893,7 +893,7 @@ html.no-scroll body {
 	.tabs.wc-tabs a {
 		font-size: 0.7rem;
 	}
-	body:not(.lookbooklinktop) .mast-head .container .nav {
+	body .mast-head .container .nav {
 		height: 1.2rem;
 		margin-top: 1.15rem;
 	}
@@ -1060,12 +1060,14 @@ html.no-scroll body {
 	.woocommerce-product-gallery__wrapper.images picture:last-of-type .wp-post-image {
 		margin-bottom: 0;
 	}
-	.lookbook .emaillist {
+/*
+	.slug__lookbook .emaillist {
 		display: none;
 	}
-	.lookbook .mast-head {
+	.slug__lookbook .mast-head {
 		padding-bottom: 1rem;
 	}
+	*/
 	.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
 		margin-left: 0.9rem;
 	}
@@ -1125,7 +1127,7 @@ html.no-scroll body {
 }	
 
 @media only screen and (max-width: 645px) {
-	.lookbook .container {
+	.slug__lookbook .container {
 		max-width: 90%;
 	}
 	.mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
@@ -1158,14 +1160,14 @@ html.no-scroll body {
 		font-size: 2.2rem!important;
 		line-height: 2.65rem!important;
 	}
-	.lookbook .eicon-chevron-right::before,
-	.lookbook .eicon-chevron-left::before {
+	.slug__lookbook .eicon-chevron-right::before,
+	.slug__lookbook .eicon-chevron-left::before {
 		font-size: 1.5rem;
 	}
-	.lookbook .eicon-chevron-left {
+	.slug__lookbook .eicon-chevron-left {
 		left: -0.15rem;
 	}
-	.lookbook .eicon-chevron-right {
+	.slug__lookbook .eicon-chevron-right {
 		left: 1.6rem;
 	}
 	.emailsubtop .mast-head .row-table .emaillist {
@@ -1280,13 +1282,13 @@ html.no-scroll body {
 		width:  152px;
 		margin: -1px 0;
 	}*/
-	.lookbook .main {
+	.slug__lookbook .main {
 		padding-top: 2rem;
 	}
-	.lookbook .entry-header {
+	.slug__lookbook .entry-header {
 		margin-bottom: 1rem;
 	}
-	.lookbook .entry-header .entry-title {
+	.slug__lookbook .entry-header .entry-title {
 		background-position-x: center !important;
 		padding-top: 80px;
 		text-align: center;
