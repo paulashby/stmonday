@@ -75,9 +75,25 @@ function sm_enqueue_resources() {
 		$email_signup_form = json_encode(trim(preg_replace('/\t+/', '', $email_signup_form)));
 	}
 
+	$lookbooklinktop = -1;
+
+	if(mode_is_active('lookbooklinktop')){
+
+		$lookbookurl = get_permalink( get_page_by_path( 'lookbook' ) );
+
+		$lookbooklinktop = $email_signup_form = json_encode("<div class='lookbooklink'>
+			<a href='$lookbookurl'></a>
+		</div>");
+
+	}
+
+
 	$js_data = "var sm_config = {
-		email_signup_form: $email_signup_form
+		email_signup_form: $email_signup_form,
+		lookbooklinktop: $lookbooklinktop
 	};";
+
+	error_log(print_r($js_data, true));
 
 	wp_add_inline_script('stmonday-script', $js_data);
 
