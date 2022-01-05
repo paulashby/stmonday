@@ -605,8 +605,8 @@ body .mast-head .container .nav {
   height: 4.5rem;
   margin-top: -1rem;
   padding-top: 1.4rem;
-  text-align: right;
-  width: 17.2rem;
+  text-align: left;
+  text-indent: 5rem;
 }
 .slug__lookbook .elementor-swiper-button.swiper-button-disabled {
 	opacity: 0.15;
