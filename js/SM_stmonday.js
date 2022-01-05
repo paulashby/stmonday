@@ -20,7 +20,7 @@ var SM_stmonday = (function () {
 			}
 		}
 		if(sm_config.lookbooklinktop !== -1) {
-			$('.mast-head .row-table').eq(1).append(sm_config.lookbooklinktop);	
+			$('.mast-head .row-table').eq(0).append(sm_config.lookbooklinktop);	
 		}
 		// Go back to first slide if no more to show
 		$('.eicon-chevron-right').click(on_next);

@@ -81,7 +81,7 @@ function sm_enqueue_resources() {
 
 		$lookbookurl = get_permalink( get_page_by_path( 'lookbook' ) );
 
-		$lookbooklinktop = $email_signup_form = json_encode("<div class='lookbooklink'>
+		$lookbooklinktop = json_encode("<div class='lookbooklink'>
 			<a href='$lookbookurl'></a>
 		</div>");
 
