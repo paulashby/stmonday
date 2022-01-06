@@ -139,6 +139,36 @@ body .mast-head .container .nav {
 .navigation-main > li > a {
 	padding: 12px 0 10px 0;
 }
+.lookbooklinktop .lookbooklink {
+	height: 3.5rem;
+	left: 15px;
+	position: absolute;
+	top: 1.35rem;
+	width: 3.5rem;
+}
+.lookbooklinktop.emailsubtop .lookbooklink {
+	left: initial;
+	right: 15px;
+}
+.lookbooklinktop.iconstop .lookbooklink {
+	left: 19px;
+	position: absolute;	
+	top: 1.5rem;
+}
+.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
+	position: absolute;	
+	left: auto;
+	right: 9rem;
+}
+.lookbooklinktop .lookbooklink a {
+	background: transparent url('assets/images/StM_Lookbook_Bttn.svg') left center/contain no-repeat !important;
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+.slug__lookbook.lookbooklinktop .lookbooklink {
+	display: none;
+}
 .ukroundeltop .mast-head .container .nav {
 	background: #fff url('assets/images/roundel.png') left center/contain no-repeat !important;
 }
@@ -950,6 +980,13 @@ html.no-scroll body {
 	.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		right: 2.35rem;
 	}
+	.lookbooklinktop .mast-head-right {
+		margin-top: 1.9rem;
+	}
+	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
+		right: 8.1rem;
+		top: 5.3rem;
+	}
 
 	#content_page_banner .elementor-container {
 		width: 690px;
@@ -1060,14 +1097,9 @@ html.no-scroll body {
 	.woocommerce-product-gallery__wrapper.images picture:last-of-type .wp-post-image {
 		margin-bottom: 0;
 	}
-/*
-	.slug__lookbook .emaillist {
-		display: none;
+	.lookbooklinktop.iconstop.emailsubtop .mast-head {
+		padding-bottom: 10rem;
 	}
-	.slug__lookbook .mast-head {
-		padding-bottom: 1rem;
-	}
-	*/
 	.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
 		margin-left: 0.9rem;
 	}
@@ -1076,10 +1108,19 @@ html.no-scroll body {
 			.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
 				margin-left: 0;
 			}
+			.lookbooklinktop.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
+				margin-left: 4.75rem;
+			}
 	    .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
 	    	position: relative;
 	    	left: 0.9rem;
 	    	top: 0;
+	    }
+	    .mast-head:not(.lookbooklinktop) .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
+	    	/*left: 0.5rem;*/
+	    }
+	    .lookbooklinktop.iconstop.emailsubtop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
+	    	width: 25px;
 	    }
 	    .iconstop.emailsubtop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
 	    	position: static;
@@ -1099,7 +1140,8 @@ html.no-scroll body {
 	}
 	.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
 	.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
-	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
+	.lookbooklinktop.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		display: flex;
 		justify-content: center;
 		right: 0;
@@ -1123,7 +1165,27 @@ html.no-scroll body {
 	.iconstop.emailsubtop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		right: 0;
 	}
-
+	.lookbooklinktop.iconstop .lookbooklink,
+	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
+		left: calc(50% - 5.5rem);
+		top: 5rem;	
+	}
+	.lookbooklinktop.iconstop .container .mast-head-right,
+	.lookbooklinktop.iconstop.emailsubtop .mast-head-right {
+		margin-left: 5.5rem;
+		margin-top: 2.3rem;
+	}
+	.lookbooklinktop.iconstop:not(.emailsubtop) .mast-head {
+		padding-bottom: 4.8rem;
+	}
+	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
+		right: 8.65rem;
+	}
+	.lookbooklinktop.emailsubtop.iconstop .mast-head .row-table .emaillist{
+		left: calc(50% - 125px);
+		right: calc(50% - 125px);
+		top: 8.5rem;
+	}
 }	
 
 @media only screen and (max-width: 645px) {
@@ -1170,6 +1232,23 @@ html.no-scroll body {
 	.slug__lookbook .eicon-chevron-right {
 		left: 1.6rem;
 	}
+	.lookbooklinktop .lookbooklink {
+		margin-left: auto;
+		margin-right: auto;
+		position: static;
+	}
+	.lookbooklinktop:not(.iconstop) .lookbooklink {
+		margin-top: 0.5rem;
+	}
+	.lookbooklinktop.emailsubtop .lookbooklink {
+		left: auto;
+		position: absolute;
+		right: 15px;
+		top: 4.55rem;
+	}
+	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
+    left: 1.2rem;
+	}
 	.emailsubtop .mast-head .row-table .emaillist {
 		top: 8rem;
 		width: calc(100% - 30px);
@@ -1178,6 +1257,9 @@ html.no-scroll body {
 		top: 4.1rem;
 		left: 15px;
 		right: auto;
+	}
+	.emailsubtop.lookbooklinktop .mast-head .row-table .emaillist {
+		width: calc(100% - 6.3rem);	
 	}
 	.topmenu.emailsubtop .mast-head .row-table .emaillist,
 	.emailsubtop.iconstop .mast-head .row-table .emaillist,
@@ -1209,11 +1291,18 @@ html.no-scroll body {
 		min-width: 200px;
 		width: calc(60% - 48px)
 	}
+	.lookbooklinktop.emailsubtop.iconstop .mast-head-right {
+		margin-left: 4.6rem;
+	}
 	@media not all and (min-resolution:.001dpcm) { @media {
 			/* Safari 10.1+ */
 			.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
 				margin-left: 0.9rem;
 			}
+			.lookbooklinktop.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
+				margin-left: 5.5rem;
+			}
+
 	}}
 	.iconstop.emailsubtop .mast-head {
 		padding-bottom:  9.2rem;
@@ -1223,6 +1312,12 @@ html.no-scroll body {
 		width: calc(100% - 32px);	
 		top: 8rem;
 	}
+	.emailsubtop.iconstop.lookbooklinktop .mast-head .row-table .emaillist {
+		top: 8.5rem;
+		left: 15px;
+		right: auto;
+		/*top: 4.1rem;*/
+	}
 	.topmenu.emailsubtop .mast-head .row-table .emaillist {
 		width: 75%;
 	}
@@ -1230,23 +1325,18 @@ html.no-scroll body {
 		width: 25px;
 		position: static;
 	}
-
-	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+	.iconstop.emailsubtop:not( .lookbooklink) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		width: 100%;
 	}
-	.iconstop.emailsubtop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+	.iconstop.emailsubtop:not(.topmenu):not( .lookbooklink) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		right: 0;
 		width: calc(100% - 0.9rem);
-	}
-	.iconstop.emailsubtop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
-		/*right: -13px;*/
 	}
 	.iconstop.emailsubtop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
 		margin-left: 4rem;
 	}
 	.topmenu:not(.iconstop):not(.emailsubtop) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		display: flex;
-		/*right: 0;*/
 		width: 100%;
 		top: 4rem;
 	}
@@ -1265,7 +1355,6 @@ html.no-scroll body {
 		width: 2rem;
 		left: 0rem;
 	}
-
 	.head-cart-wrap {
 		left: calc(50% - 127px);
 		right: calc(50% - 127px);

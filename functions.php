@@ -77,8 +77,10 @@ function sm_enqueue_resources() {
 
 	$lookbooklinktop = -1;
 
-	if(mode_is_active('lookbooklinktop')){
+	if(mode_is_active('lookbooklinktop') && !mode_is_active('topmenu')){
 
+		// This standalone Lookbook link is added only if topmenu is off
+		// When topmenu is on, the link is incorporated into the menu
 		$lookbookurl = get_permalink( get_page_by_path( 'lookbook' ) );
 
 		$lookbooklinktop = json_encode("<div class='lookbooklink'>
@@ -86,7 +88,6 @@ function sm_enqueue_resources() {
 		</div>");
 
 	}
-
 
 	$js_data = "var sm_config = {
 		email_signup_form: $email_signup_form,
