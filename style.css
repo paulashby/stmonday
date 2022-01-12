@@ -247,7 +247,7 @@ body .mast-head .container .nav {
 }
 .topmenu.emailsubtop .mast-head-right .mobile-nav-trigger .fa-bars:before,
 .topmenu.iconstop .mast-head-right .mobile-nav-trigger .fa-bars:before {
-	top: -0.485rem;
+	top: -0.512rem;
 }
 .mast-head-right {
 	margin-top: 1.6rem;
@@ -270,7 +270,7 @@ body .mast-head .container .nav {
 }
 .mast-head-right > a:first-child:before {
 	content: "\e902";
-	top: 0.26rem; 
+	top: 0.227rem; 
 }
 
 .mast-head-right > a:hover:before,
@@ -301,7 +301,7 @@ body .mast-head .container .nav {
 }
 .fas.fa-shopping-cart:before {
 	content: "\e900";
-	top: -.2rem;
+	top: -.233rem;
 	width: 1.7rem;
 }
 .fas.fa-shopping-cart {
@@ -981,7 +981,8 @@ html.no-scroll body {
 		right: 2.35rem;
 	}
 	.lookbooklinktop .mast-head-right {
-		margin-top: 1.9rem;
+		/* HERE - This seems to be pushing elements out - is there a case where it helps? */
+		/*margin-top: 1.9rem;*/
 	}
 	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
 		right: 8.1rem;
@@ -1097,7 +1098,7 @@ html.no-scroll body {
 	.woocommerce-product-gallery__wrapper.images picture:last-of-type .wp-post-image {
 		margin-bottom: 0;
 	}
-	.lookbooklinktop.iconstop.emailsubtop .mast-head {
+	.lookbooklinktop.iconstop.emailsubtop:not(.topmenu) .mast-head {
 		padding-bottom: 10rem;
 	}
 	.iconstop:not(.topmenu):not(.emailsubtop) .mast-head-right {
@@ -1141,7 +1142,7 @@ html.no-scroll body {
 	.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
 	.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
 	.iconstop.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
-	.lookbooklinktop.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+	.lookbooklinktop.iconstop.emailsubtop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		display: flex;
 		justify-content: center;
 		right: 0;
@@ -1158,7 +1159,8 @@ html.no-scroll body {
 		right: 13px;
 	}
 	.iconstop.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
-	.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+	.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12,
+	.lookbooklinktop.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		right: 0.9rem;
 		width: 8rem;
 	}	
@@ -1170,8 +1172,7 @@ html.no-scroll body {
 		left: calc(50% - 5.5rem);
 		top: 5rem;	
 	}
-	.lookbooklinktop.iconstop .container .mast-head-right,
-	.lookbooklinktop.iconstop.emailsubtop .mast-head-right {
+	.lookbooklinktop.iconstop:not(.topmenu) .container .mast-head-right {
 		margin-left: 5.5rem;
 		margin-top: 2.3rem;
 	}
@@ -1181,7 +1182,7 @@ html.no-scroll body {
 	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
 		right: 8.65rem;
 	}
-	.lookbooklinktop.emailsubtop.iconstop .mast-head .row-table .emaillist{
+	.lookbooklinktop.emailsubtop.iconstop:not(.topmenu) .mast-head .row-table .emaillist{
 		left: calc(50% - 125px);
 		right: calc(50% - 125px);
 		top: 8.5rem;
@@ -1312,14 +1313,17 @@ html.no-scroll body {
 		width: calc(100% - 32px);	
 		top: 8rem;
 	}
-	.emailsubtop.iconstop.lookbooklinktop .mast-head .row-table .emaillist {
+	.emailsubtop.iconstop.lookbooklinktop:not(.topmenu) .mast-head .row-table .emaillist {
 		top: 8.5rem;
 		left: 15px;
 		right: auto;
-		/*top: 4.1rem;*/
 	}
 	.topmenu.emailsubtop .mast-head .row-table .emaillist {
 		width: 75%;
+	}
+	.lookbooklinktop.emailsubtop.iconstop:not(.topmenu) .mast-head .row-table .emaillist {
+		left: 15px;
+		right: auto;
 	}
 	.mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
 		width: 25px;
@@ -1340,6 +1344,9 @@ html.no-scroll body {
 		width: 100%;
 		top: 4rem;
 	}
+	.lookbooklinktop.topmenu.emailsubtop.iconstop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
+		right: 4.9rem;
+	}	
 	.topmenu:not(.iconstop):not(.emailsubtop) .mast-head-right .mobile-nav-trigger .fa-bars:before {
 		left: 4rem;
 	}
