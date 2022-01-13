@@ -189,6 +189,9 @@ body .mast-head .container .nav {
 .topmenu .col-lg-5.col-md-12.col-xs-12 {
 	top: 6.5rem;
 }
+body:not(.lookbooklinktop) .top_menu__lookbook-link {
+	display: none;
+}
 #menu-lookbook-product-categories {
 	text-align: center;
 }
@@ -199,6 +202,9 @@ body .mast-head .container .nav {
 /* menus */
 .navigation-main ul {
 	border: none;
+}
+.nav-bar li:last-child {
+	margin-right: 0;
 }
 #menu-product-categories {
 	display: none;
@@ -272,7 +278,17 @@ body .mast-head .container .nav {
 	content: "\e902";
 	top: 0.227rem; 
 }
-
+@media screen and (-webkit-min-device-pixel-ratio:0)
+and (min-resolution:.001dpcm) {
+	.mast-head-right > a:first-child:before {
+		top: 0.3rem; 
+	}
+}
+@-moz-document url-prefix() {
+  .mast-head-right > a:first-child:before {
+  	top: 0.227rem; 
+  }
+}
 .mast-head-right > a:hover:before,
 .fas.fa-shopping-cart:hover:before,
 .fas.fa-search:hover:before {
@@ -980,10 +996,6 @@ html.no-scroll body {
 	.topmenu .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
 		right: 2.35rem;
 	}
-	.lookbooklinktop .mast-head-right {
-		/* HERE - This seems to be pushing elements out - is there a case where it helps? */
-		/*margin-top: 1.9rem;*/
-	}
 	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
 		right: 8.1rem;
 		top: 5.3rem;
@@ -1117,8 +1129,8 @@ html.no-scroll body {
 	    	left: 0.9rem;
 	    	top: 0;
 	    }
-	    .mast-head:not(.lookbooklinktop) .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
-	    	/*left: 0.5rem;*/
+	    .iconstop.topmenu.emailsubtop .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
+	    	left: 0.5rem;
 	    }
 	    .lookbooklinktop.iconstop.emailsubtop:not(.topmenu) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
 	    	width: 25px;
@@ -1176,7 +1188,13 @@ html.no-scroll body {
 		margin-left: 5.5rem;
 		margin-top: 2.3rem;
 	}
-	.lookbooklinktop.iconstop:not(.emailsubtop) .mast-head {
+	@media not all and (min-resolution:.001dpcm) { @media {
+			/* Safari 10.1+ */
+		.lookbooklinktop.iconstop:not(.topmenu) .container .mast-head-right {
+			margin-left: 4.75rem;
+		}
+	}}
+	.lookbooklinktop.iconstop:not(.emailsubtop):not(.topmenu) .mast-head {
 		padding-bottom: 4.8rem;
 	}
 	.lookbooklinktop.emailsubtop.iconstop .lookbooklink {
@@ -1292,7 +1310,7 @@ html.no-scroll body {
 		min-width: 200px;
 		width: calc(60% - 48px)
 	}
-	.lookbooklinktop.emailsubtop.iconstop .mast-head-right {
+	.lookbooklinktop.emailsubtop.iconstop .container .mast-head-right {
 		margin-left: 4.6rem;
 	}
 	@media not all and (min-resolution:.001dpcm) { @media {
@@ -1326,7 +1344,7 @@ html.no-scroll body {
 		right: auto;
 	}
 	.mast-head .row-table .col-lg-5.col-md-7.col-xs-12 .mast-head-right > a:first-child {
-		width: 25px;
+		width: 24px;
 		position: static;
 	}
 	.iconstop.emailsubtop:not( .lookbooklink) .mast-head .row-table .col-lg-5.col-md-7.col-xs-12 {
