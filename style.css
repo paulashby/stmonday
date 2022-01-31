@@ -169,9 +169,6 @@ body .mast-head .container .nav {
 .slug__lookbook.lookbooklinktop .lookbooklink {
 	display: none;
 }
-.ukroundeltop .mast-head .container .nav {
-	background: #fff url('assets/images/roundel.png') left center/contain no-repeat !important;
-}
 .row-table .col-lg-2 .site-logo	{
 	text-align: center;
 }
@@ -789,7 +786,12 @@ input[type="submit"].es_submit_button {
   	text-align: right;
   	top: -0.3rem;
 }
-
+#email-subs-label {
+	display: inline-block;
+	left: 0.2rem;
+	position: relative;
+	top: -0.2rem;
+}
 .es_subscription_message {
 	display: none;
 }
