@@ -94,8 +94,6 @@ function sm_enqueue_resources() {
 		lookbooklinktop: $lookbooklinktop
 	};";
 
-	error_log(print_r($js_data, true));
-
 	wp_add_inline_script('stmonday-script', $js_data);
 
 	if ( is_product() ){
@@ -864,14 +862,21 @@ function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery
 	$responsive_image_sizes = get_product_gallery_image_sizes();
 	$default_image_ids = array();
 
+	// $image_ids is the result of a call to $product->get_gallery_image_ids()
 	foreach( $image_ids as $image_id ) {
 		$image_colour  = get_field( "colour", $image_id );
+
+		// $image_gallery array is only populated if $colour == default_colour
 		$active_image = count($image_gallery) === 0;
-		// $default_image_ids = array();
-		
+		$not_colour_variation_image = strlen($image_colour) === 0 || $image_colour === "none";
+
 		if($fallback || $colour === false || $image_colour === $colour) {
 			$image_gallery[] = sm_get_image_markup($image_id, $responsive_image_sizes, $active_image);
-		}  else if($image_colour === $default_colour) {
+		} else if($not_colour_variation_image) {
+			error_log(__LINE__);
+			// Image is not a colour variation (is not tagged with a colour), so we want it regardless of which colour variation is selected
+		 	$image_gallery[] = sm_get_image_markup($image_id, $responsive_image_sizes);
+		 } else if($image_colour === $default_colour) {
 			// Store default image id
 			$default_image_ids[] = $image_id;
 		}
