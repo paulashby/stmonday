@@ -129,25 +129,25 @@ function sm_enqueue_resources() {
 // }
 
 // Remove theme image sizes that aren't used for product shots - these will need to be commented out when adding Neto or Max Slider images
-add_action('init', 'remove_extra_image_sizes');
+// add_action('init', 'remove_extra_image_sizes');
 
-function remove_extra_image_sizes( $name ) {
+// function remove_extra_image_sizes( $name ) {
 
-	global $_wp_additional_image_sizes;
-    $image_keys = array(
-    	'maxslider_slide',
-    	'neto_item',
-    	'neto_fullwidth',
-    	'neto_hero',
-    	'neto_about'
-    );
+// 	global $_wp_additional_image_sizes;
+//     $image_keys = array(
+//     	'maxslider_slide',
+//     	'neto_item',
+//     	'neto_fullwidth',
+//     	'neto_hero',
+//     	'neto_about'
+//     );
 
-    foreach ($image_keys as $key) {
-    	if ( isset( $_wp_additional_image_sizes[ $key ] ) ) {
-           unset( $_wp_additional_image_sizes[ $key ] );
-       }
-    }
-}
+//     foreach ($image_keys as $key) {
+//     	if ( isset( $_wp_additional_image_sizes[ $key ] ) ) {
+//            unset( $_wp_additional_image_sizes[ $key ] );
+//        }
+//     }
+// }
 
 //////////////////////////////////////////////////////////////
 // Custom Site Settings page /////////////////////////////////
@@ -754,15 +754,23 @@ function sm_sizing_product_tab_content() {
 }
 // Populate Shipping tab on product page
 function sm_shipping_product_tab_content() {
-	//TODO: Populate shipping page once shipping module installed then determine what we should include here
-	echo "<h2>Shipping</h2>
-	<p>Some shipping information.</p>";
+
+	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
+		
+		$id = $post->ID; 
+		$shipping_info = get_field('shipping_tab_content', $id);
+	}
+	echo "<h2>Shipping</h2>$shipping_info";
 }
 // Populate Returns tab on product page
 function sm_returns_product_tab_content() {
-	//TODO: Sort out where this info is coming from so Jules can then populate
-	echo "<h2>Returns</h2>
-	<p>Some returns information.</p>";
+	
+	if ( $post = get_page_by_path( 'site-settings', OBJECT, 'page' ) ){
+		
+		$id = $post->ID; 
+		$returns_info = get_field('returns_tab_content', $id);
+	}
+	echo "<h2>Returns</h2>$returns_info";
 }
 // This function is called indirectly by sm_customise_tabs( $tabs ) when page loads
 // And by sm_on_product_variation_change() to ensure correct size details are displayed
