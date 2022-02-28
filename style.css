@@ -368,11 +368,16 @@ and (min-resolution:.001dpcm) {
 }
 .sm-product-subtitle, 
 .entry-summary .price {
-	font-size: 0.7rem;
 	line-height: 1rem;
 	text-align: center;
 	margin-bottom: 1rem;
 	color: #999;
+}
+.sm-product-subtitle {	
+	font-size: 0.7rem;	
+}
+.entry-summary .price {
+	font-size: 0.9rem;	
 }
 .entry-summary .price {
 	color: #252525;
@@ -902,6 +907,9 @@ html.no-scroll body {
 .show {
 	display: flex;
 }
+.columns-4 .col-md-4 {
+	width: 25%;
+}
 
 @media only screen and (max-width: 1200px) {
 	#content_page_banner .elementor-container {
@@ -1021,6 +1029,9 @@ html.no-scroll body {
 	.row-table .col-lg-2 {
 		display: block;
 		width: 100%;
+	}
+	.columns-4 .col-md-4 {
+		width: 50%;
 	}
 }
 
@@ -1233,6 +1244,11 @@ html.no-scroll body {
 		right: 41px;
 		width: 255px;
 		top: 2.8rem;
+	}
+}
+@media only screen and (max-width: 544px) {
+	.columns-4 .col-md-4 {
+		width: 100%;
 	}
 }
 @media only screen and (max-width: 465px) {
