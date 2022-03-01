@@ -119,6 +119,22 @@ function sm_enqueue_resources() {
 	}
 }
 
+add_filter('pre_kses', 'sm_show_regional_privacy_and_cookie_policy_links');
+
+function sm_show_regional_privacy_and_cookie_policy_links ($string) {
+
+    if (strpos($string, '/privacy-statement-uk/') !== false) {
+        
+        return str_replace('/privacy-statement-uk/', '/privacy-statement-uk/?cmplz_region_redirect=true', $string);
+    }
+    
+    if (strpos($string, '/cookie-policy-uk/') !== false) {
+       
+        return str_replace('/cookie-policy-uk/', '/cookie-policy-uk/?cmplz_region_redirect=true', $string);
+    }
+    
+    return $string;
+}
 
 /* Enable svg - NOTE: This is safe as long as we're not allowing users to upload files */
 // add_filter('upload_mimes', 'cc_mime_types');
