@@ -622,6 +622,11 @@ and (min-resolution:.001dpcm) {
 	line-height: 64px;
 	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif!important;
 }
+.maxslider-slide-title,
+.maxslider-slide-subtitle {
+	line-height: 36px;
+	margin-top: 0;
+}
 
 .elementor-button-text,
 .maxslider .maxslider-btn {
