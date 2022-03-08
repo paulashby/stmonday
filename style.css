@@ -137,6 +137,7 @@ body .mast-head .container .nav {
 	letter-spacing: 0.75px;
 }
 .navigation-main > li > a {
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important;
 	padding: 12px 0 10px 0;
 }
 .lookbooklinktop .lookbooklink {
@@ -395,7 +396,21 @@ and (min-resolution:.001dpcm) {
 .sm-content-intro p {
 	width: 75%!important;
 }
-
+.slug__our-mission h2,
+.slug__about h2 {
+	font-size: 1.7rem;
+	margin-bottom: 2rem;
+}
+.slug__our-mission h3,
+.slug__about h3{
+	font-size: 1rem;
+	text-transform: none;
+	margin: 1rem 0 0;
+}
+.slug__our-mission p,
+.slug__about p{
+	margin: 0;
+}
 /* Footer at bottom */
 #page {
 	display: flex;
