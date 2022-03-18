@@ -148,25 +148,25 @@ function sm_show_regional_privacy_and_cookie_policy_links ($string) {
 // }
 
 // Remove theme image sizes that aren't used for product shots - these will need to be commented out when adding Neto or Max Slider images
-// add_action('init', 'remove_extra_image_sizes');
+add_action('init', 'remove_extra_image_sizes');
 
-// function remove_extra_image_sizes( $name ) {
+function remove_extra_image_sizes( $name ) {
 
-// 	global $_wp_additional_image_sizes;
-//     $image_keys = array(
-//     	'maxslider_slide',
-//     	'neto_item',
-//     	'neto_fullwidth',
-//     	'neto_hero',
-//     	'neto_about'
-//     );
+	global $_wp_additional_image_sizes;
+    $image_keys = array(
+    	'maxslider_slide',
+    	'neto_item',
+    	'neto_fullwidth',
+    	'neto_hero',
+    	'neto_about'
+    );
 
-//     foreach ($image_keys as $key) {
-//     	if ( isset( $_wp_additional_image_sizes[ $key ] ) ) {
-//            unset( $_wp_additional_image_sizes[ $key ] );
-//        }
-//     }
-// }
+    foreach ($image_keys as $key) {
+    	if ( isset( $_wp_additional_image_sizes[ $key ] ) ) {
+           unset( $_wp_additional_image_sizes[ $key ] );
+       }
+    }
+}
 
 //////////////////////////////////////////////////////////////
 // Custom Site Settings page /////////////////////////////////
@@ -187,7 +187,7 @@ function disable_gutenberg_on_settings_page($can, $post){
 add_action('pre_get_posts', 'hide_settings_page');
 
 function hide_settings_page($query) {
-	
+
 	$sm_query = new WP_Query();
 	
     if ( !is_admin() && ! $sm_query->is_main_query() ) {
@@ -242,6 +242,44 @@ function edit_site_settings_title() {
     return $title;  
 }
 
+// Hide advanced custom fields menu item from Shop manager
+add_filter('acf/settings/show_admin', 'sm_acf_show_admin');
+
+function sm_acf_show_admin( $show ) {
+    // shop_manager does not have the  activate_plugins capability
+    return current_user_can('activate_plugins');   
+}
+/*
+// Add manage_options capability to Shop manager
+add_action( 'admin_head', 'sm_add_manage_options_capability' );
+
+function sm_add_manage_options_capability() {
+	$shop_manager_role = get_role( 'shop_manager' );
+	$shop_manager_role->add_cap( 'manage_options' );
+}
+*/
+// Hide admin menu items from Shop manager
+add_action( 'admin_head', 'sm_hide_menu' );
+
+function sm_hide_menu() {
+
+	// Hiding menu items only from the shop_manager
+	$curr_user = wp_get_current_user();
+	$roles = (array) $curr_user->roles;
+
+	foreach ($roles as $role) {
+		error_log($role);
+	}
+
+	if( in_array('shop_manager', $roles) ) {
+		remove_menu_page( 'options-general.php' ); //Settings
+	  	remove_menu_page( 'edit.php?post_type=elementor_library' ); // Elementor Templates
+		remove_menu_page( 'elementor' ); // Elementor
+		remove_menu_page( 'smush' );
+		remove_menu_page( 'duplicator' );
+		remove_menu_page( 'complianz' );
+   	}
+}
 
 // -- Apply Site Settings --------------------------------- //
 
