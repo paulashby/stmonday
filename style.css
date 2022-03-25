@@ -1281,8 +1281,9 @@ html.no-scroll body {
 	.sm-content-title .elementor-heading-title,
 	.maxslider .maxslider-slide .maxslider-slide-content .maxslider-slide-title,
 	.maxslider .maxslider-slide .maxslider-slide-content .maxslider-slide-subtitle {
-		font-size: 2.2rem!important;
-		line-height: 2.65rem!important;
+		font-size: 1.76rem!important;
+		line-height: 2.12rem!important;
+		margin-top: 0rem;
 	}
 	.slug__lookbook .eicon-chevron-right::before,
 	.slug__lookbook .eicon-chevron-left::before {
