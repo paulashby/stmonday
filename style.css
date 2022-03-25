@@ -533,12 +533,13 @@ and (min-resolution:.001dpcm) {
 #buy_now_button {
 	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif;
 }
-
+.entry-summary .stock {
+	display: none;
+}
 .product-template-default .variations {
 	text-align: center;
 	text-transform: uppercase;
 }
-
 .product-template-default .variations #pa_size,
 .product-template-default .variations #pa_colour {
 	text-align: center;
@@ -800,19 +801,19 @@ and (min-resolution:.001dpcm) {
   width: 100%;
 }
 input[type="submit"].es_submit_button {
-	background-color: #fff;
-	border-bottom: 1px solid #e6e6e6;
-	border-left: none;
-	border: 1px solid #e6e6e6;
-	color: #000;
 	font-family: 'TT Norms Pro Normal', Verdana, Arial, sans-serif;
 	font-weight: 400;
-	height: 2.3rem;
-	padding: 10px 15px 10px;
 	position: absolute;
+	border: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+	border-left: none;
+	color: #000;
+	padding: 10px 15px 10px;
 	right: 0;
 	text-align: right;
 	top: -0.3rem;
+	background-color: #fff;
+	height: 2.3rem;
 }
 
 #email-subs-label {
