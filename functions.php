@@ -445,15 +445,15 @@ function variation_radio_buttons($html, $args) {
 }
 
 // Exclude out-of-stock variations if backorders are not allowed. Added when replacing select menu with radio buttons.
-add_filter('woocommerce_variation_is_active', 'variation_check', 10, 2);
+// add_filter('woocommerce_variation_is_active', 'variation_check', 10, 2);
 
-function variation_check($active, $variation) {
+// function variation_check($active, $variation) {
 
-	if(!$variation->is_in_stock() && !$variation->backorders_allowed()) {
-		return false;
-	}
-	return $active;
-}
+// 	if(!$variation->is_in_stock() && !$variation->backorders_allowed()) {
+// 		return false;
+// 	}
+// 	return $active;
+// }
 
 // Position tabs on right of product page
 add_action( 'wp', 'sm_move_tab_position' );
