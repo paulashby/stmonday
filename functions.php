@@ -267,10 +267,6 @@ function sm_hide_menu() {
 	$curr_user = wp_get_current_user();
 	$roles = (array) $curr_user->roles;
 
-	foreach ($roles as $role) {
-		error_log($role);
-	}
-
 	if( in_array('shop_manager', $roles) ) {
 		remove_menu_page( 'options-general.php' ); //Settings
 	  	remove_menu_page( 'edit.php?post_type=elementor_library' ); // Elementor Templates
@@ -293,8 +289,11 @@ function add_body_classes($classes) {
 		$queried_ob = get_queried_object();
 
 		if ( is_object($queried_ob) ) {
-			$slug = get_queried_object()->post_name;
-			$classes[] = "slug__$slug";
+			
+			if( isset($queried_ob->post_name) ) {
+				$slug = $queried_ob->post_name;
+				$classes[] = "slug__$slug";
+			}
 		}
 
 		$id = $post->ID;
@@ -938,7 +937,6 @@ function get_gallery_images($image_ids, $default_colour, $colour, $image_gallery
 		if($fallback || $colour === false || $image_colour === $colour) {
 			$image_gallery[] = sm_get_image_markup($image_id, $responsive_image_sizes, $active_image);
 		} else if($not_colour_variation_image) {
-			error_log(__LINE__);
 			// Image is not a colour variation (is not tagged with a colour), so we want it regardless of which colour variation is selected
 		 	$image_gallery[] = sm_get_image_markup($image_id, $responsive_image_sizes);
 		 } else if($image_colour === $default_colour) {
@@ -1024,6 +1022,9 @@ function replace_first($search, $replace, $subject) {
 
 function get_buy_now_button($settings) {
 
+	$button_class = 'single_add_to_cart_button button alt';
+	$disable = false; 
+
 	// We're using a placeholder button on page load just so a Buy Now button is in place from the get go
 	// An immediate ajax call replaces this with a version with the correct variation details
 	if( array_key_exists('placeholder', $settings) || ! $settings['product']->is_type( 'variable' )){
@@ -1042,11 +1043,20 @@ function get_buy_now_button($settings) {
 		$variation_id = $data_store->find_matching_product_variation(
 			new \WC_Product($settings['product_id']), $match_attributes
 		);
+		
+		// Disable button if variation is out of stock
+		$variation = new WC_Product_variation($variation_id);
+		if(!$variation->is_in_stock() && !$variation->backorders_allowed()) {
+			error_log('Variation is out of stock');
+			$button_class .= ' disabled wc-variation-is-unavailable';
+			$disable = true;
+		}
 	}
 
 	$checkout_url = wc_get_checkout_url();
+	$button_href = $disable ? "" : "href='" . wc_get_checkout_url() . "?add-to-cart=$variation_id&quantity=" . $settings['quantity'] . "'";
 
-	return "<div class='sm_buy_now__pre'><p class='sm_buy_now__pre-txt'>Or</p></div><a id='buy_now_button' class='single_add_to_cart_button button alt' href='{$checkout_url}?add-to-cart=$variation_id&quantity=" . $settings['quantity'] . "'>Buy Now</a>";
+	return "<div class='sm_buy_now__pre'><p class='sm_buy_now__pre-txt'>Or</p></div><a id='buy_now_button' class='$button_class' $button_href>Buy Now</a>";
 }
 
 function mode_is_active($mode) {
