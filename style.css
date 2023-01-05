@@ -85,7 +85,7 @@ a:hover,
 	color: #a2a2a2;
 }
 a:active,
-.woocommerce-breadcrumb a::active
+.woocommerce-breadcrumb a:active
 a:visited,
 .woocommerce-breadcrumb a:visited {
 	color: #a2a2a2;
@@ -121,7 +121,7 @@ a:visited,
 	height: 45px;
 	vertical-align: top;
 	padding: 13px 24px;
-	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important;
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif !important;
 	font-size: 12px;
 	box-shadow: #c4c2c2 0px 0px 0px 1px;
 	background-color: #fff;
@@ -137,7 +137,7 @@ body .mast-head .container .nav {
 	letter-spacing: 0.75px;
 }
 .navigation-main > li > a {
-	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif; !important;
+	font-family: 'TT Norms Pro', Verdana, Arial, sans-serif !important;
 	padding: 12px 0 10px 0;
 }
 .lookbooklinktop .lookbooklink {
