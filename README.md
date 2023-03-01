@@ -1,7 +1,7 @@
 # StMonday Website
 
   ## Description
-WordPress/Woocommerce shop for independent clothing label aimed at the maverick-minded sportsman.
+WordPress/WooCommerce shop for independent clothing label aimed at the maverick-minded sportsman.
 
 The [deployed site](https://stmonday.xyz/) uses a custom child theme based on the CSSigniter [Neto theme](https://www.cssigniter.com/demo2/?theme=neto). The [product pages](https://stmonday.xyz/product/leaf-blower-windcheater/) in particular were restyled with much greater prominence given to size variations and Buy buttons.
 Customisations include:
@@ -9,7 +9,7 @@ Customisations include:
 - Conversion of size select menu to stylable radio buttons
 - Repositioning of Additional Information tabs to right of product page
 - Addition of Sizing, Shipping and Returns tabs to Additional Information 
-- Displaying correct image is Sizing tab when different size variation selected
+- Displaying correct image in Sizing tab when different size variation selected
 - Addition of sizing message below Buy buttons
 - Reconfiguration of Social Media buttons
 - Addition of Buy Now button
